@@ -75,7 +75,12 @@ namespace CronUtils
             // throw new System.NotImplementedException();
             return RangeLower <= value && value <= RangeUpper;
         }
+
         #endregion
 
+        public override string ToString ()
+        {
+            return String.Format("{0}-{1}", RangeLower, RangeUpper);
+        }
     }
 }

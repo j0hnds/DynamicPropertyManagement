@@ -40,7 +40,7 @@ namespace CronUtils
                                     int singleValue) :
             base(lowerLimit, upperLimit, names)
         {
-            if (IsValueWithinLimits(singleValue))
+            if (! IsValueWithinLimits(singleValue))
             {
                 throw new System.ArgumentOutOfRangeException("singleValue", singleValue, "Not a legal value");
             }
@@ -58,7 +58,12 @@ namespace CronUtils
         {
             return SingleValue == value;
         }
+
         #endregion
 
+        public override string ToString ()
+        {
+            return String.Format("{0}", SingleValue);
+        }
     }
 }

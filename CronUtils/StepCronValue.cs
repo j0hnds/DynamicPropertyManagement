@@ -54,7 +54,12 @@ namespace CronUtils
         {
             return value % StepValue == 0;
         }
+
         #endregion
 
+        public override string ToString ()
+        {
+            return String.Format("*/{0}", StepValue);
+        }
     }
 }

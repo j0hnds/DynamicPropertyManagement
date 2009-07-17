@@ -29,6 +29,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="nunit.core">
+      <Package>nunit-2.4</Package>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <Package>nunit-2.4</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CronValueBase.cs" />
@@ -38,6 +44,18 @@
     <Compile Include="SingleValueCronValue.cs" />
     <Compile Include="StepCronValue.cs" />
     <Compile Include="WildcardCronValue.cs" />
+    <Compile Include="TestRangeCronValue.cs" />
+    <Compile Include="TestSingleValueCronValue.cs" />
+    <Compile Include="TestStepCronValue.cs" />
+    <Compile Include="TestWildcardCronValue.cs" />
+    <Compile Include="CronValueFactory.cs" />
+    <Compile Include="CronSpecification.cs" />
+    <Compile Include="TestCronSpecification.cs" />
+    <Compile Include="TestDayCronValueCreator.cs" />
+    <Compile Include="TestDOWCronValueCreator.cs" />
+    <Compile Include="TestMonthCronValueCreator.cs" />
+    <Compile Include="TestHourCronValueCreator.cs" />
+    <Compile Include="TestMinuteCronValueCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
