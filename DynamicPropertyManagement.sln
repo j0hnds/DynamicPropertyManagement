@@ -5,12 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CronUtils", "CronUtils\Cron
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManager", "PropertyManager\PropertyManager.csproj", "{A06CBCFA-BDFF-43ED-BC3A-0DFAB251C89D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainCore", "DomainCore\DomainCore.csproj", "{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Release|Any CPU.Build.0 = Release|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
