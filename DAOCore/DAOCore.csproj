@@ -46,6 +46,20 @@
     <Compile Include="TestDAOUtils.cs" />
     <Compile Include="DAOBase.cs" />
     <Compile Include="TestDAOBase.cs" />
+    <Compile Include="BuilderBase.cs" />
+    <Compile Include="InsertBuilder.cs" />
+    <Compile Include="DeleteBuilder.cs" />
+    <Compile Include="UpdateBuilder.cs" />
+    <Compile Include="TestDeleteBuilder.cs" />
+    <Compile Include="BaseBuilderTest.cs" />
+    <Compile Include="TestInsertBuilder.cs" />
+    <Compile Include="TestUpdateBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainCore\DomainCore.csproj">
+      <Project>{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}</Project>
+      <Name>DomainCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
