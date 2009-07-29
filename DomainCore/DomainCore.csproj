@@ -42,6 +42,7 @@
     <Compile Include="Attribute.cs" />
     <Compile Include="TestStringAttribute.cs" />
     <Compile Include="TestLongAttribute.cs" />
+    <Compile Include="TestDomain.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
