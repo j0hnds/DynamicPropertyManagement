@@ -20,6 +20,12 @@ namespace DomainCore
         // The namespace in which we expect to find dao objects.
         private static string daoNamespace = null;
 
+        // The assembly in which to find the domain objects
+        private static string domainAssembly = null;
+
+        // The assembly in which to find the DAO objects.
+        private static string daoAssembly = null;
+
         /// <value>
         /// Static readonly property for the singleton instance of the DomainFactory.
         /// </value>
@@ -48,6 +54,15 @@ namespace DomainCore
         }
 
         /// <value>
+        /// Static read/write property for the assembly which contains the domain objects.
+        /// </value>
+        public static string DomainAssembly
+        {
+            get { return domainAssembly; }
+            set { domainAssembly = value; }
+        }
+
+        /// <value>
         /// Static read/write property for the namespace to use for DAO objects. This value will be prepended to the
         /// DAO class name to obtain the fully-qualified class name. If not specified, no namespace is prepended.
         /// </value>
@@ -55,6 +70,15 @@ namespace DomainCore
         {
             get { return daoNamespace; }
             set { daoNamespace = value; }
+        }
+
+        /// <value>
+        /// Static read/write property for the assembly where the DAOs are located.
+        /// </value>
+        public static string DAOAssembly
+        {
+            get { return daoAssembly; }
+            set { daoAssembly = value; }
         }
 
         /// <summary>
@@ -125,6 +149,10 @@ namespace DomainCore
             {
                 domainClassName = String.Format("{0}.{1}", domainNamespace, domainName);
             }
+            if (domainAssembly != null)
+            {
+                domainClassName += String.Format(",{0}", domainAssembly);
+            }
             
             string daoClassName = null;
             if (daoNamespace == null)
@@ -141,6 +169,10 @@ namespace DomainCore
                     domainName = domainName.Substring(lastDot + 1);
                 }
                 daoClassName = String.Format("{0}.{1}DAO", daoNamespace, domainName);
+            }
+            if (daoAssembly != null)
+            {
+                daoClassName += String.Format(",{0}", daoAssembly);
             }
 
             // Get the type for the domain class (throw exception if fails)
@@ -324,6 +356,14 @@ namespace DomainCore
                 }
 
                 return dirty;
+            }
+        }
+
+        public Dictionary<string,Attribute> Attributes
+        {
+            get
+            {
+                return attributes;
             }
         }
 
