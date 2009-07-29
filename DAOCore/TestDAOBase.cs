@@ -4,19 +4,19 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
 
-namespace PropertyManager
+namespace DAOCore
 {
     
     
     [TestFixture]
     public class TestDAO
     {
-        private dao cut;
+        private DAOBase cut;
         
         [SetUp]
         public void SetUp()
         {
-            cut = new dao();
+            cut = new DAOBase();
         }
         [TearDown]
         public void TearDown()

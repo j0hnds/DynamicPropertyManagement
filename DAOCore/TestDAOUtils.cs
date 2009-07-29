@@ -2,9 +2,8 @@
 using System;
 using NUnit.Framework;
 
-namespace PropertyManager
+namespace DAOCore
 {
-    
     
     [TestFixture]
     public class TestDAOUtils
