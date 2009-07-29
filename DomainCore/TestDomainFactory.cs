@@ -50,6 +50,13 @@ namespace DomainCore
             DomainFactory.DomainNamespace = "DomainCore.TestDomains";
             DomainFactory.DAONamespace = "DomainCore.TestDAOs";
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            DomainFactory.DomainNamespace = null;
+            DomainFactory.DAONamespace = null;
+        }
         
         [Test]
         public void TestNewObject()
@@ -86,6 +93,15 @@ namespace DomainCore
             } catch (TypeLoadException)
             {
             }
+        }
+        [Test]
+        public void TestNewObjectNoNamespaceSet()
+        {
+            DomainFactory.DomainNamespace = null;
+            
+            Domain d = DomainFactory.Create("DomainCore.TestDomains.TDomain");
+            Assert.IsNotNull(d);
+            Assert.IsTrue(d.NewObject);
         }
     }
 }

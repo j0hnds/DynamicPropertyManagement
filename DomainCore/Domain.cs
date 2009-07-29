@@ -6,14 +6,23 @@ using System.Collections.Generic;
 
 namespace DomainCore
 {
+    /// <summary>
+    /// Factory class to instantiate domain objects.
+    /// </summary>
     public class DomainFactory
     {
+        // The single instance of the DomainFactory
         private static DomainFactory instance = null;
 
+        // The namespace in which we expect to find domain objects.
         private static string domainNamespace = null;
 
+        // The namespace in which we expect to find dao objects.
         private static string daoNamespace = null;
 
+        /// <value>
+        /// Static readonly property for the singleton instance of the DomainFactory.
+        /// </value>
         public static DomainFactory Instance
         {
             get
@@ -27,50 +36,112 @@ namespace DomainCore
             }
         }
 
+        /// <value>
+        /// Static read/write property for the namespace to use for domain objects. This value will be prepended
+        /// to the domain class name to obtain the fully-qualified class name. If not specified, no namespace is
+        /// prepended.
+        /// </value>
         public static string DomainNamespace 
         {
             get { return domainNamespace; }
             set { domainNamespace = value; }
         }
 
+        /// <value>
+        /// Static read/write property for the namespace to use for DAO objects. This value will be prepended to the
+        /// DAO class name to obtain the fully-qualified class name. If not specified, no namespace is prepended.
+        /// </value>
         public static string DAONamespace
         {
             get { return daoNamespace; }
             set { daoNamespace = value; }
         }
 
+        /// <summary>
+        /// Constructs a new domain object set as a NewObject.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain object to create. If no namespace is set on the factory, this should be the
+        /// fully qualified name of the domain class name.
+        /// </param>
+        /// <returns>
+        /// Instance of the specified domain object with the NewObject attribute set to true.
+        /// </returns>
         public static Domain Create(string domainName)
         {
             return Create(domainName, true);
         }
 
+        /// <summary>
+        /// Constructs a new domain object whose new flag is specified.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain object to create. If no namespace is set on the factory, this should be the
+        /// fully qualified name of the domain class name.
+        /// </param>
+        /// <param name="newObject">
+        /// true if the newly constructed domain object is to be set as a new object.
+        /// </param>
+        /// <returns>
+        /// An instance of the specified domain object.
+        /// </returns>
         public static Domain Create(string domainName, bool newObject)
         {
             return Instance.CreateDomain(domainName, newObject);
         }
             
 
+        /// <summary>
+        /// Private constructor to keep others from instantiating this class.
+        /// </summary>
         private DomainFactory()
         {
         }
 
+        /// <summary>
+        /// Constructs a new domain object whose new flag is specified.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain object to create. If no namespace is set on the factory, this should be the
+        /// fully qualified name of the domain class name.
+        /// </param>
+        /// <param name="newObject">
+        /// true if the newly constructed domain object is to be set as a new object.
+        /// </param>
+        /// <returns>
+        /// An instance of the specified domain object.
+        /// </returns>
         private Domain CreateDomain(string domainName, bool newObject)
         {
             Domain domain = null;
 
-            // Assert the configuration.
+            // Build the class names we want
+            string domainClassName = null;
             if (domainNamespace == null)
             {
-                throw new Exception("Domain Namespace is not configured for DomainFactory");
+                domainClassName = domainName;
             }
+            else
+            {
+                domainClassName = String.Format("{0}.{1}", domainNamespace, domainName);
+            }
+            
+            string daoClassName = null;
             if (daoNamespace == null)
             {
-                throw new Exception("DAO Namespace is not configured for DomainFactory");
+                daoClassName = String.Format("{0}DAO", domainName);
             }
-
-            // Build the class names we want
-            string domainClassName = String.Format("{0}.{1}", domainNamespace, domainName);
-            string daoClassName = String.Format("{0}.{1}DAO", daoNamespace, domainName);
+            else
+            {
+                // Remove any name qualification from the domain before prepending
+                // the dao namespace.
+                int lastDot = domainName.LastIndexOf('.');
+                if (lastDot >= 0)
+                {
+                    domainName = domainName.Substring(lastDot + 1);
+                }
+                daoClassName = String.Format("{0}.{1}DAO", daoNamespace, domainName);
+            }
 
             // Get the type for the domain class (throw exception if fails)
             Type domainType = Type.GetType(domainClassName, true);
