@@ -1,10 +1,106 @@
 
 using System;
+using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 
 namespace DomainCore
 {
+    public class DomainFactory
+    {
+        private static DomainFactory instance = null;
+
+        private static string domainNamespace = null;
+
+        private static string daoNamespace = null;
+
+        public static DomainFactory Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new DomainFactory();
+                }
+
+                return instance;
+            }
+        }
+
+        public static string DomainNamespace 
+        {
+            get { return domainNamespace; }
+            set { domainNamespace = value; }
+        }
+
+        public static string DAONamespace
+        {
+            get { return daoNamespace; }
+            set { daoNamespace = value; }
+        }
+
+        public static Domain Create(string domainName)
+        {
+            return Create(domainName, true);
+        }
+
+        public static Domain Create(string domainName, bool newObject)
+        {
+            return Instance.CreateDomain(domainName, newObject);
+        }
+            
+
+        private DomainFactory()
+        {
+        }
+
+        private Domain CreateDomain(string domainName, bool newObject)
+        {
+            Domain domain = null;
+
+            // Assert the configuration.
+            if (domainNamespace == null)
+            {
+                throw new Exception("Domain Namespace is not configured for DomainFactory");
+            }
+            if (daoNamespace == null)
+            {
+                throw new Exception("DAO Namespace is not configured for DomainFactory");
+            }
+
+            // Build the class names we want
+            string domainClassName = String.Format("{0}.{1}", domainNamespace, domainName);
+            string daoClassName = String.Format("{0}.{1}DAO", daoNamespace, domainName);
+
+            // Get the type for the domain class (throw exception if fails)
+            Type domainType = Type.GetType(domainClassName, true);
+
+            // Get the type of the DAO class (throw exception if fails)
+            Type daoType = Type.GetType(daoClassName, true);
+
+            // Get and invoke the constructor for the DAO object
+            Type[] daoConstructorTypes = {};
+            ConstructorInfo ci = daoType.GetConstructor(daoConstructorTypes);
+            object[] args = {};
+            
+            DomainDAO dao = ci.Invoke(args) as DomainDAO;
+
+            // Get and invoke the constructor for the domain object
+            Type[] domainConstructorTypes = { typeof(DomainDAO) };
+            ci = domainType.GetConstructor(domainConstructorTypes);
+            object[] args1 = { dao };
+
+            domain = ci.Invoke(args1) as Domain;
+
+            if (newObject)
+            {
+                // Must be marked as a new object.
+                domain.NewObject = newObject;
+            }
+
+            return domain;
+        }
+    }
     
     public interface DomainDAO 
     {
