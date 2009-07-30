@@ -44,12 +44,12 @@ namespace DAOCore
     {
         public class BaseDomainDAO : DomainDAO
         {
-            public string DeleteSQL(object obj) { return "DeleteSQL"; }
-            public string InsertSQL(object obj) { return "InsertSQL"; }
-            public string UpdateSQL(object obj) { return "UpdateSQL"; }
-            public void Delete(object obj) { }
-            public void Insert(object obj) { }
-            public void Update(object obj) { }
+            public string DeleteSQL(Domain obj) { return "DeleteSQL"; }
+            public string InsertSQL(Domain obj) { return "InsertSQL"; }
+            public string UpdateSQL(Domain obj) { return "UpdateSQL"; }
+            public void Delete(Domain obj) { }
+            public void Insert(Domain obj) { }
+            public void Update(Domain obj) { }
         }
         
         public class DeleteDomainDAO : BaseDomainDAO {}

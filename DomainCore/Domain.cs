@@ -207,12 +207,12 @@ namespace DomainCore
     
     public interface DomainDAO 
     {
-        string DeleteSQL(object obj);
-        string InsertSQL(object obj);
-        string UpdateSQL(object obj);
-        void Delete(object obj);
-        void Insert(object obj);
-        void Update(object obj);
+        string DeleteSQL(Domain obj);
+        string InsertSQL(Domain obj);
+        string UpdateSQL(Domain obj);
+        void Delete(Domain obj);
+        void Insert(Domain obj);
+        void Update(Domain obj);
     }
 
     public interface Attribute
