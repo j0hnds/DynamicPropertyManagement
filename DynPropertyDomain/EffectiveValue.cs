@@ -16,14 +16,14 @@ namespace DynPropertyDomain
 
             static EffectiveValueDAO()
             {
-                ATTR_COL_MAPPINGS["Id"] = "DYN_VALUE_ID";
-                ATTR_COL_MAPPINGS["EffectiveId"] = "DYN_EFFECTIVE_ID";
-                ATTR_COL_MAPPINGS["RawCriteria"] = "CRITERIA";
-                ATTR_COL_MAPPINGS["Value"] = "PROP_VALUE";
+                ATTR_COL_MAPPINGS["Id"] = "DYN_EFFECTIVE_ID";
+                ATTR_COL_MAPPINGS["AssignId"] = "DYN_ASSIGN_ID";
+                ATTR_COL_MAPPINGS["EffectiveStartDate"] = "EFF_START_DT";
+                ATTR_COL_MAPPINGS["EffectiveEndDate"] = "EFF_END_DT";
             }
             
             public EffectiveValueDAO() : 
-                base("DYN_VALUE", ATTR_COL_MAPPINGS)
+                base("DYN_EFFECTIVE", ATTR_COL_MAPPINGS)
             {
             }
         }

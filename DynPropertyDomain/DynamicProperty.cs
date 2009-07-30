@@ -17,13 +17,14 @@ namespace DynPropertyDomain
             static DynamicPropertyDAO()
             {
                 ATTR_COL_MAPPINGS["Id"] = "DYN_VALUE_ID";
-                ATTR_COL_MAPPINGS["EffectiveId"] = "DYN_EFFECTIVE_ID";
-                ATTR_COL_MAPPINGS["RawCriteria"] = "CRITERIA";
-                ATTR_COL_MAPPINGS["Value"] = "PROP_VALUE";
+                ATTR_COL_MAPPINGS["ApplicationId"] = "APPLICATION_ID";
+                ATTR_COL_MAPPINGS["PropertyId"] = "DYN_PROPERTY_ID";
+                ATTR_COL_MAPPINGS["Qualifier"] = "QUALIFIER";
+                ATTR_COL_MAPPINGS["DefaultValue"] = "DFLT_VALUE";
             }
             
             public DynamicPropertyDAO() : 
-                base("DYN_VALUE", ATTR_COL_MAPPINGS)
+                base("DYN_ASSIGN", ATTR_COL_MAPPINGS)
             {
             }
         }
