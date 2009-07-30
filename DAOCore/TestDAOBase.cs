@@ -9,14 +9,14 @@ namespace DAOCore
     
     
     [TestFixture]
-    public class TestDAO
+    public class TestDataSource
     {
-        private DAOBase cut;
+        private DataSource cut;
         
         [SetUp]
         public void SetUp()
         {
-            cut = new DAOBase();
+            cut = DataSource.Instance;
         }
         [TearDown]
         public void TearDown()
@@ -26,16 +26,24 @@ namespace DAOCore
         [Test]
         public void TestGoodConnection()
         {
-            IDbConnection conn = cut.GetConnection("localhost", "online_logging", "siehd", "jordan123");
-            conn.Close();
+            cut.Host = "localhost";
+            cut.DBName = "online_logging";
+            cut.UserID = "siehd";
+            cut.Password = "jordan123";
+            IDbConnection conn = cut.Connection;
+            cut.Close();
         }
         [Test]
         public void TestBadConnection()
         {
+            cut.Host = "localhost";
+            cut.DBName = "online_logging";
+            cut.UserID = "djs";
+            cut.Password = "joe";
             IDbConnection conn = null;
             try
             {
-                conn = cut.GetConnection("localhost", "online_logging", "djs", "joe");
+                conn = cut.Connection;
                 Assert.Fail("Should have thrown an exception");
             }
             catch (MySqlException e)
@@ -44,10 +52,7 @@ namespace DAOCore
             }
             finally
             {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                cut.Close();
             }
         }
     }

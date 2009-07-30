@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F971351D-4CE7-4ED8-979B-695FC4F4BC49}</ProjectGuid>
+    <ProjectGuid>{CA1F74DF-FAD5-47CA-B8C2-1F77926B41D6}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>DAOCore</AssemblyName>
+    <AssemblyName>DynPropertyDomain</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,31 +35,33 @@
     <Reference Include="nunit.framework">
       <Package>nunit-2.4</Package>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="MySql.Data, Version=5.2.1.0, Culture=neutral, PublicKeyToken=20449f9ba87f7ae2">
-      <Package>mysql-connector-net</Package>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAOUtils.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="TestDAOUtils.cs" />
-    <Compile Include="DAOBase.cs" />
-    <Compile Include="TestDAOBase.cs" />
-    <Compile Include="BuilderBase.cs" />
-    <Compile Include="InsertBuilder.cs" />
-    <Compile Include="DeleteBuilder.cs" />
-    <Compile Include="UpdateBuilder.cs" />
-    <Compile Include="TestDeleteBuilder.cs" />
-    <Compile Include="BaseBuilderTest.cs" />
-    <Compile Include="TestInsertBuilder.cs" />
-    <Compile Include="TestUpdateBuilder.cs" />
-    <Compile Include="DataSource.cs" />
+    <Compile Include="DataType.cs" />
+    <Compile Include="PropertyDefinition.cs" />
+    <Compile Include="Form.cs" />
+    <Compile Include="ValueCriteria.cs" />
+    <Compile Include="EffectiveValue.cs" />
+    <Compile Include="DynamicProperty.cs" />
+    <Compile Include="TestValueCriteria.cs" />
+    <Compile Include="BaseDomainTest.cs" />
+    <Compile Include="TestEffectiveValue.cs" />
+    <Compile Include="TestDynamicProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainCore\DomainCore.csproj">
       <Project>{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}</Project>
       <Name>DomainCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CronUtils\CronUtils.csproj">
+      <Project>{924287B6-61A5-42C3-BB98-38E746C82ECD}</Project>
+      <Name>CronUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAOCore\DAOCore.csproj">
+      <Project>{F971351D-4CE7-4ED8-979B-695FC4F4BC49}</Project>
+      <Name>DAOCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

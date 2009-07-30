@@ -222,6 +222,7 @@ namespace DomainCore
         bool Dirty { get; set; }
         bool Id { get; }
         bool Populating { get; }
+        bool Empty { get; }
     }
 
     public interface Relationship

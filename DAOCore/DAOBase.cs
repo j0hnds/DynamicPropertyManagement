@@ -1,7 +1,9 @@
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
+using DomainCore;
 
 namespace DAOCore
 {
@@ -9,96 +11,93 @@ namespace DAOCore
     /// This class is responsible for providing data access objects for the
     /// dynamic property application.
     /// </summary>
-    public class DAOBase
+    public class DAOBase : DomainDAO
     {
-        private const string CONNECTION_TEMPLATE = "Server={0};Database={1};User ID={2};Password={3};Pooling=false";
+//        private string tableName;
+//        private Dictionary<string,string> mappings;
+        private InsertBuilder insertBuilder;
+        private UpdateBuilder updateBuilder;
+        private DeleteBuilder deleteBuilder;
 
-        // The current DB connection
-        private IDbConnection conn;
-
-        // The host name of the DB server
-        private string host;
-
-        // The name of the data base
-        private string dbName;
-
-        // The userID of the data base
-        private string userId;
-
-        // The password of the user
-        private string password;
-        
-        public DAOBase()
+        public DAOBase(string tableName, Dictionary<string,string> mappings)
         {
+//            this.tableName = tableName;
+//            this.mappings = mappings;
+
+            insertBuilder = new InsertBuilder(tableName, mappings);
+            updateBuilder = new UpdateBuilder(tableName, mappings);
+            deleteBuilder = new DeleteBuilder(tableName, mappings);
+        }
+
+        private IDbConnection Connection
+        {
+            get { return DataSource.Instance.Connection; }
+        }
+
+        private void CloseConnection()
+        {
+            DataSource.Instance.Close();
+        }
+
+        #region DomainDAO implementation
+        public string DeleteSQL (Domain obj)
+        {
+            return deleteBuilder.Build(obj);
         }
         
-        /// <summary>
-        /// Returns the connection associated with this data access object. Acts
-        /// as a factory method in that - until the connection is closed - it will
-        /// always return the same connection.
-        /// </summary>
-        /// <param name="host">
-        /// The name of the host for the data base.
-        /// </param>
-        /// <param name="dbName">
-        /// The name of the data base on the host.
-        /// </param>
-        /// <param name="userId">
-        /// A valid user ID for the data base.
-        /// </param>
-        /// <param name="password">
-        /// The password for the valid user id.
-        /// </param>
-        /// <returns>
-        /// A connection to the data base.
-        /// </returns>
-        public IDbConnection GetConnection(string host, string dbName, string userId, string password)
+        public string InsertSQL (Domain obj)
         {
-            this.host = host;
-            this.dbName = dbName;
-            this.userId = userId;
-            this.password = password;
-
-            return GetConnection();
+            return insertBuilder.Build(obj);
         }
-
-        /// <summary>
-        /// Returns a connection to the data base. Uses the values from previous call to 
-        /// GetConnection(host, dbName, userId, password).
-        /// </summary>
-        /// <returns>
-        /// A connection to the data base.
-        /// </returns>
-        public IDbConnection GetConnection()
+        
+        public string UpdateSQL (Domain obj)
         {
-            if (host == null || dbName == null || userId == null || password == null)
-            {
-                throw new InvalidOperationException("Connection string parameters have not been set.");
-            }
-            
-            if (conn == null)
-            {
-                string connectionString = String.Format(CONNECTION_TEMPLATE, host, dbName, userId, password);
-    
-                conn = new MySqlConnection(connectionString);
-    
-                conn.Open();
-            }
-            return conn;
+            return updateBuilder.Build(obj);
         }
-
-        /// <summary>
-        /// Closes the currently open connection (if any) and nulls out the member
-        /// connection.
-        /// </summary>
-        public void Close()
+        public void Delete (Domain obj)
         {
-            if (conn != null)
+            IDbCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = DeleteSQL(obj);
+
+            int numRows = cmd.ExecuteNonQuery();
+            if (numRows <= 0)
             {
-                conn.Close();
-                conn = null;
+                throw new Exception("Should have deleted at least one row");
             }
+
+            CloseConnection();
         }
+        
+        public void Insert (Domain obj)
+        {
+            IDbCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = InsertSQL(obj);
+
+            int numRows = cmd.ExecuteNonQuery();
+            if (numRows <= 0)
+            {
+                throw new Exception("Should have inserted at least one row");
+            }
+
+            CloseConnection();
+        }
+        
+        public void Update (Domain obj)
+        {
+            IDbCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = UpdateSQL(obj);
+
+            int numRows = cmd.ExecuteNonQuery();
+            if (numRows <= 0)
+            {
+                throw new Exception("Should have updated at least one row");
+            }
+
+            CloseConnection();
+        }
+        #endregion
+
+        
         
     }
 }

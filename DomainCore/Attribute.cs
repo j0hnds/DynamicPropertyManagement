@@ -66,6 +66,32 @@ namespace DomainCore
         }
 
         public virtual object Value { get; set; }
+
+        public virtual bool Empty 
+        {
+            get { return false; }
+        }
+    }
+
+    public class DateTimeAttribute : BaseAttribute
+    {
+        private DateTime attrValue;
+
+        public DateTimeAttribute(Domain domain, string name) :
+            base(domain, name, false)
+        {
+        }
+
+        override public object Value
+        {
+            get { return attrValue; }
+            set
+            {
+                attrValue = (DateTime) value;
+                Dirty = true;
+            }
+        }
+
     }
 
     public class LongAttribute : BaseAttribute
@@ -76,7 +102,7 @@ namespace DomainCore
             base(domain, name, id)
         {
         }
-
+        
         override public object Value
         {
             get { return attrValue; }
@@ -114,6 +140,14 @@ namespace DomainCore
             
         }
 
+        public override bool Empty 
+        {
+            get 
+            { 
+                return attrValue == null || attrValue.Length == 0; 
+            }
+        }
+        
         override public object Value
         {
             get { return attrValue; }
