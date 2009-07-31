@@ -1,5 +1,6 @@
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using DomainCore;
 using DAOCore;
@@ -23,8 +24,47 @@ namespace DynPropertyDomain
             }
             
             public EffectiveValueDAO() : 
-                base("DYN_EFFECTIVE", ATTR_COL_MAPPINGS)
+                base("EffectiveValue", "DYN_EFFECTIVE", ATTR_COL_MAPPINGS)
             {
+            }
+            public override Domain GetObject (object id)
+            {
+                IDbCommand cmd = Connection.CreateCommand();
+                cmd.CommandText = String.Format("SELECT * FROM DYN_EFFECTIVE WHERE DYN_EFFECTIVE_ID = {0}", DAOUtils.ConvertValue(id));
+
+                IDataReader reader = cmd.ExecuteReader();
+                if (! reader.Read())
+                {
+                    throw new Exception("Unable to find specified effective value");
+                }
+
+                Domain domain = PopulateDomain(reader);
+
+                reader.Close();
+                CloseConnection();
+
+                return domain;
+            }
+            
+            public override List<Domain> Get (params object[] argsRest)
+            {
+                List<Domain> dataTypes = new List<Domain>();
+                
+                IDbCommand cmd = Connection.CreateCommand();
+                cmd.CommandText = "SELECT * FROM DYN_EFFECTIVE";
+
+                IDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Domain domain = PopulateDomain(reader);
+
+                    dataTypes.Add(domain);
+                }
+
+                reader.Close();
+                CloseConnection();
+
+                return dataTypes;
             }
         }
     }

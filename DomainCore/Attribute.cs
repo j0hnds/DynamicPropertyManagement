@@ -87,7 +87,7 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
-                attrValue = (DateTime) value;
+                attrValue = (value == null) ? DateTime.MinValue : (DateTime) value;
                 Dirty = true;
             }
         }

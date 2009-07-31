@@ -82,6 +82,21 @@ namespace DomainCore
         }
 
         /// <summary>
+        /// Returns the DAO for the specified domain name.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain for which the DAO is to be returned.
+        /// </param>
+        /// <returns>
+        /// Reference to the DAO. An exception is thrown if there is a problem
+        /// finding the DAO.
+        /// </returns>
+        public static DomainDAO GetDAO(string domainName)
+        {
+            return Instance.GetDomainDAO(domainName);
+        }
+
+        /// <summary>
         /// Constructs a new domain object set as a NewObject.
         /// </summary>
         /// <param name="domainName">
@@ -154,6 +169,39 @@ namespace DomainCore
                 domainClassName += String.Format(",{0}", domainAssembly);
             }
             
+            // Get the type for the domain class (throw exception if fails)
+            Type domainType = Type.GetType(domainClassName, true);
+
+            DomainDAO dao = GetDomainDAO(domainName);
+
+            // Get and invoke the constructor for the domain object
+            Type[] domainConstructorTypes = { typeof(DomainDAO) };
+            ConstructorInfo ci = domainType.GetConstructor(domainConstructorTypes);
+            object[] args1 = { dao };
+
+            domain = ci.Invoke(args1) as Domain;
+
+            if (newObject)
+            {
+                // Must be marked as a new object.
+                domain.NewObject = newObject;
+            }
+
+            return domain;
+        }
+
+        /// <summary>
+        /// Returns the DAO for the specified domain name.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain for which the DAO is to be returned.
+        /// </param>
+        /// <returns>
+        /// Reference to the DAO. An exception is thrown if there is a problem
+        /// finding the DAO.
+        /// </returns>
+        private DomainDAO GetDomainDAO(string domainName)
+        {
             string daoClassName = null;
             if (daoNamespace == null)
             {
@@ -174,10 +222,7 @@ namespace DomainCore
             {
                 daoClassName += String.Format(",{0}", daoAssembly);
             }
-
-            // Get the type for the domain class (throw exception if fails)
-            Type domainType = Type.GetType(domainClassName, true);
-
+            
             // Get the type of the DAO class (throw exception if fails)
             Type daoType = Type.GetType(daoClassName, true);
 
@@ -186,22 +231,7 @@ namespace DomainCore
             ConstructorInfo ci = daoType.GetConstructor(daoConstructorTypes);
             object[] args = {};
             
-            DomainDAO dao = ci.Invoke(args) as DomainDAO;
-
-            // Get and invoke the constructor for the domain object
-            Type[] domainConstructorTypes = { typeof(DomainDAO) };
-            ci = domainType.GetConstructor(domainConstructorTypes);
-            object[] args1 = { dao };
-
-            domain = ci.Invoke(args1) as Domain;
-
-            if (newObject)
-            {
-                // Must be marked as a new object.
-                domain.NewObject = newObject;
-            }
-
-            return domain;
+            return ci.Invoke(args) as DomainDAO;
         }
     }
     
@@ -213,6 +243,8 @@ namespace DomainCore
         void Delete(Domain obj);
         void Insert(Domain obj);
         void Update(Domain obj);
+        Domain GetObject(object id);
+        List<Domain> Get(params object[] argsRest);
     }
 
     public interface Attribute
@@ -253,6 +285,11 @@ namespace DomainCore
             relationships = new Dictionary<string,Relationship>(2);
         }
 
+        public DomainDAO DAO
+        {
+            get { return this.dao; }
+        }
+
         public List<Domain> GetCollection(string name)
         {
             return GetRelationship(name).CollectedObjects;
@@ -261,6 +298,14 @@ namespace DomainCore
         public Relationship GetRelationship(string name)
         {
             return relationships[name];
+        }
+
+        public void Clean()
+        {
+            foreach (Attribute attr in attributes.Values)
+            {
+                attr.Dirty = false;
+            }
         }
 
         public bool NewObject
@@ -298,14 +343,6 @@ namespace DomainCore
         public void SetValue(string attrName, object value)
         {
             attributes[attrName].Value = value;
-        }
-
-        public void Clean()
-        {
-            foreach (KeyValuePair<string, Attribute> kvp in attributes)
-            {
-                kvp.Value.Dirty = false;
-            }
         }
 
         private bool AttributesDirty

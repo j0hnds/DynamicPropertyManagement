@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Data;
 using MySql.Data.MySqlClient;
 using DomainCore;
@@ -13,30 +14,49 @@ namespace DAOCore
     /// </summary>
     public class DAOBase : DomainDAO
     {
-//        private string tableName;
-//        private Dictionary<string,string> mappings;
         private InsertBuilder insertBuilder;
         private UpdateBuilder updateBuilder;
         private DeleteBuilder deleteBuilder;
+        private bool populateId = true;
+        private string domainName;
+        private Dictionary<string,string> mappings;
 
-        public DAOBase(string tableName, Dictionary<string,string> mappings)
+        public DAOBase(string domainName, string tableName, Dictionary<string,string> mappings)
         {
-//            this.tableName = tableName;
-//            this.mappings = mappings;
-
+            this.domainName = domainName;
+            this.mappings = mappings;
             insertBuilder = new InsertBuilder(tableName, mappings);
             updateBuilder = new UpdateBuilder(tableName, mappings);
             deleteBuilder = new DeleteBuilder(tableName, mappings);
         }
 
-        private IDbConnection Connection
+        protected IDbConnection Connection
         {
             get { return DataSource.Instance.Connection; }
         }
 
-        private void CloseConnection()
+        protected void CloseConnection()
         {
             DataSource.Instance.Close();
+        }
+
+        protected virtual bool PopulateId
+        {
+            get { return populateId; }
+            set { populateId = value; }
+        }
+
+        protected virtual Domain PopulateDomain(IDataReader reader)
+        {
+            Domain domain = DomainFactory.Create(domainName, false);
+            foreach (KeyValuePair<string,DomainCore.Attribute> kvp in domain.Attributes)
+            {
+                object val = reader[mappings[kvp.Key]];
+
+                kvp.Value.Value = (val is DBNull) ? null : val;
+            }
+
+            return domain;
         }
 
         #region DomainDAO implementation
@@ -70,6 +90,7 @@ namespace DAOCore
         
         public void Insert (Domain obj)
         {
+            Console.Out.WriteLine("Starting the Insert");
             IDbCommand cmd = Connection.CreateCommand();
             cmd.CommandText = InsertSQL(obj);
 
@@ -79,7 +100,23 @@ namespace DAOCore
                 throw new Exception("Should have inserted at least one row");
             }
 
+            if (PopulateId)
+            {
+                Console.Out.WriteLine("Populating ID");
+                // Now, get the ID of the newly inserted record
+                cmd.CommandText = "SELECT last_insert_id()";
+                object oid = cmd.ExecuteScalar();
+                long id = Convert.ToInt64(oid);
+                Console.Out.WriteLine(String.Format("ID assigned to domain = {0}", oid));
+                obj.IdAttribute.Value = id;
+                Console.Out.WriteLine("Done Populating ID");
+            }
+
+            obj.Clean();
+            obj.NewObject = false;
+
             CloseConnection();
+            Console.Out.WriteLine("Done with Insert");
         }
         
         public void Update (Domain obj)
@@ -94,6 +131,16 @@ namespace DAOCore
             }
 
             CloseConnection();
+        }
+
+        public virtual List<Domain> Get (params object[] argsRest)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual Domain GetObject (object id)
+        {
+            throw new System.NotImplementedException();
         }
         #endregion
 

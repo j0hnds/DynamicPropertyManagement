@@ -1,5 +1,6 @@
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using DomainCore;
 using CronUtils;
@@ -22,8 +23,47 @@ namespace DynPropertyDomain
             }
             
             public ValueCriteriaDAO() : 
-                base("DYN_VALUE", ATTR_COL_MAPPINGS)
+                base("ValueCriteria", "DYN_VALUE", ATTR_COL_MAPPINGS)
             {
+            }
+            public override Domain GetObject (object id)
+            {
+                IDbCommand cmd = Connection.CreateCommand();
+                cmd.CommandText = String.Format("SELECT * FROM DYN_VALUE WHERE DYN_VALUE_ID = {0}", DAOUtils.ConvertValue(id));
+
+                IDataReader reader = cmd.ExecuteReader();
+                if (! reader.Read())
+                {
+                    throw new Exception("Unable to find specified effective value");
+                }
+
+                Domain domain = PopulateDomain(reader);
+
+                reader.Close();
+                CloseConnection();
+
+                return domain;
+            }
+            
+            public override List<Domain> Get (params object[] argsRest)
+            {
+                List<Domain> dataTypes = new List<Domain>();
+                
+                IDbCommand cmd = Connection.CreateCommand();
+                cmd.CommandText = "SELECT * FROM DYN_VALUE";
+
+                IDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Domain domain = PopulateDomain(reader);
+
+                    dataTypes.Add(domain);
+                }
+
+                reader.Close();
+                CloseConnection();
+
+                return dataTypes;
             }
         }
     }

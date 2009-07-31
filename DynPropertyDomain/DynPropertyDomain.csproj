@@ -35,6 +35,7 @@
     <Reference Include="nunit.framework">
       <Package>nunit-2.4</Package>
     </Reference>
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
@@ -49,6 +50,11 @@
     <Compile Include="BaseDomainTest.cs" />
     <Compile Include="TestEffectiveValue.cs" />
     <Compile Include="TestDynamicProperty.cs" />
+    <Compile Include="TestDataTypeDAO.cs" />
+    <Compile Include="TestApplicationDAO.cs" />
+    <Compile Include="TestFormDAO.cs" />
+    <Compile Include="TestPropertyDefinitionDAO.cs" />
+    <Compile Include="TestDynamicPropertyDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainCore\DomainCore.csproj">

@@ -57,6 +57,18 @@ namespace DAOCore
                 {
                     value = QuoteString((string) value_to_convert);
                 }
+                else if (value_to_convert is DateTime)
+                {
+                    DateTime dt = (DateTime) value_to_convert;
+                    if (dt == DateTime.MinValue || dt == DateTime.MaxValue)
+                    {
+                        value = NULL_VALUE;
+                    }
+                    else
+                    {
+                        value = QuoteString(dt.ToString("yyyy/MM/dd HH:mm:ss"));
+                    }
+                }
                 else
                 {
                     value = value_to_convert.ToString();

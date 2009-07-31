@@ -44,12 +44,25 @@ namespace DAOCore
     {
         public class BaseDomainDAO : DomainDAO
         {
+            #region DomainDAO implementation
             public string DeleteSQL(Domain obj) { return "DeleteSQL"; }
             public string InsertSQL(Domain obj) { return "InsertSQL"; }
             public string UpdateSQL(Domain obj) { return "UpdateSQL"; }
             public void Delete(Domain obj) { }
             public void Insert(Domain obj) { }
             public void Update(Domain obj) { }
+
+            public System.Collections.Generic.List<Domain> Get (params object[] argsRest)
+            {
+                return null;
+            }
+
+            public Domain GetObject (object id)
+            {
+                return null;
+            }
+            #endregion
+
         }
         
         public class DeleteDomainDAO : BaseDomainDAO {}

@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace DomainCore
@@ -30,12 +31,22 @@ namespace DomainCore
     {
         public class TDomainDAO : DomainDAO
         {
+            #region DomainDAO implementation
             public string DeleteSQL(Domain obj) { return "DeleteSQL"; }
             public string InsertSQL(Domain obj) { return "InsertSQL"; }
             public string UpdateSQL(Domain obj) { return "UpdateSQL"; }
             public void Delete(Domain obj) { }
             public void Insert(Domain obj) { }
             public void Update(Domain obj) { }
+
+            public List<Domain> Get (params object[] argsRest) { return null; }
+
+            public Domain GetObject (object id)
+            {
+                return null;
+            }
+            #endregion
+
         }
     }
     
