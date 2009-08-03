@@ -41,34 +41,5 @@ public partial class MainWindow: Gtk.Window
             
     }
 
-//    public void OnADifferentEvent (object o, Gtk.ButtonPressEventArgs args)
-//    {
-//        Console.Out.WriteLine("Button press event");
-//        if (args.Event.Button == 3)
-//        {
-//            int y = (int) args.Event.Y;
-//            int x = (int)args.Event.X;
-//            uint time = args.Event.Time;
-//            TreePath path = null;
-//            tvApplications.GetPathAtPos(x,y, out path);
-//            if (path != null)
-//            {
-//                Console.Out.WriteLine("Hello, world");
-//            }
-//            args.RetVal = 1;
-//        }
-//                
-//    }
-
-//    protected virtual void on_cursor_changed_tvApplications (object sender, System.EventArgs e)
-//    {
-//        Console.Out.WriteLine("Cursor Changed");
-//    }
-
-//    protected virtual void OnButtonPressApplications (object o, Gtk.ButtonPressEventArgs args)
-//    {
-//        args.RetVal = true;
-//        Console.Out.WriteLine("OnButtonPress");
-//    }
 
 }
