@@ -54,6 +54,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Configuration" />
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
+      <Package>log4net-1.2</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -67,11 +70,19 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DataSourceConfig.cs" />
+    <Compile Include="LoginDlg.cs" />
+    <Compile Include="gtk-gui\PropertyManager.LoginDlg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="PropertyManager.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAOCore\DAOCore.csproj">
+      <Project>{F971351D-4CE7-4ED8-979B-695FC4F4BC49}</Project>
+      <Name>DAOCore</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -69,6 +69,22 @@ namespace DAOCore
             set { password = value; }
         }
 
+        public void TestConnection()
+        {
+            try
+            {
+                IDbConnection conn = Connection;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                Close();
+            }
+        }
+
         public IDbConnection Connection
         {
             get

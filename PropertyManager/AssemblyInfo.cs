@@ -1,6 +1,12 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+// Configure log4net using the .config file
+[assembly: log4net.Config.XmlConfigurator(Watch=true)]
+// This will cause log4net to look for a configuration file
+// called *.exe.config in the application base directory.
+// The config file will be watched for changes.
+
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 

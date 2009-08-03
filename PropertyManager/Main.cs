@@ -1,6 +1,7 @@
 using System;
 using Gtk;
 using System.Configuration;
+using log4net;
 
 namespace PropertyManager
 {
@@ -8,16 +9,20 @@ namespace PropertyManager
     {
         public static void Main (string[] args)
         {
-            Console.WriteLine("From Main");
-            Console.WriteLine(ConfigurationManager.AppSettings["Message"]);
+            ILog log = LogManager.GetLogger(typeof(MainClass));
             DataSourceConfig dsc = ConfigurationManager.GetSection("local-machine") as DataSourceConfig;
-            Console.WriteLine(String.Format("Host = {0}, DB Name = {1}",
+            log.DebugFormat("Host = {0}, DB Name = {1}",
                                             dsc.HostName,
-                                            dsc.DBName));
+                                            dsc.DBName);
             Application.Init ();
             MainWindow win = new MainWindow ();
-            win.Show ();
-            Application.Run ();
+            LoginDlg dlg = new LoginDlg();
+            if (dlg.DoModal())
+            {
+                win.Show ();
+                Application.Run ();
+            }
+                
         }
     }
 }
