@@ -88,14 +88,29 @@ namespace DynPropertyDomain
             }
         }
     }
+    
     public class Application : Domain
     {
+        private const string NAME_ATTR = "Name";
+        private const string ID_ATTR = "Id";
         
         public Application(DomainDAO dao) : 
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new StringAttribute(this, "Name", false);
+            new LongAttribute(this, ID_ATTR, true);
+            new StringAttribute(this, NAME_ATTR, false);
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public string Name
+        {
+            get { return (string) GetValue(NAME_ATTR); }
+            set { SetValue(NAME_ATTR, value); }
         }
     }
 }

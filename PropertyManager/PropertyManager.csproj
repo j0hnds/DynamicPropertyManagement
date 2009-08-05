@@ -81,6 +81,7 @@
     <Compile Include="LoginDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.LoginDlg.cs" />
     <Compile Include="MainTextViewControl.cs" />
+    <Compile Include="DomainRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -88,6 +89,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Templates\ApplicationSummary.st" />
+    <None Include="Templates\ApplicationLabel.st" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOCore\DAOCore.csproj">

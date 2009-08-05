@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DomainCore;
 using Gtk;
 using log4net;
-using Antlr.StringTemplate;
 using PropertyManager;
 
 public partial class MainWindow: Gtk.Window
@@ -54,7 +53,8 @@ public partial class MainWindow: Gtk.Window
         List<Domain> applications = dao.Get();
         foreach (Domain app in applications)
         {
-            string appName = (string) app.GetValue("Name");
+//            string appName = (string) app.GetValue("Name");
+            string appName = DomainRenderer.Render(app, "Label");
             store.AppendValues(appName, Convert.ToInt64(app.GetValue("Id")));
         }
             
@@ -70,19 +70,12 @@ public partial class MainWindow: Gtk.Window
         {
             // Something was selected; what was it?
             string name = (string) model.GetValue(iter, 0);
-            log.DebugFormat("Name = {0}", name);
             long id = (long) model.GetValue(iter, 1);
-            log.DebugFormat("Name = {0}", id);
-
+ 
             DomainDAO dao = DomainFactory.GetDAO("Application");
             Domain app = dao.GetObject(id);
 
-            StringTemplateGroup group = new StringTemplateGroup("myGroup", "/home/siehd/Projects/DynamicPropertyManagement/PropertyManager/Templates");
-            StringTemplate tpt = group.GetInstanceOf("ApplicationSummary");
-            tpt.SetAttribute("app", app.AttributeValues);
-            string summary = tpt.ToString();
-            log.DebugFormat("Populated Template: [{0}]", summary);
-            mainTextViewCtl.Render(summary);
+            mainTextViewCtl.Render(DomainRenderer.Render(app, "Summary"));
         }
     }
 

@@ -71,15 +71,49 @@ namespace DynPropertyDomain
     
     public class EffectiveValue : Domain
     {
+        private const string ID_ATTR = "Id";
+        private const string ASSIGNID_ATTR = "AssignId";
+        private const string EFFECTIVESTARTDATE_ATTR = "EffectiveStartDate";
+        private const string EFFECTIVEENDDATE_ATTR = "EffectiveEndDate";
+        private const string VALUECRITERIA_REL = "ValueCriteria";
         
         public EffectiveValue(DomainDAO dao) :
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new LongAttribute(this, "AssignId", false);
-            new DateTimeAttribute(this, "EffectiveStartDate");
-            new DateTimeAttribute(this, "EffectiveEndDate");
-            new CollectionRelationship(this, "ValueCriteria", "ValueCriteria", "EffectiveId");
+            new LongAttribute(this, ID_ATTR, true);
+            new LongAttribute(this, ASSIGNID_ATTR, false);
+            new DateTimeAttribute(this, EFFECTIVESTARTDATE_ATTR);
+            new DateTimeAttribute(this, EFFECTIVEENDDATE_ATTR);
+            new CollectionRelationship(this, VALUECRITERIA_REL, "ValueCriteria", "EffectiveId");
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public long AssignId
+        {
+            get { return (long) GetValue(ASSIGNID_ATTR); }
+            set { SetValue(ASSIGNID_ATTR, value); }
+        }
+
+        public DateTime EffectiveStartDate
+        {
+            get { return (DateTime) GetValue(EFFECTIVESTARTDATE_ATTR); }
+            set { SetValue(EFFECTIVESTARTDATE_ATTR, value); }
+        }
+
+        public DateTime EffectiveEndDate
+        {
+            get { return (DateTime) GetValue(EFFECTIVEENDDATE_ATTR); }
+            set { SetValue(EFFECTIVEENDDATE_ATTR, value); }
+        }
+
+        public List<Domain> ValueCriteria
+        {
+            get { return GetCollection(VALUECRITERIA_REL); }
         }
 
         public bool IsEffectiveAt(DateTime dateTime)

@@ -46,6 +46,6 @@ Global
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		version = 0.1
-		StartupItem = CronUtils\CronUtils.csproj
+		StartupItem = PropertyManager\PropertyManager.csproj
 	EndGlobalSection
 EndGlobal

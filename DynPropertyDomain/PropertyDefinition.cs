@@ -72,15 +72,50 @@ namespace DynPropertyDomain
     }
     public class PropertyDefinition : Domain
     {
+        private const string ID_ATTR = "Id";
+        private const string CATEGORY_ATTR = "Category";
+        private const string NAME_ATTR = "Name";
+        private const string DATATYPE_ATTR = "DataType";
+        private const string DESCRIPTION_ATTR = "Description";
         
         public PropertyDefinition(DomainDAO dao) :
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new StringAttribute(this, "Category", false);
-            new StringAttribute(this, "Name", false);
-            new LongAttribute(this, "DataType", false);
-            new StringAttribute(this, "Description", false);
+            new LongAttribute(this, ID_ATTR, true);
+            new StringAttribute(this, CATEGORY_ATTR, false);
+            new StringAttribute(this, NAME_ATTR, false);
+            new LongAttribute(this, DATATYPE_ATTR, false);
+            new StringAttribute(this, DESCRIPTION_ATTR, false);
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public string Category
+        {
+            get { return (string) GetValue(CATEGORY_ATTR); }
+            set { SetValue(CATEGORY_ATTR, value); }
+        }
+
+        public string Name
+        {
+            get { return (string) GetValue(NAME_ATTR); }
+            set { SetValue(NAME_ATTR, value); }
+        }
+
+        public long DataType
+        {
+            get { return (long) GetValue(DATATYPE_ATTR); }
+            set { SetValue(DATATYPE_ATTR, value); }
+        }
+
+        public string Description
+        {
+            get { return (string) GetValue(DESCRIPTION_ATTR); }
+            set { SetValue(DESCRIPTION_ATTR, value); }
         }
     }
 }

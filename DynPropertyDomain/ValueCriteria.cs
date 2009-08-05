@@ -70,14 +70,42 @@ namespace DynPropertyDomain
     
     public class ValueCriteria : Domain
     {
+        private const string ID_ATTR = "Id";
+        private const string EFFECTIVEID_ATTR = "EffectiveId";
+        private const string VALUE_ATTR = "Value";
+        private const string RAWCRITERIA_ATTR = "RawCriteria";
         
         public ValueCriteria(DomainDAO dao) : 
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new LongAttribute(this, "EffectiveId", false);
-            new StringAttribute(this, "Value", false);
-            new StringAttribute(this, "RawCriteria", false);
+            new LongAttribute(this, ID_ATTR, true);
+            new LongAttribute(this, EFFECTIVEID_ATTR, false);
+            new StringAttribute(this, VALUE_ATTR, false);
+            new StringAttribute(this, RAWCRITERIA_ATTR, false);
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public long EffectiveId
+        {
+            get { return (long) GetValue(EFFECTIVEID_ATTR); }
+            set { SetValue(EFFECTIVEID_ATTR, value); }
+        }
+
+        public string Value
+        {
+            get { return (string) GetValue(VALUE_ATTR); }
+            set { SetValue(VALUE_ATTR, value); }
+        }
+
+        public string RawCriteria
+        {
+            get { return (string) GetValue(RAWCRITERIA_ATTR); }
+            set { SetValue(RAWCRITERIA_ATTR, value); }
         }
 
         public CronSpecification CronSpec

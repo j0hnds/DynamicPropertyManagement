@@ -178,20 +178,89 @@ namespace DynPropertyDomain
     
     public class DynamicProperty : Domain
     {
+        private const string ID_ATTR = "Id";
+        private const string APPLICATIONID_ATTR = "ApplicationId";
+        private const string APPLICATIONNAME_ATTR = "ApplicationName";
+        private const string PROPERTYID_ATTR = "PropertyId";
+        private const string CATEGORY_ATTR = "Category";
+        private const string PROPERTYNAME_ATTR = "PropertyName";
+        private const string DEFAULTVALUE_ATTR = "DefaultValue";
+        private const string PROPERTYTYPE_ATTR = "PropertyType";
+        private const string QUALIFIER_ATTR = "Qualifier";
+        private const string EFFECTIVEVALUES_REL = "EffectiveValues";
         
         public DynamicProperty(DomainDAO dao) :
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new LongAttribute(this, "ApplicationId", false);
-            new StringAttribute(this, "ApplicationName", false);
-            new LongAttribute(this, "PropertyId", false);
-            new StringAttribute(this, "Category", false);
-            new StringAttribute(this, "PropertyName", false);
-            new StringAttribute(this, "DefaultValue", false);
-            new StringAttribute(this, "PropertyType", false);
-            new StringAttribute(this, "Qualifier", false);
-            new CollectionRelationship(this, "EffectiveValues", "EffectiveValue", "AssignId");
+            new LongAttribute(this, ID_ATTR, true);
+            new LongAttribute(this, APPLICATIONID_ATTR, false);
+            new StringAttribute(this, APPLICATIONNAME_ATTR, false);
+            new LongAttribute(this, PROPERTYID_ATTR, false);
+            new StringAttribute(this, CATEGORY_ATTR, false);
+            new StringAttribute(this, PROPERTYNAME_ATTR, false);
+            new StringAttribute(this, DEFAULTVALUE_ATTR, false);
+            new StringAttribute(this, PROPERTYTYPE_ATTR, false);
+            new StringAttribute(this, QUALIFIER_ATTR, false);
+            new CollectionRelationship(this, EFFECTIVEVALUES_REL, "EffectiveValue", "AssignId");
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public long ApplicationId
+        {
+            get { return (long) GetValue(APPLICATIONID_ATTR); }
+            set { SetValue(APPLICATIONID_ATTR, value); }
+        }
+
+        public string ApplicationName
+        {
+            get { return (string) GetValue(APPLICATIONNAME_ATTR); }
+            set { SetValue(APPLICATIONNAME_ATTR, value); }
+        }
+
+        public long PropertyId
+        {
+            get { return (long) GetValue(PROPERTYID_ATTR); }
+            set { SetValue(PROPERTYID_ATTR, value); }
+        }
+
+        public string Category
+        {
+            get { return (string) GetValue(CATEGORY_ATTR); }
+            set { SetValue(CATEGORY_ATTR, value); }
+        }
+
+        public string PropertyName
+        {
+            get { return (string) GetValue(PROPERTYNAME_ATTR); }
+            set { SetValue(PROPERTYNAME_ATTR, value); }
+        }
+        
+        public string DefaultValue
+        {
+            get { return (string) GetValue(DEFAULTVALUE_ATTR); }
+            set { SetValue(DEFAULTVALUE_ATTR, value); }
+        }
+
+        public string PropertyType
+        {
+            get { return (string) GetValue(PROPERTYTYPE_ATTR); }
+            set { SetValue(PROPERTYTYPE_ATTR, value); }
+        }
+
+        public string Qualifier
+        {
+            get { return (string) GetValue(QUALIFIER_ATTR); }
+            set { SetValue(QUALIFIER_ATTR, value); }
+        }
+
+        public List<Domain> EffectiveValues
+        {
+            get { return GetCollection(EFFECTIVEVALUES_REL); }
         }
 
         public object GetEffectiveValue()

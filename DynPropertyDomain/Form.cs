@@ -70,12 +70,26 @@ namespace DynPropertyDomain
     }
     public class Form : Domain
     {
+        private const string ID_ATTR = "Id";
+        private const string DESCRIPTION_ATTR = "Description";
         
         public Form(DomainDAO dao) :
             base(dao)
         {
-            new LongAttribute(this, "Id", true);
-            new StringAttribute(this, "Description", false);
+            new LongAttribute(this, ID_ATTR, true);
+            new StringAttribute(this, DESCRIPTION_ATTR, false);
+        }
+
+        public long Id
+        {
+            get { return (long) GetValue(ID_ATTR); }
+            set { SetValue(ID_ATTR, value); }
+        }
+
+        public string Description
+        {
+            get { return (string) GetValue(DESCRIPTION_ATTR); }
+            set { SetValue(DESCRIPTION_ATTR, value); }
         }
     }
 }
