@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project name="DynamicPropertyManagement" default="build" basedir=".">
+  <description>
+    The master build for the Dynamic Property Management application
+  </description>
+
+  <target name="build" depends="PropertyManager.build" />
+
+  <target 
+     name="PropertyManager.build"
+     depends="DomainCore.build,DAOCore.build,DynPropertyDomain.build">
+    <nant 
+       buildfile="PropertyManager/PropertyManager.build" 
+       inheritall="false" />
+  </target>
+
+  <target
+     name="DomainCore.build">
+    <nant
+       buildfile="DomainCore/DomainCore.build"
+       inheritall="false" />
+  </target>
+
+  <target
+     name="DAOCore.build"
+     depends="DomainCore.build">
+    <nant
+       buildfile="DAOCore/DAOCore.build"
+       inheritall="false" />
+  </target>
+
+  <target
+     name="DynPropertyDomain.build"
+     depends="DomainCore.build,DAOCore.build,CronUtils.build">
+    <nant
+       buildfile="DynPropertyDomain/DynPropertyDomain.build"
+       inheritall="false" />
+  </target>
+
+  <target
+     name="CronUtils.build">
+    <nant
+       buildfile="CronUtils/CronUtils.build"
+       inheritall="false" />
+  </target>
+
+  <target
+     name="clean"
+     depends="DomainCore.clean,DAOCore.clean,CronUtils.clean,DynPropertyDomain.clean,PropertyManager.clean" />
+
+  <target name="DomainCore.clean">
+    <nant
+       buildfile="DomainCore/DomainCore.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+  <target name="DAOCore.clean">
+    <nant
+       buildfile="DAOCore/DAOCore.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+  <target name="CronUtils.clean">
+    <nant
+       buildfile="CronUtils/CronUtils.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+  <target name="DynPropertyDomain.clean">
+    <nant
+       buildfile="DynPropertyDomain/DynPropertyDomain.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+  <target name="PropertyManager.clean">
+    <nant
+       buildfile="PropertyManager/PropertyManager.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+</project>

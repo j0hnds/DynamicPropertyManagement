@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="DomainCore" default="build" basedir=".">
+  <description>
+    Nant build file for DomainCore library.
+  </description>
+
+  <property name="debug" value="true" overwrite="false" />
+  <property name="build.dir" value="bin" />
+  <property name="build.debug.dir" value="${build.dir}/Debug" />
+  <property name="lib.dir" value="../lib" />
+  <property name="output.name" value="${project::get-name()}.dll" />
+  <property name="output.path" value="${build.debug.dir}/${output.name}" />
+  <property name="lib.path" value="${lib.dir}/${output.path}" />
+
+  <target 
+     name="clean"
+     description="Remove all generated files">
+    <delete dir="${build.debug.dir}" failonerror="false" />
+    <delete file="${lib.path}" failonerror="false" />
+  </target>
+
+  <target
+     name="init"
+     description="Initializes the environment">
+    <mkdir dir="${build.debug.dir}" failonerror="false" />
+    <mkdir dir="${lib.dir}" failonerror="false" />
+  </target>
+
+  <target 
+     name="build"
+     description="Compiles and packages the library"
+     depends="init">
+    <csc 
+       target="library"
+       output="${output.path}"
+       debug="${debug}">
+      <sources>
+	<include name="**/*.cs" />
+	<exclude name="**/Test*.cs" />
+      </sources>
+    </csc>
+
+    <copy file="${output.path}" todir="${lib.dir}" />
+  </target>
+
+</project>

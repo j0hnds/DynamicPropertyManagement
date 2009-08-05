@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="PropertyManager" default="build" basedir=".">
+  <description>
+    Nant build file for the PropertyManager executable
+  </description>
+
+  <property name="debug" value="true" overwrite="false" />
+  <property name="build.dir" value="bin" />
+  <property name="build.debug.dir" value="${build.dir}/Debug" />
+  <property name="lib.dir" value="../lib" />
+  <property name="output.name" value="${project::get-name()}.exe" />
+  <property name="output.path" value="${build.debug.dir}/${output.name}" />
+  <property name="lib.path" value="${lib.dir}/${output.path}" />
+  <property name="config.file.name" value="${output.name}.config" />
+
+  <target 
+     name="clean"
+     description="Remove all generated files">
+    <delete dir="${build.debug.dir}" failonerror="false" />
+    <delete file="${lib.path}" failonerror="false" />
+  </target>
+
+  <target
+     name="init"
+     description="Initializes the environment">
+    <mkdir dir="${build.debug.dir}" failonerror="false" />
+    <mkdir dir="${lib.dir}" failonerror="false" />
+  </target>
+
+  <target 
+     name="build"
+     description="Compiles and packages the executable"
+     depends="init">
+    <csc 
+       target="exe"
+       output="${output.path}"
+       debug="${debug}">
+      <sources>
+	<include name="**/*.cs" />
+	<exclude name="**/Test*.cs" />
+      </sources>
+      <references>
+	<lib>
+	  <include name="${lib.dir}" />
+	</lib>
+	<include name="DomainCore.dll" />
+	<include name="DAOCore.dll" />
+	<include name="System.Data.dll" />
+	<include name="System.Configuration.dll" />
+	<include name="Mono.Posix.dll" />
+      </references>
+      <pkg-references>
+	<package name="gtk-sharp-2.0" />
+	<package name="nvelocity" />
+	<package name="log4net" />
+      </pkg-references>
+    </csc>
+
+    <copy file="${output.path}" todir="${lib.dir}" />
+    <copy file="${config.file.name}" todir="${lib.dir}" />
+    <copy todir="${lib.dir}">
+      <fileset>
+	<include name="Templates/*.vm" />
+      </fileset>
+    </copy>
+  </target>
+</project>
