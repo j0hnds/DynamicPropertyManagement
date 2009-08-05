@@ -212,5 +212,6 @@ public partial class MainWindow {
         this.Show();
         this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
         this.QuitAction.Activated += new System.EventHandler(this.on_file_quit);
+        this.tvApplications.CursorChanged += new System.EventHandler(this.ApplicationCursorChanged);
     }
 }

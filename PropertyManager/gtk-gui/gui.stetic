@@ -74,6 +74,7 @@
                         <property name="Events">PointerMotionMask, ButtonPressMask, ButtonReleaseMask, StructureMask</property>
                         <property name="EnableSearch">False</property>
                         <property name="HeadersVisible">False</property>
+                        <signal name="CursorChanged" handler="ApplicationCursorChanged" />
                       </widget>
                     </child>
                   </widget>

@@ -57,6 +57,14 @@
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
       <Package>log4net-1.2</Package>
     </Reference>
+    <Reference Include="antlr.runtime, Version=2.7.7.3, Culture=neutral, PublicKeyToken=d7701e059243744f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\StringTemplate.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -78,6 +86,7 @@
     <None Include="PropertyManager.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\ApplicationSummary.st" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOCore\DAOCore.csproj">
@@ -88,5 +97,12 @@
       <Project>{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}</Project>
       <Name>DomainCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DynPropertyDomain\DynPropertyDomain.csproj">
+      <Project>{CA1F74DF-FAD5-47CA-B8C2-1F77926B41D6}</Project>
+      <Name>DynPropertyDomain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\" />
   </ItemGroup>
 </Project>

@@ -31,7 +31,7 @@ namespace PropertyManager
 
             log.Debug("Done configuring Domain Factory");
         }
-        
+
         public static void Main (string[] args)
         {
             ILog log = LogManager.GetLogger(typeof(MainClass));
@@ -47,6 +47,7 @@ namespace PropertyManager
             LoginDlg dlg = new LoginDlg();
             if (dlg.DoModal())
             {
+                win.SetUpApplication();
                 win.Show ();
                 Application.Run ();
             }

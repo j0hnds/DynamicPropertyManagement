@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DomainCore
@@ -494,6 +495,19 @@ namespace DomainCore
             }
 
             return sql.ToString();
+        }
+
+        public Hashtable AttributeValues
+        {
+            get
+            {
+                Hashtable ht = new Hashtable();
+                foreach (KeyValuePair<string,Attribute> kvp in attributes)
+                {
+                    ht[kvp.Key] = kvp.Value.Value;
+                }
+                return ht;
+            }
         }
 
     }

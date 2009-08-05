@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
+using DomainCore;
 using Gtk;
+using log4net;
+using Antlr.StringTemplate;
 
 public partial class MainWindow: Gtk.Window
 {   
@@ -7,6 +11,10 @@ public partial class MainWindow: Gtk.Window
     {
         Build ();
 
+    }
+
+    public void SetUpApplication()
+    {
         SetUpApplicationTree();
     }
     
@@ -23,7 +31,7 @@ public partial class MainWindow: Gtk.Window
 
     protected void SetUpApplicationTree()
     {
-        ListStore store = new ListStore(GLib.GType.String, GLib.GType.Object);
+        ListStore store = new ListStore(GLib.GType.String, GLib.GType.Int64);
         tvApplications.Model = store;
         
         // Set up the columns
@@ -34,11 +42,40 @@ public partial class MainWindow: Gtk.Window
         tc.AddAttribute(cell, "text", 0);
         tvApplications.AppendColumn(tc);
 
-        // Now, just add a few fake items
-        store.AppendValues("Item 1", "Item 1");
-        store.AppendValues("Item 2", "Item 2");
-        Console.Out.WriteLine("Setup the control");
+        // Get the DAO for the applications
+        DomainDAO dao = DomainFactory.GetDAO("Application");
+        List<Domain> applications = dao.Get();
+        foreach (Domain app in applications)
+        {
+            string appName = (string) app.GetValue("Name");
+            store.AppendValues(appName, Convert.ToInt64(app.GetValue("Id")));
+        }
             
+    }
+
+    protected virtual void ApplicationCursorChanged (object sender, System.EventArgs e)
+    {
+        ILog log = LogManager.GetLogger(typeof(MainWindow));
+        // Get the selected item from the tree view
+        TreeModel model = null;
+        TreeIter iter;
+        
+        if (tvApplications.Selection.GetSelected(out model, out iter))
+        {
+            // Something was selected; what was it?
+            string name = (string) model.GetValue(iter, 0);
+            log.Debug(String.Format("Name = {0}", name));
+            long id = (long) model.GetValue(iter, 1);
+            log.Debug(String.Format("Name = {0}", id));
+
+            DomainDAO dao = DomainFactory.GetDAO("Application");
+            Domain app = dao.GetObject(id);
+
+            StringTemplateGroup group = new StringTemplateGroup("myGroup", "/home/siehd/Projects/DynamicPropertyManagement/PropertyManager/Templates");
+            StringTemplate tpt = group.GetInstanceOf("ApplicationSummary");
+            tpt.SetAttribute("app", app.AttributeValues);
+            Console.WriteLine(tpt);
+        }
     }
 
 
