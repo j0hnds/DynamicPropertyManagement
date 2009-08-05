@@ -6,6 +6,7 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="../../ControlWrappers/bin/Debug/ControlWrappers.dll" />
     <widget-library name="../bin/Debug/PropertyManager.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="640 480">
@@ -174,10 +175,14 @@
                 <property name="CanFocus">True</property>
                 <property name="ShadowType">In</property>
                 <child>
-                  <widget class="Gtk.TextView" id="textview1">
+                  <widget class="Gtk.TextView" id="mainTextView">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
+                    <property name="Editable">False</property>
                     <property name="Text" translatable="yes" />
+                    <property name="WrapMode">Word</property>
+                    <property name="LeftMargin">5</property>
+                    <property name="RightMargin">5</property>
                   </widget>
                 </child>
               </widget>
@@ -318,6 +323,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="Visibility">False</property>
                 <property name="InvisibleChar">●</property>
                 <signal name="Changed" handler="PasswordChanged" />
@@ -343,6 +349,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="InvisibleChar">●</property>
                 <signal name="Changed" handler="UserNameChanged" />
               </widget>
@@ -398,6 +405,7 @@ Production</property>
             <property name="MemberName" />
             <property name="Sensitive">False</property>
             <property name="CanDefault">True</property>
+            <property name="HasDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>

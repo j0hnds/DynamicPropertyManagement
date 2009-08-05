@@ -4,13 +4,20 @@ using DomainCore;
 using Gtk;
 using log4net;
 using Antlr.StringTemplate;
+using PropertyManager;
 
 public partial class MainWindow: Gtk.Window
-{   
+{
+    private MainTextViewControl mainTextViewCtl;
+    private ILog log;
+    
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
         Build ();
 
+        log = LogManager.GetLogger(typeof(MainWindow));
+        
+        mainTextViewCtl = new MainTextViewControl(mainTextView);
     }
 
     public void SetUpApplication()
@@ -55,7 +62,6 @@ public partial class MainWindow: Gtk.Window
 
     protected virtual void ApplicationCursorChanged (object sender, System.EventArgs e)
     {
-        ILog log = LogManager.GetLogger(typeof(MainWindow));
         // Get the selected item from the tree view
         TreeModel model = null;
         TreeIter iter;
@@ -64,9 +70,9 @@ public partial class MainWindow: Gtk.Window
         {
             // Something was selected; what was it?
             string name = (string) model.GetValue(iter, 0);
-            log.Debug(String.Format("Name = {0}", name));
+            log.DebugFormat("Name = {0}", name);
             long id = (long) model.GetValue(iter, 1);
-            log.Debug(String.Format("Name = {0}", id));
+            log.DebugFormat("Name = {0}", id);
 
             DomainDAO dao = DomainFactory.GetDAO("Application");
             Domain app = dao.GetObject(id);
@@ -74,7 +80,9 @@ public partial class MainWindow: Gtk.Window
             StringTemplateGroup group = new StringTemplateGroup("myGroup", "/home/siehd/Projects/DynamicPropertyManagement/PropertyManager/Templates");
             StringTemplate tpt = group.GetInstanceOf("ApplicationSummary");
             tpt.SetAttribute("app", app.AttributeValues);
-            Console.WriteLine(tpt);
+            string summary = tpt.ToString();
+            log.DebugFormat("Populated Template: [{0}]", summary);
+            mainTextViewCtl.Render(summary);
         }
     }
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOCore", "DAOCore\DAOCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynPropertyDomain", "DynPropertyDomain\DynPropertyDomain.csproj", "{CA1F74DF-FAD5-47CA-B8C2-1F77926B41D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlWrappers", "ControlWrappers\ControlWrappers.csproj", "{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{924287B6-61A5-42C3-BB98-38E746C82ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU

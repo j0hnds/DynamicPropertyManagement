@@ -80,6 +80,7 @@
     <Compile Include="DataSourceConfig.cs" />
     <Compile Include="LoginDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.LoginDlg.cs" />
+    <Compile Include="MainTextViewControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -100,6 +101,10 @@
     <ProjectReference Include="..\DynPropertyDomain\DynPropertyDomain.csproj">
       <Project>{CA1F74DF-FAD5-47CA-B8C2-1F77926B41D6}</Project>
       <Name>DynPropertyDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControlWrappers\ControlWrappers.csproj">
+      <Project>{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}</Project>
+      <Name>ControlWrappers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

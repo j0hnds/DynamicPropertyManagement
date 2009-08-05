@@ -100,6 +100,7 @@ namespace PropertyManager {
             this.txtPassword.CanFocus = true;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.IsEditable = true;
+            this.txtPassword.ActivatesDefault = true;
             this.txtPassword.Visibility = false;
             this.txtPassword.InvisibleChar = '●';
             this.table1.Add(this.txtPassword);
@@ -115,6 +116,7 @@ namespace PropertyManager {
             this.txtUserName.CanFocus = true;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.IsEditable = true;
+            this.txtUserName.ActivatesDefault = true;
             this.txtUserName.InvisibleChar = '●';
             this.table1.Add(this.txtUserName);
             Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.table1[this.txtUserName]));
@@ -164,6 +166,7 @@ namespace PropertyManager {
             }
             this.DefaultWidth = 270;
             this.DefaultHeight = 163;
+            this.buttonOk.HasDefault = true;
             this.Show();
             this.txtUserName.Changed += new System.EventHandler(this.UserNameChanged);
             this.txtPassword.Changed += new System.EventHandler(this.PasswordChanged);

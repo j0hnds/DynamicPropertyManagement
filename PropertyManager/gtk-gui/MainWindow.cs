@@ -52,7 +52,7 @@ public partial class MainWindow {
     
     private Gtk.ScrolledWindow scrolledwindow2;
     
-    private Gtk.TextView textview1;
+    private Gtk.TextView mainTextView;
     
     private Gtk.Statusbar statusbar1;
     
@@ -186,10 +186,14 @@ public partial class MainWindow {
         this.scrolledwindow2.Name = "scrolledwindow2";
         this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
         // Container child scrolledwindow2.Gtk.Container+ContainerChild
-        this.textview1 = new Gtk.TextView();
-        this.textview1.CanFocus = true;
-        this.textview1.Name = "textview1";
-        this.scrolledwindow2.Add(this.textview1);
+        this.mainTextView = new Gtk.TextView();
+        this.mainTextView.CanFocus = true;
+        this.mainTextView.Name = "mainTextView";
+        this.mainTextView.Editable = false;
+        this.mainTextView.WrapMode = ((Gtk.WrapMode)(2));
+        this.mainTextView.LeftMargin = 5;
+        this.mainTextView.RightMargin = 5;
+        this.scrolledwindow2.Add(this.mainTextView);
         this.hpaned1.Add(this.scrolledwindow2);
         this.vbox1.Add(this.hpaned1);
         Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned1]));

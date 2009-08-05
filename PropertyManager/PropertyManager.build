@@ -12,6 +12,8 @@
   <property name="output.path" value="${build.debug.dir}/${output.name}" />
   <property name="lib.path" value="${lib.dir}/${output.path}" />
   <property name="config.file.name" value="${output.name}.config" />
+  <property name="third.party.dir" value="/home/siehd/thirdparty" />
+  <property name="string.template.dir" value="${third.party.dir}/StringTemplate/net-2.0" />
 
   <target 
      name="clean"
@@ -25,6 +27,14 @@
      description="Initializes the environment">
     <mkdir dir="${build.debug.dir}" failonerror="false" />
     <mkdir dir="${lib.dir}" failonerror="false" />
+
+    <!-- Need to bring over the StringTemplate dll's -->
+    <copy todir="${lib.dir}">
+      <fileset basedir="${string.template.dir}">
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
+      </fileset>
+    </copy>
   </target>
 
   <target 
@@ -45,13 +55,15 @@
 	</lib>
 	<include name="DomainCore.dll" />
 	<include name="DAOCore.dll" />
+	<include name="ControlWrappers.dll" />
 	<include name="System.Data.dll" />
 	<include name="System.Configuration.dll" />
 	<include name="Mono.Posix.dll" />
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
       </references>
       <pkg-references>
 	<package name="gtk-sharp-2.0" />
-	<package name="nvelocity" />
 	<package name="log4net" />
       </pkg-references>
     </csc>

@@ -8,9 +8,16 @@
 
   <target 
      name="PropertyManager.build"
-     depends="DomainCore.build,DAOCore.build,DynPropertyDomain.build">
+     depends="DomainCore.build,DAOCore.build,DynPropertyDomain.build,ControlWrappers.build">
     <nant 
        buildfile="PropertyManager/PropertyManager.build" 
+       inheritall="false" />
+  </target>
+
+  <target
+     name="ControlWrappers.build">
+    <nant
+       buildfile="ControlWrappers/ControlWrappers.build"
        inheritall="false" />
   </target>
 
@@ -46,7 +53,7 @@
 
   <target
      name="clean"
-     depends="DomainCore.clean,DAOCore.clean,CronUtils.clean,DynPropertyDomain.clean,PropertyManager.clean" />
+     depends="DomainCore.clean,DAOCore.clean,CronUtils.clean,DynPropertyDomain.clean,PropertyManager.clean,ControlWrappers.clean" />
 
   <target name="DomainCore.clean">
     <nant
@@ -79,6 +86,13 @@
   <target name="PropertyManager.clean">
     <nant
        buildfile="PropertyManager/PropertyManager.build"
+       inheritall="false"
+       target="clean" />
+  </target>
+
+  <target name="ControlWrappers.clean">
+    <nant
+       buildfile="ControlWrappers/ControlWrappers.build"
        inheritall="false"
        target="clean" />
   </target>
