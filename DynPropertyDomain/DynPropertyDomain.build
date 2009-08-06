@@ -16,7 +16,11 @@
      name="clean"
      description="Remove all generated files">
     <delete dir="${build.debug.dir}" failonerror="false" />
-    <delete file="${lib.path}" failonerror="false" />
+    <delete failonerror="false">
+      <fileset basedir="${lib.dir}">
+	<include name="${output.name}" />
+      </fileset>
+    </delete>
   </target>
 
   <target
@@ -47,6 +51,9 @@
 	<include name="CronUtils.dll" />
 	<include name="System.Data.dll" />
       </references>
+      <pkg-references>
+	<package name="log4net" />
+      </pkg-references>
     </csc>
 
     <copy file="${output.path}" todir="${lib.dir}" />

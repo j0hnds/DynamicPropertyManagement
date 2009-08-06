@@ -16,7 +16,11 @@
      name="clean"
      description="Remove all generated files">
     <delete dir="${build.debug.dir}" failonerror="false" />
-    <delete file="${lib.path}" failonerror="false" />
+    <delete failonerror="false">
+      <fileset basedir="${lib.dir}">
+	<include name="${output.name}" />
+      </fileset>
+    </delete>
   </target>
 
   <target

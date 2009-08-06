@@ -19,7 +19,15 @@
      name="clean"
      description="Remove all generated files">
     <delete dir="${build.debug.dir}" failonerror="false" />
-    <delete file="${lib.path}" failonerror="false" />
+    <delete dir="${lib.dir}/Templates" failonerror="false" />
+    <delete failonerror="false">
+      <fileset basedir="${lib.dir}">
+	<include name="${output.name}" />
+	<include name="${config.file.name}" />
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
+      </fileset>
+    </delete>
   </target>
 
   <target
@@ -72,7 +80,7 @@
     <copy file="${config.file.name}" todir="${lib.dir}" />
     <copy todir="${lib.dir}">
       <fileset>
-	<include name="Templates/*.vm" />
+	<include name="Templates/*.stg" />
       </fileset>
     </copy>
   </target>
