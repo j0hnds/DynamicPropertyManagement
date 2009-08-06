@@ -1,0 +1,7 @@
+group BaseTemplates;
+
+// Tags the specified text
+tag_text(tag,text) ::= "{{<tag>}}<text>{{/}}"
+
+// Applies a "Caption" tag to the specified text.
+caption(text) ::= "<tag_text(tag=\"Caption\",text=(text))>"

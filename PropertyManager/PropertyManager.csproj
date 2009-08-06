@@ -90,6 +90,9 @@
     </None>
     <None Include="Templates\ApplicationSummary.st" />
     <None Include="Templates\ApplicationLabel.st" />
+    <None Include="Templates\Application.stg" />
+    <None Include="Templates\BaseTemplates.stg" />
+    <None Include="Templates\PropertyDefinition.stg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOCore\DAOCore.csproj">

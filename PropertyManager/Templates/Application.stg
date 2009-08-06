@@ -1,0 +1,10 @@
+group Application;
+
+Summary(domain) ::= <<
+You have selected an 'Application' item. These provide a way to name the applications to which dynamic properties can be assigned.
+
+<caption(text="DB ID:")> <domain.Id>
+<caption(text="Application:")> <domain.Name>
+>>
+
+Label(domain) ::= "<domain.Name>"

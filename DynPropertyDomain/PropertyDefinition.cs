@@ -53,7 +53,14 @@ namespace DynPropertyDomain
                 List<Domain> dataTypes = new List<Domain>();
                 
                 IDbCommand cmd = Connection.CreateCommand();
-                cmd.CommandText = "SELECT * FROM DYN_PROPERTY ORDER BY CATEGORY, NAME";
+                if (argsRest.Length == 0)
+                {
+                    cmd.CommandText = "SELECT * FROM DYN_PROPERTY ORDER BY CATEGORY, NAME";
+                }
+                else
+                {
+                    cmd.CommandText = string.Format("SELECT * FROM DYN_PROPERTY WHERE CATEGORY = '{0}' ORDER BY NAME", argsRest[0]);
+                }
 
                 IDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -116,6 +123,24 @@ namespace DynPropertyDomain
         {
             get { return (string) GetValue(DESCRIPTION_ATTR); }
             set { SetValue(DESCRIPTION_ATTR, value); }
+        }
+
+        public List<Domain> UsingApplications
+        {
+            get
+            {
+                DomainDAO dao = DomainFactory.GetDAO("Application");
+
+                return dao.Get(Id);
+            }
+        }
+
+        public List<Domain> PropertiesInCategory
+        {
+            get
+            {
+                return DAO.Get(Category);
+            }
         }
     }
 }

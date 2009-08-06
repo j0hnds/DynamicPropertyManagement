@@ -101,6 +101,12 @@ namespace DynPropertyDomain
             new StringAttribute(this, NAME_ATTR, false);
         }
 
+//        public object this[string name]
+//        {
+//            get { return GetValue(name); }
+//            set { SetValue(name, value); }
+//        }
+//
         public long Id
         {
             get { return (long) GetValue(ID_ATTR); }
