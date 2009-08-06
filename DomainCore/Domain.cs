@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace DomainCore
 {
+    public delegate void AttributeValueChangeHandler(string attributeName, object oldValue, object newValue);
+    
     /// <summary>
     /// Factory class to instantiate domain objects.
     /// </summary>

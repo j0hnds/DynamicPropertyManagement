@@ -21,6 +21,18 @@ namespace DomainCore
             }
         }
 
+        public event AttributeValueChangeHandler AttributeValueChanged;
+
+        protected void OnAttributeValueChanged(object oldValue, object newValue)
+        {
+            AttributeValueChangeHandler handler = AttributeValueChanged;
+
+            if (handler != null)
+            {
+                handler(name, oldValue, newValue);
+            }
+        }
+
         public static int BeginPopulation()
         {
             return populating++;
@@ -87,8 +99,11 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
+                object oldValue = attrValue;
+                object newValue = value;
                 attrValue = (value == null) ? DateTime.MinValue : (DateTime) value;
                 Dirty = true;
+                OnAttributeValueChanged(oldValue, newValue);
             }
         }
 
@@ -108,6 +123,8 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
+                object oldValue = attrValue;
+                object newerValue = value;
                 if (value == null)
                 {
                     // New value is null
@@ -115,6 +132,7 @@ namespace DomainCore
                     {
                         attrValue = 0L;
                         Dirty = true;
+                        OnAttributeValueChanged(oldValue, newerValue);
                     }
                 }
                 else
@@ -124,6 +142,7 @@ namespace DomainCore
                     {
                         attrValue = newValue;
                         Dirty = true;
+                        OnAttributeValueChanged(oldValue, newerValue);
                     }
                 }
             }
@@ -153,6 +172,9 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
+                object oldValue = attrValue;
+                object newValue = value;
+                
                 if (attrValue == null)
                 {
                     // Current value is null
@@ -160,6 +182,7 @@ namespace DomainCore
                     {
                         attrValue = value.ToString();
                         Dirty = true;
+                        OnAttributeValueChanged(oldValue, newValue);
                     }
                 }
                 else
@@ -177,6 +200,7 @@ namespace DomainCore
                         }
                         
                         Dirty = true;
+                        OnAttributeValueChanged(oldValue, newValue);
                     }
                 }
             }

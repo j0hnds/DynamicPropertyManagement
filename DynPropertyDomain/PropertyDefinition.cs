@@ -4,6 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using DomainCore;
 using DAOCore;
+using log4net;
 
 namespace DynPropertyDomain
 {
@@ -84,15 +85,29 @@ namespace DynPropertyDomain
         private const string NAME_ATTR = "Name";
         private const string DATATYPE_ATTR = "DataType";
         private const string DESCRIPTION_ATTR = "Description";
+
+        private List<Domain> usedByApplications;
+        private List<Domain> propertiesInCategory;
+
+        private ILog log;
         
         public PropertyDefinition(DomainDAO dao) :
             base(dao)
         {
-            new LongAttribute(this, ID_ATTR, true);
-            new StringAttribute(this, CATEGORY_ATTR, false);
-            new StringAttribute(this, NAME_ATTR, false);
-            new LongAttribute(this, DATATYPE_ATTR, false);
-            new StringAttribute(this, DESCRIPTION_ATTR, false);
+            log = LogManager.GetLogger(typeof(PropertyDefinition));
+            
+            new LongAttribute(this, ID_ATTR, true).AttributeValueChanged += HandleAttributeChange;
+            new StringAttribute(this, CATEGORY_ATTR, false).AttributeValueChanged += HandleAttributeChange;
+            new StringAttribute(this, NAME_ATTR, false).AttributeValueChanged += HandleAttributeChange;
+            new LongAttribute(this, DATATYPE_ATTR, false).AttributeValueChanged += HandleAttributeChange;
+            new StringAttribute(this, DESCRIPTION_ATTR, false).AttributeValueChanged += HandleAttributeChange;
+        }
+
+        private void HandleAttributeChange(string name, object oldValue, object newValue)
+        {
+            log.Debug("Clearing cached collections");
+            usedByApplications = null;
+            propertiesInCategory = null;
         }
 
         public long Id
@@ -129,9 +144,14 @@ namespace DynPropertyDomain
         {
             get
             {
-                DomainDAO dao = DomainFactory.GetDAO("Application");
+                if (usedByApplications == null)
+                {
+                    DomainDAO dao = DomainFactory.GetDAO("Application");
 
-                return dao.Get(Id);
+                    usedByApplications = dao.Get(Id);
+                }
+
+                return usedByApplications;
             }
         }
 
@@ -139,7 +159,12 @@ namespace DynPropertyDomain
         {
             get
             {
-                return DAO.Get(Category);
+                if (propertiesInCategory == null)
+                {
+                    propertiesInCategory = DAO.Get(Category);
+                }
+
+                return propertiesInCategory;
             }
         }
     }
