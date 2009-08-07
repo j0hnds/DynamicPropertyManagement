@@ -4,6 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using DomainCore;
 using DAOCore;
+using log4net;
 
 namespace DynPropertyDomain
 {
@@ -93,12 +94,24 @@ namespace DynPropertyDomain
     {
         private const string NAME_ATTR = "Name";
         private const string ID_ATTR = "Id";
+
+        private List<Domain> dynamicProperties;
+
+        protected ILog log;
         
         public Application(DomainDAO dao) : 
             base(dao)
         {
-            new LongAttribute(this, ID_ATTR, true);
-            new StringAttribute(this, NAME_ATTR, false);
+            log = LogManager.GetLogger(typeof(Application));
+            
+            new LongAttribute(this, ID_ATTR, true).AttributeValueChanged += HandleAttributeChange;
+            new StringAttribute(this, NAME_ATTR, false).AttributeValueChanged += HandleAttributeChange;
+        }
+
+        private void HandleAttributeChange(string name, object oldValue, object newValue)
+        {
+            log.Debug("Clearing cached collections");
+            dynamicProperties = null;
         }
 
 //        public object this[string name]
@@ -117,6 +130,20 @@ namespace DynPropertyDomain
         {
             get { return (string) GetValue(NAME_ATTR); }
             set { SetValue(NAME_ATTR, value); }
+        }
+
+        public List<Domain> DynamicProperties
+        {
+            get
+            {
+                if (dynamicProperties == null)
+                {
+                    DomainDAO dao = DomainFactory.GetDAO("DynamicProperty");
+                    dynamicProperties = dao.Get(Name);
+                }
+
+                return dynamicProperties;
+            }
         }
     }
 }

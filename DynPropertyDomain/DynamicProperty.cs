@@ -263,6 +263,11 @@ namespace DynPropertyDomain
             get { return GetCollection(EFFECTIVEVALUES_REL); }
         }
 
+        public object CurrentEffectiveValue
+        {
+            get { return GetEffectiveValue(); }
+        }
+
         public object GetEffectiveValue()
         {
             return GetEffectiveValue(DateTime.Now);

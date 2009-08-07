@@ -5,6 +5,14 @@ You have selected an 'Application' item. These provide a way to name the applica
 
 <caption(text="DB ID:")> <domain.Id>
 <caption(text="Application:")> <domain.Name>
+
+<if(domain.DynamicProperties)>
+The following are the list of properties currently assigned to this application (values as of this moment).
+
+  <domain.DynamicProperties:{it | * <it.Category>.<it.PropertyName> = <it.CurrentEffectiveValue><\n>}>
+<else>
+There are no dynamic properties assigned for this application.
+<endif>
 >>
 
 Label(domain) ::= "<domain.Name>"
