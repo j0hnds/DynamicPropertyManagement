@@ -23,7 +23,7 @@ namespace DynPropertyDomain
                 ATTR_COL_MAPPINGS["Qualifier"] = "QUALIFIER";
                 ATTR_COL_MAPPINGS["DefaultValue"] = "DFLT_VALUE";
             }
-            
+
             public DynamicPropertyDAO() : 
                 base("DynamicProperty", "DYN_ASSIGN", ATTR_COL_MAPPINGS)
             {
@@ -74,17 +74,6 @@ namespace DynPropertyDomain
                 return dynProps;
             }
 
-            private DateTime HandleNullDateTime(object obj)
-            {
-                DateTime dt = DateTime.MinValue;
-                if (obj != null)
-                {
-                    dt = (obj is DBNull) ? DateTime.MinValue : (DateTime) obj;
-                }
-
-                return dt;
-            }
-
             protected List<Domain> ParseResultSet(IDataReader reader)
             {
                 List<Domain> domains = new List<Domain>();
@@ -96,24 +85,24 @@ namespace DynPropertyDomain
 
                 while (reader.Read())
                 {
-                    long assignId = (int) reader["DYN_ASSIGN_ID"];
-                    long appId = (int) reader["DYN_APPLICATION_ID"];
-                    string appName = (string) reader["APPLICATION_NAME"];
-                    long propId = (int) reader["DYN_PROPERTY_ID"];
-                    string category = (string) reader["CATEGORY"];
-                    string qualifier = (string) reader["QUALIFIER"];
-                    string name = (string) reader["NAME"];
-                    string dataType = (string) reader["DESCRIPTION"];
-                    string defaultValue = (string) reader["DFLT_VALUE"];
-                    DateTime assignModDt = HandleNullDateTime(reader["ASSIGN_MOD_DT"]);
-                    object effectiveId = reader["DYN_EFFECTIVE_ID"];
-                    DateTime effStartDate = HandleNullDateTime(reader["EFF_START_DT"]);
-                    DateTime effEndDate = HandleNullDateTime(reader["EFF_END_DT"]);
-                    DateTime effectiveModDt = HandleNullDateTime(reader["EFFECTIVE_MOD_DT"]);
-                    object valueId = reader["DYN_VALUE_ID"];
-                    string criteria = (string) reader["CRITERIA"];
-                    string propValue = (string) reader["PROP_VALUE"];
-                    DateTime valueModDt = HandleNullDateTime(reader["VALUE_MOD_DT"]);
+                    long assignId = GetLong(reader, 0); // DYN_ASSIGN_ID
+                    long appId = GetLong(reader, 1); // DYN_APPLICATION_ID
+                    string appName = GetString(reader, 2); // APPLICATION_NAME
+                    long propId = GetLong(reader, 3); // DYN_PROPERTY_ID
+                    string category = GetString(reader, 4); // CATEGORY
+                    string qualifier = GetString(reader, 5); // QUALIFIER
+                    string name = GetString(reader, 6); // NAME
+                    string dataType = GetString(reader, 7); // DESCRIPTION
+                    string defaultValue = GetString(reader, 8); // DFLT_VALUE
+                    DateTime assignModDt = GetDateTime(reader, 9); // ASSIGN_MOD_DT
+                    long effectiveId = GetLong(reader, 10); // DYN_EFFECTIVE_ID
+                    DateTime effStartDate = GetDateTime(reader, 11); // EFF_START_DT
+                    DateTime effEndDate = GetDateTime(reader, 12); // EFF_END_DT
+                    DateTime effectiveModDt = GetDateTime(reader, 13); // EFFECTIVE_MOD_DT
+                    long valueId = GetLong(reader, 14); // DYN_VALUE_ID
+                    string criteria = GetString(reader, 15); // CRITERIA
+                    string propValue = GetString(reader, 16); // PROP_VALUE
+                    DateTime valueModDt = GetDateTime(reader, 17); // VALUE_MOD_DT
 
                     if (qualifier != null && qualifier.Length > 0)
                     {
@@ -143,7 +132,7 @@ namespace DynPropertyDomain
                         currentName = name;
                     }
 
-                    if (effectiveId != null)
+                    if (effectiveId >= 0)
                     {
                         if (currentEffective == null || 
                             (long) currentEffective.GetValue("Id") != Convert.ToInt64(effectiveId))
@@ -158,7 +147,7 @@ namespace DynPropertyDomain
                         }
                     }
 
-                    if (valueId != null)
+                    if (valueId >= 0)
                     {
                         Domain val = DomainFactory.Create("ValueCriteria", false);
                         val.SetValue("Id", valueId);

@@ -51,6 +51,7 @@
       </references>
       <pkg-references>
 	<package name="mysql-connector-net" />
+	<package name="log4net" />
       </pkg-references>
     </csc>
 

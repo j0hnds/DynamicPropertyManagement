@@ -1,10 +1,14 @@
 group Application;
 
 Summary(domain) ::= <<
-You have selected an 'Application' item. These provide a way to name the applications to which dynamic properties can be assigned.
+You have selected the '<domain.Name>' Application. Dynamic Properties are assigned to applications.
 
-<caption(text="DB ID:")> <domain.Id>
-<caption(text="Application:")> <domain.Name>
+<caption(text="Application Details")>
+
+  <caption(text="DB ID:")> <domain.Id>
+  <caption(text="Application:")> <domain.Name>
+
+<caption(text="Assigned Dynamic Properties")>
 
 <if(domain.DynamicProperties)>
 The following are the list of properties currently assigned to this application (values as of this moment).

@@ -8,14 +8,15 @@
 
   <target 
      name="PropertyManager.build"
-     depends="DomainCore.build,DAOCore.build,DynPropertyDomain.build,ControlWrappers.build">
+     depends="DomainCore.build,DAOCore.build,DynPropertyDomain.build,ControlWrappers.build,STUtils.build">
     <nant 
        buildfile="PropertyManager/PropertyManager.build" 
        inheritall="false" />
   </target>
 
   <target
-     name="ControlWrappers.build">
+     name="ControlWrappers.build"
+     depends="STUtils.build,DomainCore.build">
     <nant
        buildfile="ControlWrappers/ControlWrappers.build"
        inheritall="false" />
@@ -52,8 +53,15 @@
   </target>
 
   <target
+     name="STUtils.build">
+    <nant
+       buildfile="STUtils/STUtils.build"
+       inheritall="false" />
+  </target>
+
+  <target
      name="clean"
-     depends="DomainCore.clean,DAOCore.clean,CronUtils.clean,DynPropertyDomain.clean,PropertyManager.clean,ControlWrappers.clean" />
+     depends="DomainCore.clean,DAOCore.clean,CronUtils.clean,DynPropertyDomain.clean,PropertyManager.clean,ControlWrappers.clean,STUtils.clean" />
 
   <target name="DomainCore.clean">
     <nant
@@ -94,6 +102,14 @@
     <nant
        buildfile="ControlWrappers/ControlWrappers.build"
        inheritall="false"
+       target="clean" />
+  </target>
+
+  <target
+     name="STUtils.clean">
+    <nant
+       buildfile="STUtils/STUtils.build"
+       inheritall="false" 
        target="clean" />
   </target>
 

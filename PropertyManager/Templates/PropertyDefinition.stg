@@ -1,0 +1,41 @@
+group PropertyDefinition;
+
+// Boiler-plate macro for no applications message
+NoApplications() ::= "No applications currently use this property definition."
+
+// The main object summary
+Summary(domain) ::= <<
+You have selected a Property Definition. Property Definitions provide the basic definition of property information.
+        
+<caption(text="DB ID:")> <domain.Id>
+<caption(text="Category:")> <domain.Category>
+<caption(text="Name:")> <domain.Name>
+<caption(text="Data Type:")> <domain.DataType>
+<caption(text="Description:")> <domain.Description>
+
+<if(domain.NewObject)>
+<NoApplications()>
+<else>
+<if(domain.UsingApplications)>
+The following applications use this property definition:
+
+  <domain.UsingApplications:{it | * <it.Name></n>}>
+<else>
+<NoApplications()>
+<endif>
+<endif>
+>>
+
+// The summary to display for a category
+CategorySummary(domain) ::= <<
+You have selected Property Definition category '<domain.Category>'. Categories are used to group property definitions with similar purposes.
+        
+The following properties are assigned to this category:
+  <domain.PropertiesInCategory:{it | * <it.Name><\n>}>
+>>
+
+// The primary object label
+Label(domain) ::= "<domain.Name>"
+
+// The category label.
+CategoryLabel(domain) ::= "<domain.Category>"

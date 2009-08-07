@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}</ProjectGuid>
+    <ProjectGuid>{F41C37BE-1636-4F6A-BF6D-D3D422B6189D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>ControlWrappers</AssemblyName>
+    <AssemblyName>StringTemplateUtils</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,27 +29,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
-      <Package>log4net-1.2</Package>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseControl.cs" />
+    <Compile Include="MyClass.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BaseTextViewControl.cs" />
-    <Compile Include="BaseTreeControl.cs" />
-    <Compile Include="ListControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\DomainCore\DomainCore.csproj">
-      <Project>{264C7CA8-82C9-4CEC-B2DF-B0993C3FF663}</Project>
-      <Name>DomainCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\STUtils\STUtils.csproj">
-      <Project>{261E235C-0CCB-40B6-86ED-FADEADE0B122}</Project>
-      <Name>STUtils</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

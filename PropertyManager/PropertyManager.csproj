@@ -57,14 +57,6 @@
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
       <Package>log4net-1.2</Package>
     </Reference>
-    <Reference Include="antlr.runtime, Version=2.7.7.3, Culture=neutral, PublicKeyToken=d7701e059243744f">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\antlr.runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\StringTemplate.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -81,7 +73,7 @@
     <Compile Include="LoginDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.LoginDlg.cs" />
     <Compile Include="MainTextViewControl.cs" />
-    <Compile Include="DomainRenderer.cs" />
+    <Compile Include="ApplicationListControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -110,6 +102,10 @@
     <ProjectReference Include="..\ControlWrappers\ControlWrappers.csproj">
       <Project>{7DD1BAD1-FAD0-4A75-A390-E226F9E9C0D2}</Project>
       <Name>ControlWrappers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\STUtils\STUtils.csproj">
+      <Project>{261E235C-0CCB-40B6-86ED-FADEADE0B122}</Project>
+      <Name>STUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

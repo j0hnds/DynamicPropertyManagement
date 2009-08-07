@@ -14,8 +14,9 @@ namespace ControlWrappers
         
         public BaseControl(Widget widget)
         {
-            log = LogManager.GetLogger(typeof(BaseControl));
+            log = LogManager.GetLogger(this.GetType());
             this.widget = widget;
         }
+
     }
 }

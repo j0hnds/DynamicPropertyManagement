@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Data;
 using MySql.Data.MySqlClient;
 using DomainCore;
+using log4net;
 
 namespace DAOCore
 {
@@ -20,9 +21,11 @@ namespace DAOCore
         private bool populateId = true;
         private string domainName;
         private Dictionary<string,string> mappings;
+        protected ILog log;
 
         public DAOBase(string domainName, string tableName, Dictionary<string,string> mappings)
         {
+            log = LogManager.GetLogger(this.GetType().Name);
             this.domainName = domainName;
             this.mappings = mappings;
             insertBuilder = new InsertBuilder(tableName, mappings);
@@ -49,14 +52,52 @@ namespace DAOCore
         protected virtual Domain PopulateDomain(IDataReader reader)
         {
             Domain domain = DomainFactory.Create(domainName, false);
+            BaseAttribute.BeginPopulation();
             foreach (KeyValuePair<string,DomainCore.Attribute> kvp in domain.Attributes)
             {
                 object val = reader[mappings[kvp.Key]];
 
                 kvp.Value.Value = (val is DBNull) ? null : val;
             }
+            BaseAttribute.EndPopulation();
 
             return domain;
+        }
+
+        protected long GetLong(IDataReader reader, int index)
+        {
+            long val = -1L;
+
+            if (! reader.IsDBNull(index))
+            {
+                val = reader.GetInt64(index);
+            }
+
+            return val;
+        }
+
+        protected string GetString(IDataReader reader, int index)
+        {
+            string val = null;
+
+            if (! reader.IsDBNull(index))
+            {
+                val = reader.GetString(index);
+            }
+
+            return val;
+        }
+
+        protected DateTime GetDateTime(IDataReader reader, int index)
+        {
+            DateTime val = DateTime.MinValue;
+
+            if (! reader.IsDBNull(index))
+            {
+                val = reader.GetDateTime(index);
+            }
+
+            return val;
         }
 
         #region DomainDAO implementation

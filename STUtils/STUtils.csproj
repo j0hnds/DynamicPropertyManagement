@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F971351D-4CE7-4ED8-979B-695FC4F4BC49}</ProjectGuid>
+    <ProjectGuid>{261E235C-0CCB-40B6-86ED-FADEADE0B122}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>DAOCore</AssemblyName>
+    <AssemblyName>STUtils</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,35 +29,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.core">
-      <Package>nunit-2.4</Package>
+    <Reference Include="antlr.runtime, Version=2.7.7.3, Culture=neutral, PublicKeyToken=d7701e059243744f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\antlr.runtime.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <Package>nunit-2.4</Package>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="MySql.Data, Version=5.2.1.0, Culture=neutral, PublicKeyToken=20449f9ba87f7ae2">
-      <Package>mysql-connector-net</Package>
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\thirdparty\StringTemplate\net-2.0\StringTemplate.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
       <Package>log4net</Package>
     </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAOUtils.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="TestDAOUtils.cs" />
-    <Compile Include="DAOBase.cs" />
-    <Compile Include="TestDAOBase.cs" />
-    <Compile Include="BuilderBase.cs" />
-    <Compile Include="InsertBuilder.cs" />
-    <Compile Include="DeleteBuilder.cs" />
-    <Compile Include="UpdateBuilder.cs" />
-    <Compile Include="TestDeleteBuilder.cs" />
-    <Compile Include="BaseBuilderTest.cs" />
-    <Compile Include="TestInsertBuilder.cs" />
-    <Compile Include="TestUpdateBuilder.cs" />
-    <Compile Include="DataSource.cs" />
+    <Compile Include="DomainRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainCore\DomainCore.csproj">

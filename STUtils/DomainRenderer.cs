@@ -6,7 +6,7 @@ using DomainCore;
 using Antlr.StringTemplate;
 using log4net;
 
-namespace PropertyManager
+namespace STUtils
 {
     
     

@@ -23,6 +23,30 @@
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="on_file_quit" />
       </action>
+      <action id="AddAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Add</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_Add</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="AddItemAction" />
+      </action>
+      <action id="RemoveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Remove</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_Remove</property>
+        <property name="StockId">gtk-remove</property>
+        <signal name="Activated" handler="RemoveItemAction" />
+      </action>
+      <action id="PropertiesAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Properties</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_Properties</property>
+        <property name="StockId">gtk-properties</property>
+        <signal name="Activated" handler="ItemPropertyAction" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">640</property>
@@ -51,17 +75,37 @@
           </packing>
         </child>
         <child>
+          <widget class="Gtk.Toolbar" id="mainToolbar">
+            <property name="MemberName" />
+            <property name="ShowArrow">False</property>
+            <property name="ButtonStyle">Icons</property>
+            <property name="IconSize">LargeToolbar</property>
+            <node name="mainToolbar" type="Toolbar">
+              <node type="Toolitem" action="AddAction" />
+              <node type="Toolitem" action="RemoveAction" />
+              <node type="Toolitem" action="PropertiesAction" />
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HPaned" id="hpaned1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Position">250</property>
             <child>
-              <widget class="Gtk.Notebook" id="notebook1">
+              <widget class="Gtk.Notebook" id="nbSelections">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Events">PointerMotionMask, ButtonPressMask, ButtonReleaseMask, StructureMask, SubstructureMask</property>
-                <property name="CurrentPage">0</property>
+                <property name="CurrentPage">1</property>
                 <property name="Scrollable">True</property>
+                <signal name="SwitchPage" handler="SwitchPageAction" />
                 <child>
                   <widget class="Gtk.ScrolledWindow" id="scrolledwindow3">
                     <property name="MemberName" />
@@ -189,7 +233,7 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -205,7 +249,7 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">3</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>

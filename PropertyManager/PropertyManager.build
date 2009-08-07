@@ -24,8 +24,6 @@
       <fileset basedir="${lib.dir}">
 	<include name="${output.name}" />
 	<include name="${config.file.name}" />
-	<include name="antlr.runtime.dll" />
-	<include name="StringTemplate.dll" />
       </fileset>
     </delete>
   </target>
@@ -35,14 +33,6 @@
      description="Initializes the environment">
     <mkdir dir="${build.debug.dir}" failonerror="false" />
     <mkdir dir="${lib.dir}" failonerror="false" />
-
-    <!-- Need to bring over the StringTemplate dll's -->
-    <copy todir="${lib.dir}">
-      <fileset basedir="${string.template.dir}">
-	<include name="antlr.runtime.dll" />
-	<include name="StringTemplate.dll" />
-      </fileset>
-    </copy>
   </target>
 
   <target 
@@ -63,12 +53,11 @@
 	</lib>
 	<include name="DomainCore.dll" />
 	<include name="DAOCore.dll" />
+	<include name="STUtils.dll" />
 	<include name="ControlWrappers.dll" />
 	<include name="System.Data.dll" />
 	<include name="System.Configuration.dll" />
 	<include name="Mono.Posix.dll" />
-	<include name="antlr.runtime.dll" />
-	<include name="StringTemplate.dll" />
       </references>
       <pkg-references>
 	<package name="gtk-sharp-2.0" />

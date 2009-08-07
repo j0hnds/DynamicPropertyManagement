@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<project name="ControlWrappers" default="build" basedir=".">
+<project name="STUtils" default="build" basedir=".">
   <description>
-    Nant build file for the Control Wrappers library.
+    Nant build file for the STUtils library.
   </description>
 
   <property name="debug" value="true" overwrite="false" />
@@ -11,6 +11,9 @@
   <property name="output.name" value="${project::get-name()}.dll" />
   <property name="output.path" value="${build.debug.dir}/${output.name}" />
   <property name="lib.path" value="${lib.dir}/${output.path}" />
+  <property name="config.file.name" value="${output.name}.config" />
+  <property name="third.party.dir" value="/home/siehd/thirdparty" />
+  <property name="string.template.dir" value="${third.party.dir}/StringTemplate/net-2.0" />
 
   <target 
      name="clean"
@@ -19,6 +22,8 @@
     <delete failonerror="false">
       <fileset basedir="${lib.dir}">
 	<include name="${output.name}" />
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
       </fileset>
     </delete>
   </target>
@@ -28,11 +33,19 @@
      description="Initializes the environment">
     <mkdir dir="${build.debug.dir}" failonerror="false" />
     <mkdir dir="${lib.dir}" failonerror="false" />
+
+    <!-- Need to bring over the StringTemplate dll's -->
+    <copy todir="${lib.dir}">
+      <fileset basedir="${string.template.dir}">
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
+      </fileset>
+    </copy>
   </target>
 
   <target 
      name="build"
-     description="Compiles and packages the library"
+     description="Compiles and packages the executable"
      depends="init">
     <csc 
        target="library"
@@ -47,10 +60,11 @@
 	  <include name="${lib.dir}" />
 	</lib>
 	<include name="DomainCore.dll" />
-	<include name="STUtils.dll" />
+	<include name="System.Configuration.dll" />
+	<include name="antlr.runtime.dll" />
+	<include name="StringTemplate.dll" />
       </references>
       <pkg-references>
-	<package name="gtk-sharp-2.0" />
 	<package name="log4net" />
       </pkg-references>
     </csc>

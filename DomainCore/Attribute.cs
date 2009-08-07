@@ -27,7 +27,7 @@ namespace DomainCore
         {
             AttributeValueChangeHandler handler = AttributeValueChanged;
 
-            if (handler != null)
+            if (handler != null && ! Populating)
             {
                 handler(name, oldValue, newValue);
             }
