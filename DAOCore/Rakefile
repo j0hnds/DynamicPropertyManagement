@@ -1,0 +1,81 @@
+require 'rake/clean'
+require '../DotNet'
+
+# The name of the project being built.
+PROJECT_NAME = "DAOCore"
+
+DEBUG = false
+
+# The directory where the DLL will be deployed
+LIB_DIR = '../lib'
+
+# The directory to which we will build the DLL
+if DEBUG
+  BUILD_DIR = 'bin/Debug'
+  TEST_DIR = 'bin/test/Debug'
+else
+  BUILD_DIR = 'bin/Release'
+  TEST_DIR = 'bin/test/Release'
+end
+
+# Set up the required target names
+PROJECT_TARGET = "#{BUILD_DIR}/#{PROJECT_NAME}.dll"
+DEPLOY_PATH = "#{LIB_DIR}/#{PROJECT_NAME}.dll"
+TEST_PATH = "#{TEST_DIR}/#{PROJECT_NAME}.dll"
+
+# Define the clean/clobber paths
+CLEAN.include(BUILD_DIR) 
+CLEAN.include(TEST_DIR) 
+CLEAN.include("TestResult.xml")
+CLOBBER.include(DEPLOY_PATH)
+
+# Set up the default target to build the DLL
+task :default => [:init, PROJECT_TARGET]
+
+task :init do
+  mkdir_p BUILD_DIR if not File.exist?(BUILD_DIR)
+end
+
+task :testinit do
+  mkdir_p TEST_DIR if not File.exist?(TEST_DIR)
+end
+
+# Source files excluding the test files.
+SRC = FileList['*.cs'].exclude("Test*.cs")
+# Source files including the test files
+TEST_SRC = FileList['*.cs']
+
+# Build the DLL only if it is out of date with respect to any
+# of the source files.
+file PROJECT_TARGET => SRC do |t|
+  c = Gmcs.new "library", t.name, t.prerequisites
+  c.packages = [ "mysql-connector-net", "log4net" ]
+  c.libs = [ LIB_DIR ]
+  c.references = [ "DomainCore.dll", "System.Data.dll" ]
+  c.debug = DEBUG
+  c.exec
+end
+
+# Build the DLL only if it is out of date with respect to any
+# of the source files.
+file TEST_PATH => TEST_SRC do |t|
+  c = Gmcs.new "library", t.name, t.prerequisites
+  c.packages = [ "mysql-connector-net", "log4net", "nunit" ]
+  c.libs = [ LIB_DIR ]
+  c.references = [ "DomainCore.dll", "System.Data.dll" ]
+  c.debug = DEBUG
+  c.exec
+end
+
+task :test => [ :testinit, TEST_PATH ] do |t|
+  cp "#{LIB_DIR}/DomainCore.dll", TEST_DIR
+  nu = NUnitConsole.new t.prerequisites[1]
+  nu.exec
+end
+
+task :deploy => [ :init, DEPLOY_PATH ]
+
+file DEPLOY_PATH => [ PROJECT_TARGET ] do |t|
+  cp t.prerequisites[0], t.name
+end
+  
