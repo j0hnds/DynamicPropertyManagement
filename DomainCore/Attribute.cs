@@ -83,11 +83,16 @@ namespace DomainCore
         {
             get { return false; }
         }
+
+        public virtual void Revert()
+        {
+        }
     }
 
     public class DateTimeAttribute : BaseAttribute
     {
         private DateTime attrValue;
+        private DateTime previousValue;
 
         public DateTimeAttribute(Domain domain, string name) :
             base(domain, name, false)
@@ -99,6 +104,11 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
+                if (! Dirty)
+                {
+                    // Save the old value for posterity
+                    previousValue = attrValue;
+                }
                 object oldValue = attrValue;
                 object newValue = value;
                 attrValue = (value == null) ? DateTime.MinValue : (DateTime) value;
@@ -107,11 +117,21 @@ namespace DomainCore
             }
         }
 
+        public override void Revert ()
+        {
+            if (Dirty)
+            {
+                attrValue = previousValue;
+                Dirty = false;
+            }
+        }
+
     }
 
     public class LongAttribute : BaseAttribute
     {
         private long attrValue;
+        private long previousValue;
 
         public LongAttribute(Domain domain, string name, bool id) : 
             base(domain, name, id)
@@ -123,6 +143,10 @@ namespace DomainCore
             get { return attrValue; }
             set
             {
+                if (! Dirty)
+                {
+                    previousValue = attrValue;
+                }
                 object oldValue = attrValue;
                 object newerValue = value;
                 if (value == null)
@@ -147,11 +171,21 @@ namespace DomainCore
                 }
             }
         }
+
+        public override void Revert ()
+        {
+            if (Dirty)
+            {
+                attrValue = previousValue;
+                Dirty = false;
+            }
+        }
     }
     
     public class StringAttribute : BaseAttribute
     {
         private string attrValue;
+        private string previousValue;
         
         public StringAttribute(Domain domain, string name, bool id) : 
             base(domain, name, id)
@@ -174,6 +208,11 @@ namespace DomainCore
             {
                 object oldValue = attrValue;
                 object newValue = value;
+
+                if (! Dirty)
+                {
+                    previousValue = attrValue;
+                }
                 
                 if (attrValue == null)
                 {
@@ -203,6 +242,15 @@ namespace DomainCore
                         OnAttributeValueChanged(oldValue, newValue);
                     }
                 }
+            }
+        }
+
+        public override void Revert ()
+        {
+            if (Dirty)
+            {
+                attrValue = previousValue;
+                Dirty = false;
             }
         }
     }

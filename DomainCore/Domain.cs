@@ -258,6 +258,7 @@ namespace DomainCore
         bool Id { get; }
         bool Populating { get; }
         bool Empty { get; }
+        void Revert();
     }
 
     public interface Relationship
@@ -291,6 +292,14 @@ namespace DomainCore
         public DomainDAO DAO
         {
             get { return this.dao; }
+        }
+
+        public void Revert()
+        {
+            foreach (Attribute attr in attributes.Values)
+            {
+                attr.Revert();
+            }
         }
 
         public List<Domain> GetCollection(string name)
