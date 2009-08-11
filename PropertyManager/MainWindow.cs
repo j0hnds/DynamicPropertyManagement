@@ -183,7 +183,10 @@ public partial class MainWindow: Gtk.Window
     private void AddPropertyDefinition()
     {
         // Create a new Application domain
+        Domain selDomain = propertyListCtl.GetSelectedDomain();
+        
         Domain domain = DomainFactory.Create("PropertyDefinition");
+        domain.SetValue("Category", selDomain.GetValue("Category"));
 
         PropertyDefinitionEntryDlg dlg = new PropertyDefinitionEntryDlg();
 

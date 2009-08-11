@@ -654,7 +654,7 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.PropertyDefinitionEntryDlg" design-size="364 325">
+  <widget class="Gtk.Dialog" id="PropertyManager.PropertyDefinitionEntryDlg" design-size="246 285">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
@@ -788,14 +788,13 @@ Production</property>
                 <property name="TopAttach">4</property>
                 <property name="BottomAttach">6</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="XOptions">0</property>
-                <property name="YOptions">0</property>
+                <property name="AutoSize">False</property>
+                <property name="XOptions">Fill</property>
                 <property name="XExpand">False</property>
-                <property name="XFill">False</property>
+                <property name="XFill">True</property>
                 <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">False</property>
+                <property name="YExpand">True</property>
+                <property name="YFill">True</property>
                 <property name="YShrink">False</property>
               </packing>
             </child>
@@ -804,6 +803,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="InvisibleChar">●</property>
               </widget>
               <packing>
@@ -825,6 +825,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="InvisibleChar">●</property>
               </widget>
               <packing>
@@ -847,6 +848,8 @@ Production</property>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -878,6 +881,7 @@ Production</property>
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
             <property name="CanDefault">True</property>
+            <property name="HasDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>

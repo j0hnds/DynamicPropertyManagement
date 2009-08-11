@@ -32,9 +32,6 @@ namespace ControlWrappers
                 listStore.AppendValues(displayValue, valueValue);
             }
 
-//            CellRendererText cellRenderer = new CellRendererText();
-//            ((ComboBox) widget).PackStart(cellRenderer, true);
-//            ((ComboBox) widget).AddAttribute(cellRenderer, "text", 0);
             ((ComboBox) widget).Model = listStore;
         }
 

@@ -120,13 +120,13 @@ namespace PropertyManager {
             w8.TopAttach = ((uint)(4));
             w8.BottomAttach = ((uint)(6));
             w8.RightAttach = ((uint)(2));
-            w8.XOptions = ((Gtk.AttachOptions)(0));
-            w8.YOptions = ((Gtk.AttachOptions)(0));
+            w8.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.txtCategories = new Gtk.Entry();
             this.txtCategories.CanFocus = true;
             this.txtCategories.Name = "txtCategories";
             this.txtCategories.IsEditable = true;
+            this.txtCategories.ActivatesDefault = true;
             this.txtCategories.InvisibleChar = '●';
             this.table1.Add(this.txtCategories);
             Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table1[this.txtCategories]));
@@ -139,6 +139,7 @@ namespace PropertyManager {
             this.txtName.CanFocus = true;
             this.txtName.Name = "txtName";
             this.txtName.IsEditable = true;
+            this.txtName.ActivatesDefault = true;
             this.txtName.InvisibleChar = '●';
             this.table1.Add(this.txtName);
             Gtk.Table.TableChild w10 = ((Gtk.Table.TableChild)(this.table1[this.txtName]));
@@ -151,6 +152,8 @@ namespace PropertyManager {
             w1.Add(this.table1);
             Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(w1[this.table1]));
             w11.Position = 0;
+            w11.Expand = false;
+            w11.Fill = false;
             // Internal child PropertyManager.PropertyDefinitionEntryDlg.ActionArea
             Gtk.HButtonBox w12 = this.ActionArea;
             w12.Name = "dialog1_ActionArea";
@@ -185,8 +188,9 @@ namespace PropertyManager {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 364;
-            this.DefaultHeight = 325;
+            this.DefaultWidth = 246;
+            this.DefaultHeight = 285;
+            this.buttonOk.HasDefault = true;
             this.Show();
         }
     }
