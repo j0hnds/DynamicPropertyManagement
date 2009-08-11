@@ -61,7 +61,7 @@ namespace ControlWrappers
             }
         }
 
-        public void RemoveSelected()
+        public virtual void RemoveSelected()
         {
             TreeModel model = null;
             TreeIter iter = TreeIter.Zero;

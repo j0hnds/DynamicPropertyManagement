@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using DomainCore;
 using Gtk;
@@ -8,6 +9,9 @@ using STUtils;
 
 public partial class MainWindow: Gtk.Window
 {
+    private const string DISPLAY_SQL_CFG = "DisplaySQL";
+    private const string UPDATE_DB_CFG = "UpdateDB";
+    
     private MainTextViewControl mainTextViewCtl;
     private ILog log;
     private ApplicationListControl applicationListCtl;
@@ -102,6 +106,17 @@ public partial class MainWindow: Gtk.Window
         if (dlg.DoModal(this, domain))
         {
             log.Info("OK pressed on ApplicationEntryDlg");
+            if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+            {
+                BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                bdDlg.DoModal(this, domain);
+            }
+            if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+            {
+                domain.Save();
+            }
+
+            applicationListCtl.AddDomain(domain);
         }
     }
 
@@ -115,6 +130,19 @@ public partial class MainWindow: Gtk.Window
         if (dlg.DoModal(this, domain))
         {
             log.Info("OK pressed on ApplicationEntryDlg");
+            if (domain.Dirty)
+            {
+                if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                {
+                    BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                    bdDlg.DoModal(this, domain);
+                }
+                if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                {
+                    domain.Save();
+                }
+                applicationListCtl.UpdateSelectedLabel();
+            }
         }
         log.DebugFormat("Application Name: {0}", domain.GetValue("Name"));
     }
@@ -145,7 +173,17 @@ public partial class MainWindow: Gtk.Window
                 {
                     domain.ForDelete = true;
 
+                    if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                    {
+                        BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                        bdDlg.DoModal(this, domain);
+                    }
                     // Now, delete the object.
+                    if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                    {
+                        domain.Save();
+                    }
+                    applicationListCtl.RemoveSelected();
                 }
             }
         }

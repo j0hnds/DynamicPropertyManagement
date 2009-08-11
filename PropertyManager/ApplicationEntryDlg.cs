@@ -9,8 +9,6 @@ namespace PropertyManager
     
     public partial class ApplicationEntryDlg : BoundDialog //Gtk.Dialog
     {
-        private Domain domain;
-        
         public ApplicationEntryDlg()
         {
             this.Build();

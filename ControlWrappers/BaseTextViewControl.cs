@@ -16,6 +16,17 @@ namespace ControlWrappers
             this.buffer = ((TextView) widget).Buffer;
         }
 
+        public void TagText(string tag, string text)
+        {
+            TextIter startIter = buffer.StartIter;
+            TextIter endIter = buffer.EndIter;
+
+            // Clear the buffer.
+            buffer.Delete(ref startIter, ref endIter);
+
+            buffer.InsertWithTagsByName(ref startIter, text, tag);
+        }
+
         public void Render(string text)
         {
             TextIter startIter = buffer.StartIter;

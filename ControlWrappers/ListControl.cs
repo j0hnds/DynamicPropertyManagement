@@ -86,5 +86,17 @@ namespace ControlWrappers
                 ok = listStore.IterNext(ref iter);
             }
         }
+        
+        public override void RemoveSelected()
+        {
+            TreeModel model = null;
+            TreeIter iter = TreeIter.Zero;
+
+            if (((TreeView) widget).Selection.GetSelected(out model, out iter))
+            {
+                ((ListStore) model).Remove(ref iter);
+            }
+        }
+
     }
 }
