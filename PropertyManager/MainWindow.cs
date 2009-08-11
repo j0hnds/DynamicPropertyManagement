@@ -40,26 +40,10 @@ public partial class MainWindow: Gtk.Window
     protected void SetUpApplicationTree()
     {
         applicationListCtl = new ApplicationListControl(tvApplications);
-//        ListStore store = new ListStore(GLib.GType.String, GLib.GType.Int64, GLib.GType.String);
-//        tvApplications.Model = store;
-//        
-//        // Set up the columns
-//        TreeViewColumn tc = new TreeViewColumn();
-//        tc.Title = "Name";
-//        CellRenderer cell = new CellRendererText();
-//        tc.PackStart(cell, true);
-//        tc.AddAttribute(cell, "text", 0);
-//        tvApplications.AppendColumn(tc);
 
         // Get the DAO for the applications
         DomainDAO dao = DomainFactory.GetDAO("Application");
         List<Domain> applications = dao.Get();
-//        foreach (Domain app in applications)
-//        {
-////            string appName = (string) app.GetValue("Name");
-//            string appName = DomainRenderer.Render(app, "Label");
-//            store.AppendValues(appName, Convert.ToInt64(app.GetValue("Id")), app.GetType().Name);
-//        }
         applicationListCtl.Populate(applications);
             
     }
@@ -71,21 +55,6 @@ public partial class MainWindow: Gtk.Window
         {
             mainTextViewCtl.Render(DomainRenderer.Render(domain, "Summary"));
         }
-//        // Get the selected item from the tree view
-//        TreeModel model = null;
-//        TreeIter iter;
-//        
-//        if (tvApplications.Selection.GetSelected(out model, out iter))
-//        {
-//            // Something was selected; what was it?
-////            string name = (string) model.GetValue(iter, 0);
-//            long id = (long) model.GetValue(iter, 1);
-// 
-//            DomainDAO dao = DomainFactory.GetDAO("Application");
-//            Domain app = dao.GetObject(id);
-//
-//            mainTextViewCtl.Render(DomainRenderer.Render(app, "Summary"));
-//        }
 
         HandleToolBarSensitivity();
     }
@@ -123,19 +92,111 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void AddApplication()
+    {
+        // Create a new Application domain
+        Domain domain = DomainFactory.Create("Application");
+
+        ApplicationEntryDlg dlg = new ApplicationEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on ApplicationEntryDlg");
+        }
+    }
+
+    private void EditApplication()
+    {
+        // Need to get the selected domain
+        Domain domain = applicationListCtl.GetSelectedDomain();
+
+        ApplicationEntryDlg dlg = new ApplicationEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on ApplicationEntryDlg");
+        }
+        log.DebugFormat("Application Name: {0}", domain.GetValue("Name"));
+    }
+
+    private void RemoveApplication()
+    {
+        // Need to get the selected domain
+        Domain domain = applicationListCtl.GetSelectedDomain();
+
+        if (domain != null)
+        {
+            // Have the user verify that we really want to remove the
+            // selected object.
+            MessageDialog dlg = new MessageDialog(this,
+                                                  DialogFlags.DestroyWithParent,
+                                                  MessageType.Question,
+                                                  ButtonsType.YesNo,
+                                                  string.Format("Are you sure you wish to remove application '{0}'?",
+                                                                domain.GetValue("Name")));
+            int result = dlg.Run();
+            dlg.Destroy();
+            
+            if (result == ResponseType.Yes.value__)
+            {
+                log.InfoFormat("User chose to remove application '{0}'",
+                               domain.GetValue("Name"));
+                if (! domain.NewObject)
+                {
+                    domain.ForDelete = true;
+
+                    // Now, delete the object.
+                }
+            }
+        }
+    }
+
     protected virtual void AddItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Add a new item to the current item");
+        int currentPage = nbSelections.CurrentPage;
+        switch (currentPage)
+        {
+        case 0: // Application page
+            AddApplication();
+            break;
+
+        default: // Any other page
+            log.WarnFormat("Unknown notebook page selected: {0}", currentPage);
+            break;
+        }
     }
 
     protected virtual void RemoveItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Remove the selected item.");
+        int currentPage = nbSelections.CurrentPage;
+        switch (currentPage)
+        {
+        case 0: // Application page
+            RemoveApplication();
+            break;
+
+        default: // Any other page
+            log.WarnFormat("Unknown notebook page selected: {0}", currentPage);
+            break;
+        }
     }
 
     protected virtual void ItemPropertyAction (object sender, System.EventArgs e)
     {
         log.Debug("Edit the selected item.");
+        int currentPage = nbSelections.CurrentPage;
+        switch (currentPage)
+        {
+        case 0: // Application page
+            EditApplication();
+            break;
+
+        default: // Any other page
+            log.WarnFormat("Unknown notebook page selected: {0}", currentPage);
+            break;
+        }
     }
 
     protected virtual void SwitchPageAction (object o, Gtk.SwitchPageArgs args)

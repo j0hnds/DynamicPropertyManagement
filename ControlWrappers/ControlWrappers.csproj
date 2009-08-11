@@ -40,6 +40,7 @@
     <Compile Include="BaseTextViewControl.cs" />
     <Compile Include="BaseTreeControl.cs" />
     <Compile Include="ListControl.cs" />
+    <Compile Include="EntryBoundControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

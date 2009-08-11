@@ -74,6 +74,8 @@
     <Compile Include="gtk-gui\PropertyManager.LoginDlg.cs" />
     <Compile Include="MainTextViewControl.cs" />
     <Compile Include="ApplicationListControl.cs" />
+    <Compile Include="ApplicationEntryDlg.cs" />
+    <Compile Include="gtk-gui\PropertyManager.ApplicationEntryDlg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
