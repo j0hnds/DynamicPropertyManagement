@@ -129,7 +129,7 @@ public partial class MainWindow {
         this.nbSelections.CanFocus = true;
         this.nbSelections.Events = ((Gdk.EventMask)(1082116));
         this.nbSelections.Name = "nbSelections";
-        this.nbSelections.CurrentPage = 1;
+        this.nbSelections.CurrentPage = 2;
         this.nbSelections.Scrollable = true;
         // Container child nbSelections.Gtk.Notebook+NotebookChild
         this.scrolledwindow3 = new Gtk.ScrolledWindow();
@@ -180,6 +180,8 @@ public partial class MainWindow {
         this.tvPropertyDefinitions = new Gtk.TreeView();
         this.tvPropertyDefinitions.CanFocus = true;
         this.tvPropertyDefinitions.Name = "tvPropertyDefinitions";
+        this.tvPropertyDefinitions.EnableSearch = false;
+        this.tvPropertyDefinitions.HeadersVisible = false;
         this.scrolledwindow5.Add(this.tvPropertyDefinitions);
         this.nbSelections.Add(this.scrolledwindow5);
         Gtk.Notebook.NotebookChild w9 = ((Gtk.Notebook.NotebookChild)(this.nbSelections[this.scrolledwindow5]));
@@ -253,5 +255,6 @@ public partial class MainWindow {
         this.PropertiesAction.Activated += new System.EventHandler(this.ItemPropertyAction);
         this.nbSelections.SwitchPage += new Gtk.SwitchPageHandler(this.SwitchPageAction);
         this.tvApplications.CursorChanged += new System.EventHandler(this.ApplicationCursorChanged);
+        this.tvPropertyDefinitions.CursorChanged += new System.EventHandler(this.PropertyDefinitionCursorChanged);
     }
 }

@@ -15,6 +15,7 @@ public partial class MainWindow: Gtk.Window
     private MainTextViewControl mainTextViewCtl;
     private ILog log;
     private ApplicationListControl applicationListCtl;
+    private PropertyListControl propertyListCtl;
     
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
@@ -28,6 +29,7 @@ public partial class MainWindow: Gtk.Window
     public void SetUpApplication()
     {
         SetUpApplicationTree();
+        SetUpPropertyDefinitionTree();
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -39,6 +41,15 @@ public partial class MainWindow: Gtk.Window
     protected virtual void on_file_quit (object sender, System.EventArgs e)
     {
         Application.Quit();
+    }
+
+    protected void SetUpPropertyDefinitionTree()
+    {
+        propertyListCtl = new PropertyListControl(tvPropertyDefinitions);
+
+        DomainDAO dao = DomainFactory.GetDAO("PropertyDefinition");
+        List<Domain> properties = dao.Get();
+        propertyListCtl.Populate(properties);
     }
 
     protected void SetUpApplicationTree()
@@ -63,6 +74,27 @@ public partial class MainWindow: Gtk.Window
         HandleToolBarSensitivity();
     }
 
+    protected virtual void PropertyDefinitionCursorChanged (object sender, System.EventArgs e)
+    {
+        Domain domain = propertyListCtl.GetSelectedDomain();
+        
+        switch (propertyListCtl.SelectedLevel)
+        {
+        case PropertyDefinitionLevels.Category:
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "CategorySummary"));
+            break;
+
+        case PropertyDefinitionLevels.Property:
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "Summary"));
+            break;
+
+        case PropertyDefinitionLevels.None:
+            break;
+        }
+        
+        HandlePropertyDefinitionToolBarSensitivity();
+    }
+
     private void HandleApplicationToolBarSensitivity()
     {
         bool somethingSelected = applicationListCtl.IsSelected;
@@ -70,6 +102,30 @@ public partial class MainWindow: Gtk.Window
         AddAction.Sensitive = somethingSelected;
         RemoveAction.Sensitive = somethingSelected;
         PropertiesAction.Sensitive = somethingSelected;
+    }
+
+    private void HandlePropertyDefinitionToolBarSensitivity()
+    {
+        switch (propertyListCtl.SelectedLevel)
+        {
+        case PropertyDefinitionLevels.Category:
+            AddAction.Sensitive = true;
+            RemoveAction.Sensitive = false;
+            PropertiesAction.Sensitive = false;
+            break;
+
+        case PropertyDefinitionLevels.Property:
+            AddAction.Sensitive = true;
+            RemoveAction.Sensitive = true;
+            PropertiesAction.Sensitive = true;
+            break;
+
+        case PropertyDefinitionLevels.None:
+            AddAction.Sensitive = false;
+            RemoveAction.Sensitive = false;
+            PropertiesAction.Sensitive = false;
+            break;
+        }
     }
 
     private void HandleNoopToolBarSensitivity()
@@ -87,6 +143,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Applications page
             HandleApplicationToolBarSensitivity();
+            break;
+
+        case 2: // PropertyDefinition page
+            HandlePropertyDefinitionToolBarSensitivity();
             break;
 
         default: // Any other page
@@ -120,6 +180,30 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void AddPropertyDefinition()
+    {
+        // Create a new Application domain
+        Domain domain = DomainFactory.Create("PropertyDefinition");
+
+        PropertyDefinitionEntryDlg dlg = new PropertyDefinitionEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on PropertyDefinitionEntryDlg");
+            if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+            {
+                BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                bdDlg.DoModal(this, domain);
+            }
+            if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+            {
+                domain.Save();
+            }
+
+            propertyListCtl.AddDomain(domain);
+        }
+    }
+
     private void EditApplication()
     {
         // Need to get the selected domain
@@ -145,6 +229,32 @@ public partial class MainWindow: Gtk.Window
             }
         }
         log.DebugFormat("Application Name: {0}", domain.GetValue("Name"));
+    }
+
+    private void EditPropertyDefinition()
+    {
+        // Need to get the selected domain
+        Domain domain = propertyListCtl.GetSelectedDomain();
+
+        PropertyDefinitionEntryDlg dlg = new PropertyDefinitionEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on PropertyDefinitionEntryDlg");
+            if (domain.Dirty)
+            {
+                if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                {
+                    BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                    bdDlg.DoModal(this, domain);
+                }
+                if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                {
+                    domain.Save();
+                }
+                propertyListCtl.UpdateSelectedLabel();
+            }
+        }
     }
 
     private void RemoveApplication()
@@ -189,6 +299,48 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void RemovePropertyDefinition()
+    {
+        // Need to get the selected domain
+        Domain domain = propertyListCtl.GetSelectedDomain();
+
+        if (domain != null)
+        {
+            // Have the user verify that we really want to remove the
+            // selected object.
+            MessageDialog dlg = new MessageDialog(this,
+                                                  DialogFlags.DestroyWithParent,
+                                                  MessageType.Question,
+                                                  ButtonsType.YesNo,
+                                                  string.Format("Are you sure you wish to remove property '{0}'?",
+                                                                domain.GetValue("Name")));
+            int result = dlg.Run();
+            dlg.Destroy();
+            
+            if (result == ResponseType.Yes.value__)
+            {
+                log.InfoFormat("User chose to remove property '{0}'",
+                               domain.GetValue("Name"));
+                if (! domain.NewObject)
+                {
+                    domain.ForDelete = true;
+
+                    if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                    {
+                        BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                        bdDlg.DoModal(this, domain);
+                    }
+                    // Now, delete the object.
+                    if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                    {
+                        domain.Save();
+                    }
+                    propertyListCtl.RemoveSelected();
+                }
+            }
+        }
+    }
+
     protected virtual void AddItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Add a new item to the current item");
@@ -197,6 +349,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Application page
             AddApplication();
+            break;
+
+        case 2: // PropertyDefinition page;
+            AddPropertyDefinition();
             break;
 
         default: // Any other page
@@ -215,6 +371,10 @@ public partial class MainWindow: Gtk.Window
             RemoveApplication();
             break;
 
+        case 2: // PropertyDefinition page
+            RemovePropertyDefinition();
+            break;
+
         default: // Any other page
             log.WarnFormat("Unknown notebook page selected: {0}", currentPage);
             break;
@@ -229,6 +389,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Application page
             EditApplication();
+            break;
+
+        case 2: // PropertyDefinition page
+            EditPropertyDefinition();
             break;
 
         default: // Any other page

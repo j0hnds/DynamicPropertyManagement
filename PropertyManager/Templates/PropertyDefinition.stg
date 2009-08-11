@@ -19,7 +19,7 @@ You have selected a Property Definition. Property Definitions provide the basic 
 <if(domain.UsingApplications)>
 The following applications use this property definition:
 
-  <domain.UsingApplications:{it | * <it.Name></n>}>
+  <domain.UsingApplications:{it | * <it.Name><\n>}>
 <else>
 <NoApplications()>
 <endif>

@@ -79,6 +79,9 @@
     <Compile Include="BufferDisplayDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.BufferDisplayDlg.cs" />
     <Compile Include="MonospacedTextViewControl.cs" />
+    <Compile Include="PropertyListControl.cs" />
+    <Compile Include="PropertyDefinitionEntryDlg.cs" />
+    <Compile Include="gtk-gui\PropertyManager.PropertyDefinitionEntryDlg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -41,6 +41,8 @@
     <Compile Include="BaseTreeControl.cs" />
     <Compile Include="ListControl.cs" />
     <Compile Include="EntryBoundControl.cs" />
+    <Compile Include="ComboBoxBoundControl.cs" />
+    <Compile Include="TextViewBoundControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

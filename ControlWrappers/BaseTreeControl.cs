@@ -22,7 +22,13 @@ namespace ControlWrappers
 
         public string RenderLabel(Domain domain)
         {
-            return DomainRenderer.Render(domain, "Label");
+            // return DomainRenderer.Render(domain, "Label");
+            return Render(domain, "Label");
+        }
+
+        public string Render(Domain domain, string renderType)
+        {
+            return DomainRenderer.Render(domain, renderType);
         }
 
         public void SelectRow(TreeIter iter)
