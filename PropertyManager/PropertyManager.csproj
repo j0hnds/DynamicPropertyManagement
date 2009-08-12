@@ -86,6 +86,8 @@
     <Compile Include="FormEntryDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.FormEntryDlg.cs" />
     <Compile Include="DynPropertyListControl.cs" />
+    <Compile Include="DynPropEntryDlg.cs" />
+    <Compile Include="gtk-gui\PropertyManager.DynPropEntryDlg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

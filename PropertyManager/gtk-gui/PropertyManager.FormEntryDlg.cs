@@ -31,7 +31,6 @@ namespace PropertyManager {
             Stetic.Gui.Initialize(this);
             // Widget PropertyManager.FormEntryDlg
             this.Name = "PropertyManager.FormEntryDlg";
-            this.Title = Mono.Unix.Catalog.GetString("dialog1");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child PropertyManager.FormEntryDlg.VBox

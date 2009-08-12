@@ -335,6 +335,31 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void AddDynamicProperty()
+    {
+        log.Debug("Adding new Dynamic Property");
+        // Create a new Form domain
+        Domain domain = DomainFactory.Create("DynamicProperty");
+
+        DynPropEntryDlg dlg = new DynPropEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on DynPropEntryDlg");
+            if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+            {
+                BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                bdDlg.DoModal(this, domain);
+            }
+            if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+            {
+                domain.Save();
+            }
+
+            // formListCtl.AddDomain(domain);
+        }
+    }
+
     private void EditApplication()
     {
         // Need to get the selected domain
@@ -399,6 +424,33 @@ public partial class MainWindow: Gtk.Window
         if (dlg.DoModal(this, domain))
         {
             log.Info("OK pressed on FormEntryDlg");
+            if (domain.Dirty)
+            {
+                if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                {
+                    BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                    bdDlg.DoModal(this, domain);
+                }
+                if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                {
+                    domain.Save();
+                }
+                formListCtl.UpdateSelectedLabel();
+            }
+        }
+    }
+
+    private void EditDynamicProperty()
+    {
+        log.Debug("Editing dynamic property");
+        // Need to get the selected domain
+        Domain domain = dynPropertyListCtl.GetSelectedDomain();
+
+        DynPropEntryDlg dlg = new DynPropEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on DynPropEntryDlg");
             if (domain.Dirty)
             {
                 if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
@@ -542,6 +594,49 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void RemoveDynamicProperty()
+    {
+        log.Debug("Removing Dynamic Property");
+        // Need to get the selected domain
+        Domain domain = dynPropertyListCtl.GetSelectedDomain();
+
+        if (domain != null)
+        {
+            // Have the user verify that we really want to remove the
+            // selected object.
+            MessageDialog dlg = new MessageDialog(this,
+                                                  DialogFlags.DestroyWithParent,
+                                                  MessageType.Question,
+                                                  ButtonsType.YesNo,
+                                                  string.Format("Are you sure you wish to remove Property '{0}'?",
+                                                                domain.GetValue("PropertyName")));
+            int result = dlg.Run();
+            dlg.Destroy();
+            
+            if (result == ResponseType.Yes.value__)
+            {
+                log.InfoFormat("User chose to remove Dynamic Property '{0}'",
+                               domain.GetValue("PropertyName"));
+                if (! domain.NewObject)
+                {
+                    domain.ForDelete = true;
+
+                    if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                    {
+                        BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                        bdDlg.DoModal(this, domain);
+                    }
+                    // Now, delete the object.
+                    if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                    {
+                        domain.Save();
+                    }
+                    dynPropertyListCtl.RemoveSelected();
+                }
+            }
+        }
+    }
+
     protected virtual void AddItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Add a new item to the current item");
@@ -558,6 +653,10 @@ public partial class MainWindow: Gtk.Window
 
         case 2: // PropertyDefinition page;
             AddPropertyDefinition();
+            break;
+
+        case 3: // Dynamic Property page
+            AddDynamicProperty();
             break;
 
         default: // Any other page
@@ -584,6 +683,10 @@ public partial class MainWindow: Gtk.Window
             RemovePropertyDefinition();
             break;
 
+        case 3: // Dynamic Property page
+            RemoveDynamicProperty();
+            break;
+
         default: // Any other page
             log.WarnFormat("Unknown notebook page selected: {0}", currentPage);
             break;
@@ -606,6 +709,10 @@ public partial class MainWindow: Gtk.Window
 
         case 2: // PropertyDefinition page
             EditPropertyDefinition();
+            break;
+
+        case 3: // Dynamic Property page
+            EditDynamicProperty();
             break;
 
         default: // Any other page
