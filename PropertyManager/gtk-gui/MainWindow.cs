@@ -129,7 +129,7 @@ public partial class MainWindow {
         this.nbSelections.CanFocus = true;
         this.nbSelections.Events = ((Gdk.EventMask)(1082116));
         this.nbSelections.Name = "nbSelections";
-        this.nbSelections.CurrentPage = 0;
+        this.nbSelections.CurrentPage = 3;
         this.nbSelections.Scrollable = true;
         // Container child nbSelections.Gtk.Notebook+NotebookChild
         this.scrolledwindow3 = new Gtk.ScrolledWindow();
@@ -257,5 +257,6 @@ public partial class MainWindow {
         this.tvApplications.CursorChanged += new System.EventHandler(this.ApplicationCursorChanged);
         this.tvForms.CursorChanged += new System.EventHandler(this.FormCursorChanged);
         this.tvPropertyDefinitions.CursorChanged += new System.EventHandler(this.PropertyDefinitionCursorChanged);
+        this.tvDynamicProperties.CursorChanged += new System.EventHandler(this.DynamicPropertyCursorChanged);
     }
 }

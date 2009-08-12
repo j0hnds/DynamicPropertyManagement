@@ -35,10 +35,6 @@ namespace DynPropertyDomain
                 cmd.CommandText = String.Format("SELECT * FROM NAMED_PROPERTY_VIEW WHERE DYN_ASSIGN_ID = {0} ORDER BY CATEGORY, NAME, EFFECTIVE_MOD_DT DESC, VALUE_MOD_DT, ASSIGN_MOD_DT", DAOUtils.ConvertValue(id));
 
                 IDataReader reader = cmd.ExecuteReader();
-//                if (! reader.Read())
-//                {
-//                    throw new Exception("Unable to find specified data type");
-//                }
 
                 List<Domain> results = ParseResultSet(reader);
                 if (results.Count == 0)

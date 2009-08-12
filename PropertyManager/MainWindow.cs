@@ -17,6 +17,7 @@ public partial class MainWindow: Gtk.Window
     private ApplicationListControl applicationListCtl;
     private PropertyListControl propertyListCtl;
     private FormListControl formListCtl;
+    private DynPropertyListControl dynPropertyListCtl;
     
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
@@ -32,6 +33,7 @@ public partial class MainWindow: Gtk.Window
         SetUpApplicationTree();
         SetUpPropertyDefinitionTree();
         SetUpFormTree();
+        SetUpDynamicPropertyTree();
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -52,6 +54,15 @@ public partial class MainWindow: Gtk.Window
         DomainDAO dao = DomainFactory.GetDAO("PropertyDefinition");
         List<Domain> properties = dao.Get();
         propertyListCtl.Populate(properties);
+    }
+
+    protected void SetUpDynamicPropertyTree()
+    {
+        dynPropertyListCtl = new DynPropertyListControl(tvDynamicProperties);
+
+        DomainDAO dao = DomainFactory.GetDAO("Application");
+        List<Domain> applications = dao.Get();
+        dynPropertyListCtl.Populate(applications);
     }
 
     protected void SetUpApplicationTree()
@@ -106,6 +117,29 @@ public partial class MainWindow: Gtk.Window
         HandlePropertyDefinitionToolBarSensitivity();
     }
 
+    protected virtual void DynamicPropertyCursorChanged (object sender, System.EventArgs e)
+    {
+        Domain domain = dynPropertyListCtl.GetSelectedDomain();
+
+        switch (dynPropertyListCtl.SelectedLevel)
+        {
+        case DynamicPropertyLevels.Application:
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "Summary"));
+            break;
+
+        case DynamicPropertyLevels.Category:
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "CategorySummary"));
+            break;
+
+        case DynamicPropertyLevels.Property:
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "Summary"));
+            break;
+        }
+
+        HandleDynamicPropertyToolBarSensitivity();
+    }
+
+
     protected virtual void FormCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = formListCtl.GetSelectedDomain();
@@ -150,6 +184,36 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void HandleDynamicPropertyToolBarSensitivity()
+    {
+        switch (dynPropertyListCtl.SelectedLevel)
+        {
+        case DynamicPropertyLevels.Application:
+            AddAction.Sensitive = true;
+            RemoveAction.Sensitive = false;
+            PropertiesAction.Sensitive = false;
+            break;
+
+        case DynamicPropertyLevels.Category:
+            AddAction.Sensitive = true;
+            RemoveAction.Sensitive = false;
+            PropertiesAction.Sensitive = false;
+            break;
+
+        case DynamicPropertyLevels.None:
+            AddAction.Sensitive = false;
+            RemoveAction.Sensitive = false;
+            PropertiesAction.Sensitive = false;
+            break;
+
+        case DynamicPropertyLevels.Property:
+            AddAction.Sensitive = true;
+            RemoveAction.Sensitive = true;
+            PropertiesAction.Sensitive = true;
+            break;
+        }
+    }
+
     private void HandleFormToolBarSensitivity()
     {
         bool somethingSelected = formListCtl.IsSelected;
@@ -182,6 +246,10 @@ public partial class MainWindow: Gtk.Window
 
         case 2: // PropertyDefinition page
             HandlePropertyDefinitionToolBarSensitivity();
+            break;
+
+        case 3: // Dynamic Properties page
+            HandleDynamicPropertyToolBarSensitivity();
             break;
 
         default: // Any other page

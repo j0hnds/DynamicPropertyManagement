@@ -85,6 +85,7 @@
     <Compile Include="FormListControl.cs" />
     <Compile Include="FormEntryDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.FormEntryDlg.cs" />
+    <Compile Include="DynPropertyListControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -97,6 +98,7 @@
     <None Include="Templates\BaseTemplates.stg" />
     <None Include="Templates\PropertyDefinition.stg" />
     <None Include="Templates\Form.stg" />
+    <None Include="Templates\DynamicProperty.stg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOCore\DAOCore.csproj">

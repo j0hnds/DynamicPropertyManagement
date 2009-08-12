@@ -1,0 +1,27 @@
+group DynamicProperty;
+
+// Boiler-plate macro for no applications message
+NoApplications() ::= "No applications currently use this property definition."
+
+// The main object summary
+Summary(domain) ::= <<
+You have selected Dynamic Property '<domain.Category>.<domain.QualifiedName>'. 
+        
+<caption(text="DB ID:")> <domain.Id>
+<caption(text="Name:")> <domain.QualifiedName>
+<caption(text="Default Value:")> <domain.DefaultValue>
+<caption(text="Effective Value:")> <domain.CurrentEffectiveValue>
+
+>>
+
+// The summary to display for a category
+CategorySummary(domain) ::= <<
+You have selected Property Definition category '<domain.Category>'. Categories are used to group property definitions with similar purposes.
+        
+>>
+
+// The primary object label
+Label(domain) ::= "<domain.QualifiedName>"
+
+// The category label.
+CategoryLabel(domain) ::= "<domain.Category>"
