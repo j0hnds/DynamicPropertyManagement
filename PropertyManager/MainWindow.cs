@@ -16,6 +16,7 @@ public partial class MainWindow: Gtk.Window
     private ILog log;
     private ApplicationListControl applicationListCtl;
     private PropertyListControl propertyListCtl;
+    private FormListControl formListCtl;
     
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
@@ -30,6 +31,7 @@ public partial class MainWindow: Gtk.Window
     {
         SetUpApplicationTree();
         SetUpPropertyDefinitionTree();
+        SetUpFormTree();
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -63,6 +65,15 @@ public partial class MainWindow: Gtk.Window
             
     }
 
+    protected void SetUpFormTree()
+    {
+        formListCtl = new FormListControl(tvForms);
+
+        DomainDAO dao = DomainFactory.GetDAO("Form");
+        List<Domain> forms = dao.Get();
+        formListCtl.Populate(forms);
+    }
+
     protected virtual void ApplicationCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = applicationListCtl.GetSelectedDomain();
@@ -93,6 +104,17 @@ public partial class MainWindow: Gtk.Window
         }
         
         HandlePropertyDefinitionToolBarSensitivity();
+    }
+
+    protected virtual void FormCursorChanged (object sender, System.EventArgs e)
+    {
+        Domain domain = formListCtl.GetSelectedDomain();
+        if (domain != null)
+        {
+            mainTextViewCtl.Render(DomainRenderer.Render(domain, "Summary"));
+        }
+
+        HandleToolBarSensitivity();
     }
 
     private void HandleApplicationToolBarSensitivity()
@@ -128,6 +150,15 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void HandleFormToolBarSensitivity()
+    {
+        bool somethingSelected = formListCtl.IsSelected;
+
+        AddAction.Sensitive = somethingSelected;
+        RemoveAction.Sensitive = somethingSelected;
+        PropertiesAction.Sensitive = somethingSelected;
+    }
+
     private void HandleNoopToolBarSensitivity()
     {
         AddAction.Sensitive = false;
@@ -143,6 +174,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Applications page
             HandleApplicationToolBarSensitivity();
+            break;
+
+        case 1: // Forms page
+            HandleFormToolBarSensitivity();
             break;
 
         case 2: // PropertyDefinition page
@@ -207,6 +242,31 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void AddForm()
+    {
+        log.Debug("Adding new form");
+        // Create a new Form domain
+        Domain domain = DomainFactory.Create("Form");
+
+        FormEntryDlg dlg = new FormEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on FormEntryDlg");
+            if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+            {
+                BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                bdDlg.DoModal(this, domain);
+            }
+            if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+            {
+                domain.Save();
+            }
+
+            formListCtl.AddDomain(domain);
+        }
+    }
+
     private void EditApplication()
     {
         // Need to get the selected domain
@@ -256,6 +316,33 @@ public partial class MainWindow: Gtk.Window
                     domain.Save();
                 }
                 propertyListCtl.UpdateSelectedLabel();
+            }
+        }
+    }
+
+    private void EditForm()
+    {
+        log.Debug("Editing form");
+        // Need to get the selected domain
+        Domain domain = formListCtl.GetSelectedDomain();
+
+        FormEntryDlg dlg = new FormEntryDlg();
+
+        if (dlg.DoModal(this, domain))
+        {
+            log.Info("OK pressed on FormEntryDlg");
+            if (domain.Dirty)
+            {
+                if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                {
+                    BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                    bdDlg.DoModal(this, domain);
+                }
+                if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                {
+                    domain.Save();
+                }
+                formListCtl.UpdateSelectedLabel();
             }
         }
     }
@@ -344,6 +431,49 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    private void RemoveForm()
+    {
+        log.Debug("Removing form");
+        // Need to get the selected domain
+        Domain domain = formListCtl.GetSelectedDomain();
+
+        if (domain != null)
+        {
+            // Have the user verify that we really want to remove the
+            // selected object.
+            MessageDialog dlg = new MessageDialog(this,
+                                                  DialogFlags.DestroyWithParent,
+                                                  MessageType.Question,
+                                                  ButtonsType.YesNo,
+                                                  string.Format("Are you sure you wish to remove form '{0}'?",
+                                                                domain.GetValue("Description")));
+            int result = dlg.Run();
+            dlg.Destroy();
+            
+            if (result == ResponseType.Yes.value__)
+            {
+                log.InfoFormat("User chose to remove form '{0}'",
+                               domain.GetValue("Description"));
+                if (! domain.NewObject)
+                {
+                    domain.ForDelete = true;
+
+                    if (ConfigurationManager.AppSettings[DISPLAY_SQL_CFG].Equals("true"))
+                    {
+                        BufferDisplayDlg bdDlg = new BufferDisplayDlg();
+                        bdDlg.DoModal(this, domain);
+                    }
+                    // Now, delete the object.
+                    if (ConfigurationManager.AppSettings[UPDATE_DB_CFG].Equals("true"))
+                    {
+                        domain.Save();
+                    }
+                    formListCtl.RemoveSelected();
+                }
+            }
+        }
+    }
+
     protected virtual void AddItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Add a new item to the current item");
@@ -352,6 +482,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Application page
             AddApplication();
+            break;
+
+        case 1: // Forms page
+            AddForm();
             break;
 
         case 2: // PropertyDefinition page;
@@ -374,6 +508,10 @@ public partial class MainWindow: Gtk.Window
             RemoveApplication();
             break;
 
+        case 1: // Form page
+            RemoveForm();
+            break;
+
         case 2: // PropertyDefinition page
             RemovePropertyDefinition();
             break;
@@ -392,6 +530,10 @@ public partial class MainWindow: Gtk.Window
         {
         case 0: // Application page
             EditApplication();
+            break;
+
+        case 1: // Form page
+            EditForm();
             break;
 
         case 2: // PropertyDefinition page

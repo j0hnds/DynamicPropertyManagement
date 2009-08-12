@@ -1,0 +1,13 @@
+group Form;
+
+Summary(domain) ::= <<
+You have selected the '<domain.Description>' Form.
+
+<caption(text="Form Details")>
+
+  <caption(text="DB ID:")> <domain.Id>
+  <caption(text="Description:")> <domain.Description>
+
+>>
+
+Label(domain) ::= "<domain.Description>"
