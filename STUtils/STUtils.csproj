@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DomainRenderer.cs" />
+    <Compile Include="DateRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainCore\DomainCore.csproj">

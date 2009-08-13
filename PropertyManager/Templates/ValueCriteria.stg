@@ -1,0 +1,5 @@
+group ValueCriteria;
+
+CriteriaFormat(rawCriteria) ::= "<if(rawCriteria)><rawCriteria><else>* * * * *<endif>"
+
+Label(domain) ::= "<CriteriaFormat(domain.RawCriteria)> - <domain.Value>"

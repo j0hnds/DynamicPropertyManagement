@@ -22,7 +22,7 @@ namespace ControlWrappers
             boundControls.Add(boundControl);
         }
 
-        public bool DoModal(Window parentWindow, Domain domain)
+        public virtual bool DoModal(Window parentWindow, Domain domain)
         {
             bool ok = false;
 

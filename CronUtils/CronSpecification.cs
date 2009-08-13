@@ -81,6 +81,36 @@ namespace CronUtils
             
         }
 
+        public ArrayList Minutes
+        {
+            get { return minutes; }
+            set { minutes = value; }
+        }
+
+        public ArrayList Hours
+        {
+            get { return hours; }
+            set { hours = value; }
+        }
+
+        public ArrayList Days
+        {
+            get { return days; }
+            set { days = value; }
+        }
+
+        public ArrayList Months
+        {
+            get { return months; }
+            set { months = value; }
+        }
+
+        public ArrayList DaysOfWeek
+        {
+            get { return daysOfWeek; }
+            set { daysOfWeek = value; }
+        }
+
         private void ParseSpecification(string specification, ArrayList cronValues, CronValueFactory.CronValueCreator cronValueCreator)
         {
             if (specification == null)
@@ -155,6 +185,36 @@ namespace CronUtils
             }
 
             return effective;
+        }
+
+        private string FormatArray(ArrayList al)
+        {
+            string result = "";
+            foreach (object obj in al)
+            {
+                if (result.Length > 0)
+                {
+                    result += ",";
+                }
+                result += obj.ToString();
+            }
+
+            return result;
+        }
+
+        public override string ToString ()
+        {
+            string result = FormatArray(minutes);
+            result += " ";
+            result += FormatArray(hours);
+            result += " ";
+            result += FormatArray(days);
+            result += " ";
+            result += FormatArray(months);
+            result += " ";
+            result += FormatArray(daysOfWeek);
+
+            return result;
         }
 
         public string RawSpecification

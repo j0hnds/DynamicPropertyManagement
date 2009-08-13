@@ -23,6 +23,8 @@ namespace STUtils
 
         private Dictionary<string,StringTemplateGroup> templateGroups;
 
+        private DateRenderer dateRenderer;
+
         protected ILog log;
         
         private DomainRenderer()
@@ -48,6 +50,8 @@ namespace STUtils
             baseTemplateGroup = StringTemplateGroup.LoadGroup(BASE_TEMPLATES_GROUP);
 
             templateGroups = new Dictionary<string, StringTemplateGroup>();
+
+            dateRenderer = new DateRenderer();
             
         }
 
@@ -98,6 +102,8 @@ namespace STUtils
             StringTemplateGroup stGroup = this[domain.GetType().Name];
 
             StringTemplate st = stGroup.GetInstanceOf(type);
+
+            st.RegisterAttributeRenderer(typeof(DateTime), dateRenderer);
 
             st.SetAttribute("domain", domain);
 

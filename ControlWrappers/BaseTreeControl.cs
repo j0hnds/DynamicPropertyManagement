@@ -95,7 +95,7 @@ namespace ControlWrappers
             return domain;
         }
 
-        public Domain GetSelectedDomain()
+        public virtual Domain GetSelectedDomain()
         {
             Domain domain = null;
 

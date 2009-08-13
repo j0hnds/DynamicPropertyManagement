@@ -1048,7 +1048,7 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="766 626">
+  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="831 626">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
@@ -1293,6 +1293,7 @@ Production</property>
                         <property name="UseStock">True</property>
                         <property name="Type">StockItem</property>
                         <property name="StockId">gtk-apply</property>
+                        <signal name="Clicked" handler="ApplyButtonClicked" />
                         <property name="label">gtk-apply</property>
                       </widget>
                       <packing>
@@ -1389,6 +1390,21 @@ Production</property>
                     <property name="CurrentPage">0</property>
                     <property name="ShowTabs">False</property>
                     <child>
+                      <widget class="Gtk.Label" id="label2">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Nothing Selected</property>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label1">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">page3</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="Gtk.Table" id="table4">
                         <property name="MemberName" />
                         <property name="NRows">4</property>
@@ -1447,6 +1463,7 @@ Production</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
+                            <signal name="Toggled" handler="EndDateNullToggled" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">3</property>
@@ -1470,6 +1487,7 @@ Production</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
+                            <signal name="Toggled" handler="StartDateNullToggled" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">1</property>
@@ -1612,6 +1630,9 @@ Production</property>
                           </packing>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                      </packing>
                     </child>
                     <child>
                       <widget class="Gtk.Label" id="label6">
@@ -1636,6 +1657,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-select-all</property>
+                            <signal name="Clicked" handler="SelectAllDaysClicked" />
                             <property name="label">gtk-select-all</property>
                           </widget>
                           <packing>
@@ -1661,6 +1683,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-select-all</property>
+                            <signal name="Clicked" handler="SelectAllDOWClicked" />
                             <property name="label">gtk-select-all</property>
                           </widget>
                           <packing>
@@ -1686,6 +1709,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-select-all</property>
+                            <signal name="Clicked" handler="SelectAllHoursClicked" />
                             <property name="label">gtk-select-all</property>
                           </widget>
                           <packing>
@@ -1711,6 +1735,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-select-all</property>
+                            <signal name="Clicked" handler="SelectAllMinutesClicked" />
                             <property name="label">gtk-select-all</property>
                           </widget>
                           <packing>
@@ -1734,6 +1759,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-select-all</property>
+                            <signal name="Clicked" handler="SelectAllMonthsClicked" />
                             <property name="label">gtk-select-all</property>
                           </widget>
                           <packing>
@@ -1759,6 +1785,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-clear</property>
+                            <signal name="Clicked" handler="ClearDaysClicked" />
                             <property name="label">gtk-clear</property>
                           </widget>
                           <packing>
@@ -1784,6 +1811,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-clear</property>
+                            <signal name="Clicked" handler="ClearDOWClicked" />
                             <property name="label">gtk-clear</property>
                           </widget>
                           <packing>
@@ -1809,6 +1837,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-clear</property>
+                            <signal name="Clicked" handler="ClearHoursClicked" />
                             <property name="label">gtk-clear</property>
                           </widget>
                           <packing>
@@ -1834,6 +1863,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-clear</property>
+                            <signal name="Clicked" handler="ClearMinutesClicked" />
                             <property name="label">gtk-clear</property>
                           </widget>
                           <packing>
@@ -1857,6 +1887,7 @@ Production</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
                             <property name="StockId">gtk-clear</property>
+                            <signal name="Clicked" handler="ClearMonthsClicked" />
                             <property name="label">gtk-clear</property>
                           </widget>
                           <packing>
@@ -2023,10 +2054,11 @@ Production</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.TreeView" id="tvMinutes">
-                                <property name="MemberName" />
+                                <property name="MemberName">MinutesEditor</property>
                                 <property name="CanFocus">True</property>
                                 <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
+                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
                               </widget>
                             </child>
                           </widget>
@@ -2050,10 +2082,11 @@ Production</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.TreeView" id="tvHours">
-                                <property name="MemberName" />
+                                <property name="MemberName">HoursEditor</property>
                                 <property name="CanFocus">True</property>
                                 <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
+                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
                               </widget>
                             </child>
                           </widget>
@@ -2079,10 +2112,11 @@ Production</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.TreeView" id="tvDays">
-                                <property name="MemberName" />
+                                <property name="MemberName">DaysEditor</property>
                                 <property name="CanFocus">True</property>
                                 <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
+                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
                               </widget>
                             </child>
                           </widget>
@@ -2108,10 +2142,11 @@ Production</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.TreeView" id="tvMonths">
-                                <property name="MemberName" />
+                                <property name="MemberName">MonthsEditor</property>
                                 <property name="CanFocus">True</property>
                                 <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
+                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
                               </widget>
                             </child>
                           </widget>
@@ -2137,10 +2172,11 @@ Production</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.TreeView" id="tvDOWs">
-                                <property name="MemberName" />
+                                <property name="MemberName">DOWEditor</property>
                                 <property name="CanFocus">True</property>
                                 <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
+                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
                               </widget>
                             </child>
                           </widget>
@@ -2205,7 +2241,7 @@ Production</property>
                         </child>
                       </widget>
                       <packing>
-                        <property name="Position">1</property>
+                        <property name="Position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -2241,9 +2277,11 @@ Production</property>
                     <child>
                       <widget class="Gtk.TreeView" id="tvEffectiveValues">
                         <property name="MemberName" />
+                        <property name="WidthRequest">300</property>
                         <property name="CanFocus">True</property>
                         <property name="EnableSearch">False</property>
                         <property name="HeadersVisible">False</property>
+                        <signal name="CursorChanged" handler="EffectiveValueCursorChanged" />
                       </widget>
                     </child>
                   </widget>
