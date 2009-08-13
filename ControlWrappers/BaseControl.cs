@@ -42,7 +42,7 @@ namespace ControlWrappers
             return ok;
         }
 
-        protected void DomainToControls(Domain domain)
+        protected virtual void DomainToControls(Domain domain)
         {
             foreach (BaseBoundControl bbc in boundControls)
             {
@@ -50,7 +50,7 @@ namespace ControlWrappers
             }
         }
 
-        protected void ControlsToDomain(Domain domain)
+        protected virtual void ControlsToDomain(Domain domain)
         {
             foreach (BaseBoundControl bbc in boundControls)
             {

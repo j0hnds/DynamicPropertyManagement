@@ -505,17 +505,15 @@ Production</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Entry" id="txtApplicationName">
+              <widget class="ControlWrappers.BoundEntry" id="txtApplicationName">
                 <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="IsEditable">True</property>
-                <property name="ActivatesDefault">True</property>
-                <property name="InvisibleChar">●</property>
+                <property name="Events">ButtonPressMask</property>
+                <property name="AttributeName">Name</property>
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
                 <property name="YOptions">Fill</property>
                 <property name="XExpand">True</property>
                 <property name="XFill">True</property>

@@ -17,7 +17,7 @@ namespace PropertyManager {
         
         private Gtk.Label lblApplicationName;
         
-        private Gtk.Entry txtApplicationName;
+        private ControlWrappers.BoundEntry txtApplicationName;
         
         private Gtk.Button buttonCancel;
         
@@ -47,12 +47,10 @@ namespace PropertyManager {
             w2.XOptions = ((Gtk.AttachOptions)(4));
             w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.txtApplicationName = new Gtk.Entry();
-            this.txtApplicationName.CanFocus = true;
+            this.txtApplicationName = new ControlWrappers.BoundEntry();
+            this.txtApplicationName.Events = ((Gdk.EventMask)(256));
             this.txtApplicationName.Name = "txtApplicationName";
-            this.txtApplicationName.IsEditable = true;
-            this.txtApplicationName.ActivatesDefault = true;
-            this.txtApplicationName.InvisibleChar = '●';
+            this.txtApplicationName.AttributeName = "Name";
             this.table1.Add(this.txtApplicationName);
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.txtApplicationName]));
             w3.LeftAttach = ((uint)(1));
