@@ -509,6 +509,8 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="AttributeName">Name</property>
+                <property name="ContextName">DialogContext</property>
+                <property name="DomainName">Application</property>
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>

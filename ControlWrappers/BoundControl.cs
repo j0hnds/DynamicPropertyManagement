@@ -8,7 +8,10 @@ namespace ControlWrappers
     public interface BoundControl
     {
         string AttributeName { get; set; }
-        void SetFromDomain(DomainCore.Domain domain);
-        void SetToDomain(DomainCore.Domain domain);
+        string ContextName { get; set; }
+        string DomainName { get; set; }
+        void SetFromContext();
+        void SetToContext();
+        void ConnectControl();
     }
 }

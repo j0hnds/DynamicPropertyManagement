@@ -11,11 +11,12 @@
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.Entry" id="entry1">
+      <widget class="Gtk.Entry" id="txtEntry">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
         <property name="IsEditable">True</property>
         <property name="InvisibleChar">●</property>
+        <signal name="Changed" handler="TextEntryChanged" />
       </widget>
     </child>
   </widget>

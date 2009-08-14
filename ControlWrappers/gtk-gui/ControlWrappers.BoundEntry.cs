@@ -13,7 +13,7 @@ namespace ControlWrappers {
     
     public partial class BoundEntry {
         
-        private Gtk.Entry entry1;
+        private Gtk.Entry txtEntry;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -21,16 +21,17 @@ namespace ControlWrappers {
             Stetic.BinContainer.Attach(this);
             this.Name = "ControlWrappers.BoundEntry";
             // Container child ControlWrappers.BoundEntry.Gtk.Container+ContainerChild
-            this.entry1 = new Gtk.Entry();
-            this.entry1.CanFocus = true;
-            this.entry1.Name = "entry1";
-            this.entry1.IsEditable = true;
-            this.entry1.InvisibleChar = '●';
-            this.Add(this.entry1);
+            this.txtEntry = new Gtk.Entry();
+            this.txtEntry.CanFocus = true;
+            this.txtEntry.Name = "txtEntry";
+            this.txtEntry.IsEditable = true;
+            this.txtEntry.InvisibleChar = '●';
+            this.Add(this.txtEntry);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Hide();
+            this.txtEntry.Changed += new System.EventHandler(this.TextEntryChanged);
         }
     }
 }

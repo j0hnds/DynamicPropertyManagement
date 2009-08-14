@@ -51,6 +51,8 @@ namespace PropertyManager {
             this.txtApplicationName.Events = ((Gdk.EventMask)(256));
             this.txtApplicationName.Name = "txtApplicationName";
             this.txtApplicationName.AttributeName = "Name";
+            this.txtApplicationName.ContextName = "DialogContext";
+            this.txtApplicationName.DomainName = "Application";
             this.table1.Add(this.txtApplicationName);
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.txtApplicationName]));
             w3.LeftAttach = ((uint)(1));

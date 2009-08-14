@@ -49,6 +49,11 @@
     <Compile Include="BoundEntry.cs" />
     <Compile Include="gtk-gui\ControlWrappers.BoundEntry.cs" />
     <Compile Include="BoundControl.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="BoundDialog.cs" />
+    <Compile Include="BoundControlDelegate.cs" />
+    <Compile Include="ContextContainer.cs" />
+    <Compile Include="DataBoundDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

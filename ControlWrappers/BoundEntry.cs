@@ -1,6 +1,7 @@
 
 using System;
 using Gtk;
+using DomainCore;
 
 namespace ControlWrappers
 {
@@ -9,48 +10,75 @@ namespace ControlWrappers
     [System.ComponentModel.ToolboxItem(true)]
     public partial class BoundEntry : Bin, BoundControl
     {
-        private string attributeName;
+        private BoundControlDelegate bcd;
         
         public BoundEntry()
         {
             this.Build();
+            bcd = new BoundControlDelegate(this);
+            bcd.ContextChanged += ContextChangeHandler;
         }
 
-        private Entry Entry
+        private void ContextChangeHandler(string contextName, string itemName)
         {
-            get { return Child as Entry; }
+            SetFromContext();
         }
 
         public string AttributeName
         {
-            get { return attributeName; }
-            set { attributeName = value; }
+            get { return bcd.AttributeName; }
+            set { bcd.AttributeName = value; }
         }
 
-        public void SetFromDomain(DomainCore.Domain domain)
+        public string ContextName
         {
-            object val = domain.GetValue(attributeName);
+            get { return bcd.ContextName; }
+            set { bcd.ContextName = value; }
+        }
+
+        public string DomainName
+        {
+            get { return bcd.DomainName; }
+            set { bcd.DomainName = value; }
+        }
+
+        public void SetFromContext()
+        {
+            object val = bcd.DomainValue;
             if (val != null)
             {
-                Entry.Text = val.ToString();
+                txtEntry.Text = val.ToString();
             }
             else
             {
-                Entry.Text = "";
+                txtEntry.Text = "";
             }
         }
 
-        public void SetToDomain(DomainCore.Domain domain)
+        public void SetToContext()
         {
-            string tValue = Entry.Text;
+            string tValue = txtEntry.Text;
             if (tValue.Length > 0)
             {
-                domain.SetValue(attributeName, tValue);
+                bcd.DomainValue = tValue;
             }
             else
             {
-                domain.SetValue(attributeName, null);
+                bcd.DomainValue = null;
             }
+        }
+
+        #region BoundControl implementation
+        public void ConnectControl ()
+        {
+            bcd.ConnectControl();
+        }
+
+        #endregion
+
+        protected virtual void TextEntryChanged (object sender, System.EventArgs e)
+        {
+            SetToContext();
         }
     }
 }
