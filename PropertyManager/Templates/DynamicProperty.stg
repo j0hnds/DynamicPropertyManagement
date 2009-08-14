@@ -3,6 +3,14 @@ group DynamicProperty;
 // Boiler-plate macro for no applications message
 NoApplications() ::= "No applications currently use this property definition."
 
+ValueCriteria(it) ::= <<
+- <it.RawCriteria> - <it.Value><\n>
+>>
+
+EffectiveValues(it) ::= <<
+* <it.EffectiveStartDate> - <it.EffectiveEndDate><\n>    <it.ValueCriteria:ValueCriteria()>
+>>
+
 // The main object summary
 Summary(domain) ::= <<
 You have selected Dynamic Property '<domain.Category>.<domain.QualifiedName>'. 
@@ -12,6 +20,14 @@ You have selected Dynamic Property '<domain.Category>.<domain.QualifiedName>'.
 <caption(text="Default Value:")> <domain.DefaultValue>
 <caption(text="Effective Value:")> <domain.CurrentEffectiveValue>
 
+<if(domain.EffectiveValues)>
+The following effective dates/criteria have been set for this property:
+{{Monospaced}}
+  <domain.EffectiveValues:EffectiveValues()>
+{{/}}
+<else>
+No effective dates/criteria have been set for this property.
+<endif>
 >>
 
 // The summary to display for a category

@@ -1,17 +1,17 @@
 
 using System;
 using Gtk;
-using Pango;
 using ControlWrappers;
+using Pango;
 
 namespace PropertyManager
 {
     
     
-    public class MainTextViewControl : BaseTextViewControl
+    public class TestDynPropertyTextViewControl : BaseTextViewControl
     {
         
-        public MainTextViewControl(Widget widget) :
+        public TestDynPropertyTextViewControl(Widget widget) :
             base(widget)
         {
             TextTag tag = new TextTag("Caption");

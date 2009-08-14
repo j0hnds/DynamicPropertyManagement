@@ -89,6 +89,9 @@
     <Compile Include="DynPropEntryDlg.cs" />
     <Compile Include="gtk-gui\PropertyManager.DynPropEntryDlg.cs" />
     <Compile Include="EffectiveDateListControl.cs" />
+    <Compile Include="TestDynPropDlg.cs" />
+    <Compile Include="gtk-gui\PropertyManager.TestDynPropDlg.cs" />
+    <Compile Include="TestDynPropertyTextViewControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -158,6 +158,7 @@ public partial class MainWindow: Gtk.Window
         AddAction.Sensitive = somethingSelected;
         RemoveAction.Sensitive = somethingSelected;
         PropertiesAction.Sensitive = somethingSelected;
+        ExecuteAction.Sensitive = false;
     }
 
     private void HandlePropertyDefinitionToolBarSensitivity()
@@ -168,18 +169,21 @@ public partial class MainWindow: Gtk.Window
             AddAction.Sensitive = true;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
+            ExecuteAction.Sensitive = false;
             break;
 
         case PropertyDefinitionLevels.Property:
             AddAction.Sensitive = true;
             RemoveAction.Sensitive = true;
             PropertiesAction.Sensitive = true;
+            ExecuteAction.Sensitive = false;
             break;
 
         case PropertyDefinitionLevels.None:
             AddAction.Sensitive = false;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
+            ExecuteAction.Sensitive = false;
             break;
         }
     }
@@ -192,24 +196,28 @@ public partial class MainWindow: Gtk.Window
             AddAction.Sensitive = true;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
+            ExecuteAction.Sensitive = false;
             break;
 
         case DynamicPropertyLevels.Category:
             AddAction.Sensitive = true;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
+            ExecuteAction.Sensitive = false;
             break;
 
         case DynamicPropertyLevels.None:
             AddAction.Sensitive = false;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
+            ExecuteAction.Sensitive = false;
             break;
 
         case DynamicPropertyLevels.Property:
             AddAction.Sensitive = true;
             RemoveAction.Sensitive = true;
             PropertiesAction.Sensitive = true;
+            ExecuteAction.Sensitive = true;
             break;
         }
     }
@@ -221,6 +229,7 @@ public partial class MainWindow: Gtk.Window
         AddAction.Sensitive = somethingSelected;
         RemoveAction.Sensitive = somethingSelected;
         PropertiesAction.Sensitive = somethingSelected;
+        ExecuteAction.Sensitive = false;
     }
 
     private void HandleNoopToolBarSensitivity()
@@ -228,6 +237,7 @@ public partial class MainWindow: Gtk.Window
         AddAction.Sensitive = false;
         RemoveAction.Sensitive = false;
         PropertiesAction.Sensitive = false;
+        ExecuteAction.Sensitive = false;
     }
 
     private void HandleToolBarSensitivity()
@@ -724,6 +734,15 @@ public partial class MainWindow: Gtk.Window
     protected virtual void SwitchPageAction (object o, Gtk.SwitchPageArgs args)
     {
         HandleToolBarSensitivity();
+    }
+
+    protected virtual void TestDynamicPropertyAction (object sender, System.EventArgs e)
+    {
+        Domain domain = dynPropertyListCtl.GetSelectedDomain();
+        
+        TestDynPropDlg dlg = new TestDynPropDlg();
+
+        dlg.DoModal(this, domain);
     }
 
 

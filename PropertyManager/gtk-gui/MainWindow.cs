@@ -24,6 +24,8 @@ public partial class MainWindow {
     
     private Gtk.Action PropertiesAction;
     
+    private Gtk.Action ExecuteAction;
+    
     private Gtk.VBox vbox1;
     
     private Gtk.MenuBar menubar1;
@@ -87,6 +89,10 @@ public partial class MainWindow {
         this.PropertiesAction.Sensitive = false;
         this.PropertiesAction.ShortLabel = Mono.Unix.Catalog.GetString("_Properties");
         w1.Add(this.PropertiesAction, null);
+        this.ExecuteAction = new Gtk.Action("ExecuteAction", Mono.Unix.Catalog.GetString("_Execute"), null, "gtk-execute");
+        this.ExecuteAction.Sensitive = false;
+        this.ExecuteAction.ShortLabel = Mono.Unix.Catalog.GetString("_Execute");
+        w1.Add(this.ExecuteAction, null);
         this.UIManager.InsertActionGroup(w1, 0);
         this.AddAccelGroup(this.UIManager.AccelGroup);
         this.WidthRequest = 640;
@@ -108,7 +114,7 @@ public partial class MainWindow {
         w2.Expand = false;
         w2.Fill = false;
         // Container child vbox1.Gtk.Box+BoxChild
-        this.UIManager.AddUiFromString("<ui><toolbar name='mainToolbar'><toolitem name='AddAction' action='AddAction'/><toolitem name='RemoveAction' action='RemoveAction'/><toolitem name='PropertiesAction' action='PropertiesAction'/></toolbar></ui>");
+        this.UIManager.AddUiFromString("<ui><toolbar name='mainToolbar'><toolitem name='AddAction' action='AddAction'/><toolitem name='RemoveAction' action='RemoveAction'/><toolitem name='PropertiesAction' action='PropertiesAction'/><toolitem name='ExecuteAction' action='ExecuteAction'/></toolbar></ui>");
         this.mainToolbar = ((Gtk.Toolbar)(this.UIManager.GetWidget("/mainToolbar")));
         this.mainToolbar.Name = "mainToolbar";
         this.mainToolbar.ShowArrow = false;
@@ -253,6 +259,7 @@ public partial class MainWindow {
         this.AddAction.Activated += new System.EventHandler(this.AddItemAction);
         this.RemoveAction.Activated += new System.EventHandler(this.RemoveItemAction);
         this.PropertiesAction.Activated += new System.EventHandler(this.ItemPropertyAction);
+        this.ExecuteAction.Activated += new System.EventHandler(this.TestDynamicPropertyAction);
         this.nbSelections.SwitchPage += new Gtk.SwitchPageHandler(this.SwitchPageAction);
         this.tvApplications.CursorChanged += new System.EventHandler(this.ApplicationCursorChanged);
         this.tvForms.CursorChanged += new System.EventHandler(this.FormCursorChanged);
