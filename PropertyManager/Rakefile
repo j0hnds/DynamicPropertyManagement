@@ -44,7 +44,7 @@ task :testinit do
 end
 
 # Source files excluding the test files.
-SRC = FileList['**/*.cs'].exclude("Test*.cs")
+SRC = FileList['**/*.cs']
 # Source files including the test files
 TEST_SRC = FileList['**/*.cs']
 # Template files
@@ -58,7 +58,8 @@ file PROJECT_TARGET => SRC do |t|
   c.references = [ "DomainCore.dll", "DAOCore.dll",
                    "STUtils.dll", "ControlWrappers.dll",
                    "System.Data.dll", "System.Configuration.dll",
-                   "Mono.Posix.dll" ]
+                   "Mono.Posix.dll", "CronUtils.dll",
+                   "DynPropertyDomain.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net" ]
   c.debug = DEBUG
   c.exec
@@ -72,7 +73,8 @@ file TEST_PATH => TEST_SRC do |t|
   c.references = [ "DomainCore.dll", "DAOCore.dll",
                    "STUtils.dll", "ControlWrappers.dll",
                    "System.Data.dll", "System.Configuration.dll",
-                   "Mono.Posix.dll" ]
+                   "Mono.Posix.dll", "CronUtils.dll",
+                   "DynPropertyDomain.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net", "nunit" ]
   c.debug = DEBUG
   c.exec
@@ -83,6 +85,8 @@ task :test => [ :testinit, TEST_PATH ] do |t|
   cp "#{LIB_DIR}/DAOCore.dll", TEST_DIR
   cp "#{LIB_DIR}/STUtils.dll", TEST_DIR
   cp "#{LIB_DIR}/ControlWrappers.dll", TEST_DIR
+  cp "#{LIB_DIR}/CronUtils.dll", TEST_DIR
+  cp "#{LIB_DIR}/DynPropertyDomain.dll", TEST_DIR
   nu = NUnitConsole.new t.prerequisites[1]
   nu.exec
 end

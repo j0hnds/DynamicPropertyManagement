@@ -28,7 +28,8 @@ task "PropertyManager.deploy" => [ "DomainCore.deploy",
                                    "DAOCore.deploy",
                                    "STUtils.deploy",
                                    "ControlWrappers.deploy",
-                                   "DynPropertyDomain.deploy" ]
+                                   "DynPropertyDomain.deploy",
+                                   "CronUtils.deploy" ]
 
 task :deploy => [ "PropertyManager.deploy" ]
 
