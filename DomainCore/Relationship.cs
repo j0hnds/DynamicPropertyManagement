@@ -28,6 +28,21 @@ namespace DomainCore
             }
         }
 
+        public void Revert()
+        {
+            foreach (Domain domain in domains)
+            {
+                if (domain.NewObject)
+                {
+                    domains.Remove(domain);
+                }
+                else
+                {
+                    domain.Revert();
+                }
+            }
+        }
+
         public void AddObject(Domain domain)
         {
             domains.Add(domain);

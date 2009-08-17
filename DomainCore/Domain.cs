@@ -268,6 +268,7 @@ namespace DomainCore
         bool Dirty { get; }
         void Save(object parentId);
         string SaveSQL(object parentId);
+        void Revert();
     }
 
     
@@ -296,9 +297,22 @@ namespace DomainCore
 
         public void Revert()
         {
-            foreach (Attribute attr in attributes.Values)
+            if (! NewObject)
             {
-                attr.Revert();
+                if (ForDelete)
+                {
+                    ForDelete = false;
+                }
+                
+                foreach (Attribute attr in attributes.Values)
+                {
+                    attr.Revert();
+                }
+    
+                foreach (Relationship rel in relationships.Values)
+                {
+                    rel.Revert();
+                }
             }
         }
 

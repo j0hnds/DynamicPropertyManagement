@@ -54,6 +54,14 @@
     <Compile Include="BoundControlDelegate.cs" />
     <Compile Include="ContextContainer.cs" />
     <Compile Include="DataBoundDialog.cs" />
+    <Compile Include="BoundTime.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundTime.cs" />
+    <Compile Include="BoundCalendar.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundCalendar.cs" />
+    <Compile Include="BoundComboBox.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundComboBox.cs" />
+    <Compile Include="BoundTextView.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundTextView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

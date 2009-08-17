@@ -1,7 +1,6 @@
 
 using System;
 using Gtk;
-using DomainCore;
 
 namespace ControlWrappers
 {

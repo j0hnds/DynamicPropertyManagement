@@ -37,6 +37,11 @@ namespace ControlWrappers
             OnContextChanged(name);
         }
 
+        public void AddObject(Domain obj)
+        {
+            AddObject(obj.GetType().Name, obj);
+        }
+
         public void RemoveObject(string name)
         {
             if (contents.ContainsKey(name))

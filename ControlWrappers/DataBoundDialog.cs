@@ -46,25 +46,48 @@ namespace ControlWrappers
         }
         #endregion
 
+        protected virtual DataContext CreateDataContext()
+        {
+            DataContext context = new DataContext();
+
+            SetContext("DialogContext", context);
+
+            return context;
+        }
+
+        public virtual bool DoModal(Window parentWindow)
+        {
+            return DoModal(parentWindow, null);
+        }
+
         public virtual bool DoModal(Window parentWindow, Domain domain)
         {
             bool ok = false;
 
             // Construct a data context and register it...
-            DataContext context = new DataContext();
-
-            SetContext("DialogContext", context);
+            DataContext context = CreateDataContext();
 
             ScanControls();
 
-            context.AddObject(domain.GetType().Name, domain);
+            if (domain != null)
+            {
+                context.AddObject(domain);
+            }
 
             TransientFor = parentWindow;
 
             int response = Run();
-            if (response == Gtk.ResponseType.Ok.value__)
+            if (response == (int) Gtk.ResponseType.Ok)
             {
                 ok = true;
+            }
+            else if (response == (int) Gtk.ResponseType.Cancel)
+            {
+                if (domain != null)
+                {
+                    domain.Revert();
+                }
+                ok = false;
             }
 
             Destroy();
