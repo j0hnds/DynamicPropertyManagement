@@ -58,6 +58,8 @@
     <Compile Include="gtk-gui\ControlWrappers.BoundComboBox.cs" />
     <Compile Include="BoundTextView.cs" />
     <Compile Include="gtk-gui\ControlWrappers.BoundTextView.cs" />
+    <Compile Include="CronValueEditor.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.CronValueEditor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -68,6 +70,10 @@
     <ProjectReference Include="..\STUtils\STUtils.csproj">
       <Project>{261E235C-0CCB-40B6-86ED-FADEADE0B122}</Project>
       <Name>STUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CronUtils\CronUtils.csproj">
+      <Project>{924287B6-61A5-42C3-BB98-38E746C82ECD}</Project>
+      <Name>CronUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
