@@ -249,7 +249,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="ControlWrappers.CronValueEditor" design-size="211 300">
+  <widget class="Gtk.Bin" id="ControlWrappers.CronValueEditor" design-size="355 300">
     <action-group name="Default">
       <action id="selectAllAction">
         <property name="Type">Action</property>
@@ -294,7 +294,7 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
-            <property name="ButtonStyle">Both</property>
+            <property name="ButtonStyle">Icons</property>
             <property name="IconSize">LargeToolbar</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="selectAllAction" />

@@ -1059,7 +1059,8 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="896 626">
+  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="812 606">
+    <action-group name="Default" />
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
@@ -1535,262 +1536,7 @@ Production</property>
                         <property name="NColumns">5</property>
                         <property name="RowSpacing">6</property>
                         <property name="ColumnSpacing">6</property>
-                        <child>
-                          <widget class="Gtk.Button" id="btnAllDays">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-select-all</property>
-                            <signal name="Clicked" handler="SelectAllDaysClicked" />
-                            <property name="label">gtk-select-all</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnAllDOWs">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-select-all</property>
-                            <signal name="Clicked" handler="SelectAllDOWClicked" />
-                            <property name="label">gtk-select-all</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">4</property>
-                            <property name="RightAttach">5</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnAllHours">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-select-all</property>
-                            <signal name="Clicked" handler="SelectAllHoursClicked" />
-                            <property name="label">gtk-select-all</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnAllMinutes">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-select-all</property>
-                            <signal name="Clicked" handler="SelectAllMinutesClicked" />
-                            <property name="label">gtk-select-all</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnAllMonths">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-select-all</property>
-                            <signal name="Clicked" handler="SelectAllMonthsClicked" />
-                            <property name="label">gtk-select-all</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnNoneDays">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-clear</property>
-                            <signal name="Clicked" handler="ClearDaysClicked" />
-                            <property name="label">gtk-clear</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnNoneDOWs">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-clear</property>
-                            <signal name="Clicked" handler="ClearDOWClicked" />
-                            <property name="label">gtk-clear</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="LeftAttach">4</property>
-                            <property name="RightAttach">5</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnNoneHours">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-clear</property>
-                            <signal name="Clicked" handler="ClearHoursClicked" />
-                            <property name="label">gtk-clear</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnNoneMinutes">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-clear</property>
-                            <signal name="Clicked" handler="ClearMinutesClicked" />
-                            <property name="label">gtk-clear</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="btnNoneMonths">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-clear</property>
-                            <signal name="Clicked" handler="ClearMonthsClicked" />
-                            <property name="label">gtk-clear</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
+                        <property name="BorderWidth">6</property>
                         <child>
                           <widget class="Gtk.Label" id="lblCriteria">
                             <property name="MemberName" />
@@ -1932,150 +1678,115 @@ Production</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
+                          <widget class="ControlWrappers.CronValueEditor" id="tvDays">
                             <property name="MemberName" />
-                            <property name="HeightRequest">150</property>
-                            <property name="CanFocus">True</property>
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TreeView" id="tvMinutes">
-                                <property name="MemberName">MinutesEditor</property>
-                                <property name="CanFocus">True</property>
-                                <property name="EnableSearch">False</property>
-                                <property name="HeadersVisible">False</property>
-                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
-                              </widget>
-                            </child>
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="ValueType">2</property>
+                            <signal name="Changed" handler="DaysEditorChanged" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">True</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow3">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TreeView" id="tvHours">
-                                <property name="MemberName">HoursEditor</property>
-                                <property name="CanFocus">True</property>
-                                <property name="EnableSearch">False</property>
-                                <property name="HeadersVisible">False</property>
-                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">True</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow4">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TreeView" id="tvDays">
-                                <property name="MemberName">DaysEditor</property>
-                                <property name="CanFocus">True</property>
-                                <property name="EnableSearch">False</property>
-                                <property name="HeadersVisible">False</property>
-                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
+                            <property name="BottomAttach">4</property>
                             <property name="LeftAttach">2</property>
                             <property name="RightAttach">3</property>
                             <property name="AutoSize">True</property>
                             <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
                             <property name="XExpand">False</property>
                             <property name="XFill">True</property>
                             <property name="XShrink">False</property>
-                            <property name="YExpand">True</property>
+                            <property name="YExpand">False</property>
                             <property name="YFill">True</property>
                             <property name="YShrink">False</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow5">
+                          <widget class="ControlWrappers.CronValueEditor" id="tvDaysOfWeek">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TreeView" id="tvMonths">
-                                <property name="MemberName">MonthsEditor</property>
-                                <property name="CanFocus">True</property>
-                                <property name="EnableSearch">False</property>
-                                <property name="HeadersVisible">False</property>
-                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
-                              </widget>
-                            </child>
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="ValueType">4</property>
+                            <signal name="Changed" handler="DaysOfWeekEditorChanged" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">True</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow6">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TreeView" id="tvDOWs">
-                                <property name="MemberName">DOWEditor</property>
-                                <property name="CanFocus">True</property>
-                                <property name="EnableSearch">False</property>
-                                <property name="HeadersVisible">False</property>
-                                <signal name="CursorChanged" handler="CronEditorCursorChanged" />
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
+                            <property name="BottomAttach">4</property>
                             <property name="LeftAttach">4</property>
                             <property name="RightAttach">5</property>
                             <property name="AutoSize">True</property>
                             <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
                             <property name="XExpand">False</property>
                             <property name="XFill">True</property>
                             <property name="XShrink">False</property>
-                            <property name="YExpand">True</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="ControlWrappers.CronValueEditor" id="tvHours">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="ValueType">1</property>
+                            <signal name="Changed" handler="HoursEditorChanged" />
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">1</property>
+                            <property name="BottomAttach">4</property>
+                            <property name="LeftAttach">1</property>
+                            <property name="RightAttach">2</property>
+                            <property name="AutoSize">True</property>
+                            <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">False</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="ControlWrappers.CronValueEditor" id="tvMinutes">
+                            <property name="MemberName" />
+                            <property name="HeightRequest">200</property>
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="ValueType">0</property>
+                            <signal name="Changed" handler="MinutesEditorChanged" />
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">1</property>
+                            <property name="BottomAttach">4</property>
+                            <property name="AutoSize">True</property>
+                            <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">False</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="ControlWrappers.CronValueEditor" id="tvMonths">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="ValueType">3</property>
+                            <signal name="Changed" handler="MonthsEditorChanged" />
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">1</property>
+                            <property name="BottomAttach">4</property>
+                            <property name="LeftAttach">3</property>
+                            <property name="RightAttach">4</property>
+                            <property name="AutoSize">True</property>
+                            <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">False</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
                             <property name="YFill">True</property>
                             <property name="YShrink">False</property>
                           </packing>
@@ -2151,10 +1862,11 @@ Production</property>
                     <property name="RightAttach">2</property>
                     <property name="AutoSize">True</property>
                     <property name="XOptions">Fill</property>
+                    <property name="YOptions">Fill</property>
                     <property name="XExpand">False</property>
                     <property name="XFill">True</property>
                     <property name="XShrink">False</property>
-                    <property name="YExpand">True</property>
+                    <property name="YExpand">False</property>
                     <property name="YFill">True</property>
                     <property name="YShrink">False</property>
                   </packing>
@@ -2180,10 +1892,11 @@ Production</property>
                     <property name="BottomAttach">2</property>
                     <property name="AutoSize">True</property>
                     <property name="XOptions">Fill</property>
+                    <property name="YOptions">Fill</property>
                     <property name="XExpand">False</property>
                     <property name="XFill">True</property>
                     <property name="XShrink">False</property>
-                    <property name="YExpand">True</property>
+                    <property name="YExpand">False</property>
                     <property name="YFill">True</property>
                     <property name="YShrink">False</property>
                   </packing>
@@ -2192,12 +1905,16 @@ Production</property>
               <packing>
                 <property name="Position">1</property>
                 <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
           </widget>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

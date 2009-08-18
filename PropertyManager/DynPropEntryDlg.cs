@@ -12,43 +12,43 @@ using CronUtils;
 namespace PropertyManager
 {
 
-    public enum CronEditorType
-    {
-        Minutes,
-        Hours,
-        Days,
-        Months,
-        DaysOfWeek
-    }
+//    public enum CronEditorType
+//    {
+//        Minutes,
+//        Hours,
+//        Days,
+//        Months,
+//        DaysOfWeek
+//    }
     
     public partial class DynPropEntryDlg : DataBoundDialog // Gtk.Dialog
     {
         private EffectiveDateListControl evListCtl;
 
-        private static readonly string[] MONTHS = {
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-        };
-
-        private static readonly string[] DOWS = {
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat"
-        };
+//        private static readonly string[] MONTHS = {
+//            "Jan",
+//            "Feb",
+//            "Mar",
+//            "Apr",
+//            "May",
+//            "Jun",
+//            "Jul",
+//            "Aug",
+//            "Sep",
+//            "Oct",
+//            "Nov",
+//            "Dec"
+//        };
+//
+//        private static readonly string[] DOWS = {
+//            "Sun",
+//            "Mon",
+//            "Tue",
+//            "Wed",
+//            "Thu",
+//            "Fri",
+//            "Sat"
+//        };
 
         private ILog log;
 
@@ -73,7 +73,7 @@ namespace PropertyManager
 
             evListCtl = new EffectiveDateListControl(tvEffectiveValues);
 
-            SetUpCronEditor();
+//            SetUpCronEditor();
         }
 
 //        private void SetUpForms()
@@ -129,14 +129,20 @@ namespace PropertyManager
                 // Here is where we set up the cron editor; we always
                 // do this when a new ValueCriteria is set up.
                 CronSpecification cs = new CronSpecification(rawCriteria);
-    
+
+                tvMinutes.SpecificationList = cs.Minutes;
+                tvHours.SpecificationList = cs.Hours;
+                tvDays.SpecificationList = cs.Days;
+                tvMonths.SpecificationList = cs.Months;
+                tvDaysOfWeek.SpecificationList = cs.DaysOfWeek;
+                
                 // Set up the values in the editors based on the value
                 // of the specification
-                SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
-                SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
-                SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
-                SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
-                SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
+                // SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
+                // SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
+                // SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
+                // SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
+                // SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
             }
         }
         
@@ -255,173 +261,173 @@ namespace PropertyManager
 //            SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
         }
 
-        private void SetCronEditorValues(ListStore ls, ArrayList cronSpecs)
-        {
-            TreeIter iter = TreeIter.Zero;
-            bool more = ls.GetIterFirst(out iter);
-            while (more)
-            {
-                int val = (int) ls.GetValue(iter, 2);
-                ls.SetValue(iter, 0, IsValueEffective(cronSpecs, val));
-                more = ls.IterNext(ref iter);
-            }
-        }
+//        private void SetCronEditorValues(ListStore ls, ArrayList cronSpecs)
+//        {
+//            TreeIter iter = TreeIter.Zero;
+//            bool more = ls.GetIterFirst(out iter);
+//            while (more)
+//            {
+//                int val = (int) ls.GetValue(iter, 2);
+//                ls.SetValue(iter, 0, IsValueEffective(cronSpecs, val));
+//                more = ls.IterNext(ref iter);
+//            }
+//        }
+//
+//        private bool IsValueEffective(ArrayList cronSpecs, int val)
+//        {
+//            bool effective = false;
+//            
+//            foreach (object cronSpec in cronSpecs)
+//            {
+//                CronEffectiveValue cev = (CronEffectiveValue) cronSpec;
+//                effective = cev.IsEffective(val);
+//                if (effective)
+//                {
+//                    break;
+//                }
+//            }
+//
+//            return effective;
+//        }
 
-        private bool IsValueEffective(ArrayList cronSpecs, int val)
-        {
-            bool effective = false;
-            
-            foreach (object cronSpec in cronSpecs)
-            {
-                CronEffectiveValue cev = (CronEffectiveValue) cronSpec;
-                effective = cev.IsEffective(val);
-                if (effective)
-                {
-                    break;
-                }
-            }
+//        private void SetUpCronEditor()
+//        {
+////            SetUpCronMinuteEditor();
+////            SetUpCronHourEditor();
+////            SetUpCronDayEditor();
+////            SetUpCronMonthEditor();
+////            SetUpCronDOWEditor();
+//        }
 
-            return effective;
-        }
+//        private void SetUpCronMinuteEditor()
+//        {
+//            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
+//            tvMinutes.Model = listStore;
+//            tvMinutes.Data["EditorType"] = CronEditorType.Minutes;
+//
+//            TreeViewColumn vc = new TreeViewColumn();
+//            vc.Title = "Checked";
+//            CellRenderer cellRenderer = new CellRendererToggle();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "active", 0);
+//            tvMinutes.AppendColumn(vc);
+//
+//            vc = new TreeViewColumn();
+//            vc.Title = "Minute";
+//            cellRenderer = new CellRendererText();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "text", 1);
+//            tvMinutes.AppendColumn(vc);
+//
+//            for (int i=0; i<60; i++)
+//            {
+//                listStore.AppendValues(true, i.ToString(), i);
+//            }
+//        }
+//
+//        private void SetUpCronHourEditor()
+//        {
+//            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
+//            tvHours.Model = listStore;
+//            tvHours.Data["EditorType"] = CronEditorType.Hours;
+//
+//            TreeViewColumn vc = new TreeViewColumn();
+//            vc.Title = "Checked";
+//            CellRenderer cellRenderer = new CellRendererToggle();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "active", 0);
+//            tvHours.AppendColumn(vc);
+//
+//            vc = new TreeViewColumn();
+//            vc.Title = "Minute";
+//            cellRenderer = new CellRendererText();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "text", 1);
+//            tvHours.AppendColumn(vc);
+//
+//            for (int i=0; i<24; i++)
+//            {
+//                listStore.AppendValues(true, i.ToString(), i);
+//            }
+//        }
 
-        private void SetUpCronEditor()
-        {
-            SetUpCronMinuteEditor();
-            SetUpCronHourEditor();
-            SetUpCronDayEditor();
-            SetUpCronMonthEditor();
-            SetUpCronDOWEditor();
-        }
+//        private void SetUpCronDayEditor()
+//        {
+//            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
+//            tvDays.Model = listStore;
+//            tvDays.Data["EditorType"] = CronEditorType.Days;
+//
+//            TreeViewColumn vc = new TreeViewColumn();
+//            vc.Title = "Checked";
+//            CellRenderer cellRenderer = new CellRendererToggle();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "active", 0);
+//            tvDays.AppendColumn(vc);
+//
+//            vc = new TreeViewColumn();
+//            vc.Title = "Day";
+//            cellRenderer = new CellRendererText();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "text", 1);
+//            tvDays.AppendColumn(vc);
+//
+//            for (int i=1; i<32; i++)
+//            {
+//                listStore.AppendValues(true, i.ToString(), i);
+//            }
+//        }
 
-        private void SetUpCronMinuteEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvMinutes.Model = listStore;
-            tvMinutes.Data["EditorType"] = CronEditorType.Minutes;
+//        private void SetUpCronMonthEditor()
+//        {
+//            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
+//            tvMonths.Model = listStore;
+//            tvMonths.Data["EditorType"] = CronEditorType.Months;
+//
+//            TreeViewColumn vc = new TreeViewColumn();
+//            vc.Title = "Checked";
+//            CellRenderer cellRenderer = new CellRendererToggle();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "active", 0);
+//            tvMonths.AppendColumn(vc);
+//
+//            vc = new TreeViewColumn();
+//            vc.Title = "Month";
+//            cellRenderer = new CellRendererText();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "text", 1);
+//            tvMonths.AppendColumn(vc);
+//
+//            for (int i=0; i<MONTHS.Length; i++)
+//            {
+//                listStore.AppendValues(true, MONTHS[i], i+1);
+//            }
+//        }
 
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvMinutes.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Minute";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvMinutes.AppendColumn(vc);
-
-            for (int i=0; i<60; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
-
-        private void SetUpCronHourEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvHours.Model = listStore;
-            tvHours.Data["EditorType"] = CronEditorType.Hours;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvHours.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Minute";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvHours.AppendColumn(vc);
-
-            for (int i=0; i<24; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
-
-        private void SetUpCronDayEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvDays.Model = listStore;
-            tvDays.Data["EditorType"] = CronEditorType.Days;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvDays.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Day";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvDays.AppendColumn(vc);
-
-            for (int i=1; i<32; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
-
-        private void SetUpCronMonthEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvMonths.Model = listStore;
-            tvMonths.Data["EditorType"] = CronEditorType.Months;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvMonths.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Month";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvMonths.AppendColumn(vc);
-
-            for (int i=0; i<MONTHS.Length; i++)
-            {
-                listStore.AppendValues(true, MONTHS[i], i+1);
-            }
-        }
-
-        private void SetUpCronDOWEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvDOWs.Model = listStore;
-            tvDOWs.Data["EditorType"] = CronEditorType.DaysOfWeek;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvDOWs.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "DOW";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvDOWs.AppendColumn(vc);
-
-            for (int i=0; i<DOWS.Length; i++)
-            {
-                listStore.AppendValues(true, DOWS[i], i);
-            }
-        }
+//        private void SetUpCronDOWEditor()
+//        {
+//            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
+//            tvDOWs.Model = listStore;
+//            tvDOWs.Data["EditorType"] = CronEditorType.DaysOfWeek;
+//
+//            TreeViewColumn vc = new TreeViewColumn();
+//            vc.Title = "Checked";
+//            CellRenderer cellRenderer = new CellRendererToggle();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "active", 0);
+//            tvDOWs.AppendColumn(vc);
+//
+//            vc = new TreeViewColumn();
+//            vc.Title = "DOW";
+//            cellRenderer = new CellRendererText();
+//            vc.PackStart(cellRenderer, true);
+//            vc.AddAttribute(cellRenderer, "text", 1);
+//            tvDOWs.AppendColumn(vc);
+//
+//            for (int i=0; i<DOWS.Length; i++)
+//            {
+//                listStore.AppendValues(true, DOWS[i], i);
+//            }
+//        }
 
         private void SetCheckCBList(ListStore ls, bool setCheck)
         {
@@ -435,268 +441,268 @@ namespace PropertyManager
             }
         }
 
-        protected virtual void SelectAllMinutesClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMinutes.Model as ListStore, true);
-            CreateMinuteSpecification();
-        }
+//        protected virtual void SelectAllMinutesClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvMinutes.Model as ListStore, true);
+//            CreateMinuteSpecification();
+//        }
+//
+//        protected virtual void ClearMinutesClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvMinutes.Model as ListStore, false);
+//            CreateMinuteSpecification();
+//        }
 
-        protected virtual void ClearMinutesClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMinutes.Model as ListStore, false);
-            CreateMinuteSpecification();
-        }
+//        protected virtual void SelectAllHoursClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvHours.Model as ListStore, true);
+//            CreateHourSpecification();
+//        }
+//
+//        protected virtual void ClearHoursClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvHours.Model as ListStore, false);
+//            CreateHourSpecification();
+//        }
+//
+//        protected virtual void SelectAllDaysClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvDays.Model as ListStore, true);
+//            CreateDaySpecification();
+//        }
+//
+//        protected virtual void ClearDaysClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvDays.Model as ListStore, false);
+//            CreateDaySpecification();
+//        }
+//
+//        protected virtual void SelectAllMonthsClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvMonths.Model as ListStore, true);
+//            CreateMonthSpecification();
+//        }
+//
+//        protected virtual void ClearMonthsClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvMonths.Model as ListStore, false);
+//            CreateMonthSpecification();
+//        }
+//
+//        protected virtual void SelectAllDOWClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvDOWs.Model as ListStore, true);
+//            CreateDOWSpecification();
+//        }
+//
+//        protected virtual void ClearDOWClicked (object sender, System.EventArgs e)
+//        {
+//            SetCheckCBList(tvDOWs.Model as ListStore, false);
+//            CreateDOWSpecification();
+//        }
 
-        protected virtual void SelectAllHoursClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvHours.Model as ListStore, true);
-            CreateHourSpecification();
-        }
+//        private void ToggleValue(TreeView treeView)
+//        {
+//            TreeModel model = null;
+//            TreeIter iter = TreeIter.Zero;
+//
+//            if (treeView.Selection.GetSelected(out model, out iter))
+//            {
+//                bool bValue = (bool) model.GetValue(iter, 0);
+//                model.SetValue(iter, 0, ! bValue);
+//            }
+//
+//            switch ((CronEditorType) treeView.Data["EditorType"])
+//            {
+//            case CronEditorType.Minutes:
+////                CreateMinuteSpecification();
+//                break;
+//
+//            case CronEditorType.Hours:
+////                CreateHourSpecification();
+//                break;
+//
+//            case CronEditorType.Days:
+////                CreateDaySpecification();
+//                break;
+//
+//            case CronEditorType.Months:
+////                CreateMonthSpecification();
+//                break;
+//
+//            case CronEditorType.DaysOfWeek:
+////                CreateDOWSpecification();
+//                break;
+//            }
+//
+//            evListCtl.UpdateSelected();
+//        }
 
-        protected virtual void ClearHoursClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvHours.Model as ListStore, false);
-            CreateHourSpecification();
-        }
+//        protected virtual void CronEditorCursorChanged (object sender, System.EventArgs e)
+//        {
+//            log.DebugFormat("CronEditorCursorChanged: {0}", sender.GetType().Name);
+//            ToggleValue(sender as TreeView);
+//        }
 
-        protected virtual void SelectAllDaysClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDays.Model as ListStore, true);
-            CreateDaySpecification();
-        }
+//        private void CreateMinuteSpecification()
+//        {
+//            ArrayList spec = CreateSpecification(tvMinutes.Model as ListStore, 2, "0-59", CronValueFactory.GetMinuteCreator());
+//
+//            string rawCriteria = txtCriteria.Text;
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            cs.Minutes = spec;
+//
+//            txtCriteria.Text = cs.ToString();
+//        }
 
-        protected virtual void ClearDaysClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDays.Model as ListStore, false);
-            CreateDaySpecification();
-        }
-
-        protected virtual void SelectAllMonthsClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMonths.Model as ListStore, true);
-            CreateMonthSpecification();
-        }
-
-        protected virtual void ClearMonthsClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMonths.Model as ListStore, false);
-            CreateMonthSpecification();
-        }
-
-        protected virtual void SelectAllDOWClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDOWs.Model as ListStore, true);
-            CreateDOWSpecification();
-        }
-
-        protected virtual void ClearDOWClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDOWs.Model as ListStore, false);
-            CreateDOWSpecification();
-        }
-
-        private void ToggleValue(TreeView treeView)
-        {
-            TreeModel model = null;
-            TreeIter iter = TreeIter.Zero;
-
-            if (treeView.Selection.GetSelected(out model, out iter))
-            {
-                bool bValue = (bool) model.GetValue(iter, 0);
-                model.SetValue(iter, 0, ! bValue);
-            }
-
-            switch ((CronEditorType) treeView.Data["EditorType"])
-            {
-            case CronEditorType.Minutes:
-                CreateMinuteSpecification();
-                break;
-
-            case CronEditorType.Hours:
-                CreateHourSpecification();
-                break;
-
-            case CronEditorType.Days:
-                CreateDaySpecification();
-                break;
-
-            case CronEditorType.Months:
-                CreateMonthSpecification();
-                break;
-
-            case CronEditorType.DaysOfWeek:
-                CreateDOWSpecification();
-                break;
-            }
-
-            evListCtl.UpdateSelected();
-        }
-
-        protected virtual void CronEditorCursorChanged (object sender, System.EventArgs e)
-        {
-            log.DebugFormat("CronEditorCursorChanged: {0}", sender.GetType().Name);
-            ToggleValue(sender as TreeView);
-        }
-
-        private void CreateMinuteSpecification()
-        {
-            ArrayList spec = CreateSpecification(tvMinutes.Model as ListStore, 2, "0-59", CronValueFactory.GetMinuteCreator());
-
-            string rawCriteria = txtCriteria.Text;
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            cs.Minutes = spec;
-
-            txtCriteria.Text = cs.ToString();
-        }
-
-        private void CreateHourSpecification()
-        {
-            ArrayList spec = CreateSpecification(tvHours.Model as ListStore, 2, "0-23", CronValueFactory.GetHourCreator());
-
-            string rawCriteria = txtCriteria.Text;
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            cs.Hours = spec;
-
-            txtCriteria.Text = cs.ToString();
-        }
-
-        private void CreateDaySpecification()
-        {
-            ArrayList spec = CreateSpecification(tvDays.Model as ListStore, 2, "1-31", CronValueFactory.GetDayCreator());
-
-            string rawCriteria = txtCriteria.Text;
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            cs.Days = spec;
-
-            txtCriteria.Text = cs.ToString();
-        }
-
-        private void CreateMonthSpecification()
-        {
-            ArrayList spec = CreateSpecification(tvMonths.Model as ListStore, 2, "1-12", CronValueFactory.GetMonthCreator());
-
-            string rawCriteria = txtCriteria.Text;
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            cs.Months = spec;
-
-            txtCriteria.Text = cs.ToString();
-        }
-
-        private void CreateDOWSpecification()
-        {
-            ArrayList spec = CreateSpecification(tvDOWs.Model as ListStore, 2, "0-6", CronValueFactory.GetDOWCreator());
-
-            string rawCriteria = txtCriteria.Text;
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            cs.DaysOfWeek = spec;
-
-            txtCriteria.Text = cs.ToString();
-        }
-
-        private ArrayList CreateSpecification(ListStore model, int valueIndex, string wildcardPattern, CronValueFactory.CronValueCreator creator)
-        {
-            ArrayList specArray = new ArrayList();
-            TreeIter iter = TreeIter.Zero;
-            bool done = false;
-            bool more = model.GetIterFirst(out iter);
-            bool isChecked = false;
-            while (! done)
-            {
-                string spec = "";
-                
-                // Find the first checked item
-                bool foundFirst = false;
-                int firstValueInRange = -1;
-                while (more && ! foundFirst)
-                {
-                    isChecked = (bool) model.GetValue(iter, 0);
-                    if (isChecked)
-                    {
-                        foundFirst = true;
-                        firstValueInRange = (int) model.GetValue(iter, valueIndex);
-                    }
-                    else
-                    {
-                        more = model.IterNext(ref iter);
-                    }
-                }
-
-                if (foundFirst)
-                {
-                    spec += firstValueInRange.ToString();
-                    bool foundEndOfContiguous = false;
-                    int secondValueInRange = -1;
-
-                    if (more)
-                    {
-                        more = model.IterNext(ref iter);
-                        while (more && ! foundEndOfContiguous)
-                        {
-                            isChecked = (bool) model.GetValue(iter, 0);
-                            if (isChecked)
-                            {
-                                secondValueInRange = (int) model.GetValue(iter, valueIndex);
-                                more = model.IterNext(ref iter);
-                            }
-                            else
-                            {
-                                foundEndOfContiguous = true;
-                            }
-                        }
-
-                        if (foundEndOfContiguous)
-                        {
-                            if (secondValueInRange >= 0)
-                            {
-                                spec += string.Format("-{0}", secondValueInRange);
-                            }
-                        }
-                        else if (secondValueInRange >= 0)
-                        {
-                            spec += string.Format("-{0}", secondValueInRange);
-                        }
-                        specArray.Add(creator.CreateCronValue(spec));
-                        if (more)
-                        {
-                            more = model.IterNext(ref iter);
-                        }
-                        else
-                        {
-                            done = true;
-                        }
-                    }
-                    else
-                    {
-                        done = true;
-                    }
-                }
-                else
-                {
-                    done = true;
-                }
-            }
-
-            if (specArray.Count == 0)
-            {
-                specArray.Add(creator.CreateCronValue("*"));
-            }
-            else if (specArray.Count == 1)
-            {
-                string specStr = specArray[0].ToString();
-                if (specStr.Equals(wildcardPattern))
-                {
-                    specArray.Clear();
-                    specArray.Add(creator.CreateCronValue("*"));
-                }
-            }
-
-            return specArray;
-        }
+//        private void CreateHourSpecification()
+//        {
+//            ArrayList spec = CreateSpecification(tvHours.Model as ListStore, 2, "0-23", CronValueFactory.GetHourCreator());
+//
+//            string rawCriteria = txtCriteria.Text;
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            cs.Hours = spec;
+//
+//            txtCriteria.Text = cs.ToString();
+//        }
+//
+//        private void CreateDaySpecification()
+//        {
+//            ArrayList spec = CreateSpecification(tvDays.Model as ListStore, 2, "1-31", CronValueFactory.GetDayCreator());
+//
+//            string rawCriteria = txtCriteria.Text;
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            cs.Days = spec;
+//
+//            txtCriteria.Text = cs.ToString();
+//        }
+//
+//        private void CreateMonthSpecification()
+//        {
+//            ArrayList spec = CreateSpecification(tvMonths.Model as ListStore, 2, "1-12", CronValueFactory.GetMonthCreator());
+//
+//            string rawCriteria = txtCriteria.Text;
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            cs.Months = spec;
+//
+//            txtCriteria.Text = cs.ToString();
+//        }
+//
+//        private void CreateDOWSpecification()
+//        {
+//            ArrayList spec = CreateSpecification(tvDOWs.Model as ListStore, 2, "0-6", CronValueFactory.GetDOWCreator());
+//
+//            string rawCriteria = txtCriteria.Text;
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            cs.DaysOfWeek = spec;
+//
+//            txtCriteria.Text = cs.ToString();
+//        }
+//
+//        private ArrayList CreateSpecification(ListStore model, int valueIndex, string wildcardPattern, CronValueFactory.CronValueCreator creator)
+//        {
+//            ArrayList specArray = new ArrayList();
+//            TreeIter iter = TreeIter.Zero;
+//            bool done = false;
+//            bool more = model.GetIterFirst(out iter);
+//            bool isChecked = false;
+//            while (! done)
+//            {
+//                string spec = "";
+//                
+//                // Find the first checked item
+//                bool foundFirst = false;
+//                int firstValueInRange = -1;
+//                while (more && ! foundFirst)
+//                {
+//                    isChecked = (bool) model.GetValue(iter, 0);
+//                    if (isChecked)
+//                    {
+//                        foundFirst = true;
+//                        firstValueInRange = (int) model.GetValue(iter, valueIndex);
+//                    }
+//                    else
+//                    {
+//                        more = model.IterNext(ref iter);
+//                    }
+//                }
+//
+//                if (foundFirst)
+//                {
+//                    spec += firstValueInRange.ToString();
+//                    bool foundEndOfContiguous = false;
+//                    int secondValueInRange = -1;
+//
+//                    if (more)
+//                    {
+//                        more = model.IterNext(ref iter);
+//                        while (more && ! foundEndOfContiguous)
+//                        {
+//                            isChecked = (bool) model.GetValue(iter, 0);
+//                            if (isChecked)
+//                            {
+//                                secondValueInRange = (int) model.GetValue(iter, valueIndex);
+//                                more = model.IterNext(ref iter);
+//                            }
+//                            else
+//                            {
+//                                foundEndOfContiguous = true;
+//                            }
+//                        }
+//
+//                        if (foundEndOfContiguous)
+//                        {
+//                            if (secondValueInRange >= 0)
+//                            {
+//                                spec += string.Format("-{0}", secondValueInRange);
+//                            }
+//                        }
+//                        else if (secondValueInRange >= 0)
+//                        {
+//                            spec += string.Format("-{0}", secondValueInRange);
+//                        }
+//                        specArray.Add(creator.CreateCronValue(spec));
+//                        if (more)
+//                        {
+//                            more = model.IterNext(ref iter);
+//                        }
+//                        else
+//                        {
+//                            done = true;
+//                        }
+//                    }
+//                    else
+//                    {
+//                        done = true;
+//                    }
+//                }
+//                else
+//                {
+//                    done = true;
+//                }
+//            }
+//
+//            if (specArray.Count == 0)
+//            {
+//                specArray.Add(creator.CreateCronValue("*"));
+//            }
+//            else if (specArray.Count == 1)
+//            {
+//                string specStr = specArray[0].ToString();
+//                if (specStr.Equals(wildcardPattern))
+//                {
+//                    specArray.Clear();
+//                    specArray.Add(creator.CreateCronValue("*"));
+//                }
+//            }
+//
+//            return specArray;
+//        }
 
 //        protected virtual void ApplyButtonClicked (object sender, System.EventArgs e)
 //        {
@@ -857,6 +863,84 @@ namespace PropertyManager
 
         protected virtual void VCValueChanged (object sender, System.EventArgs e)
         {
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void SelectAllActivated (object sender, System.EventArgs e)
+        {
+        }
+
+        protected virtual void ClearActivated (object sender, System.EventArgs e)
+        {
+        }
+
+        protected virtual void MinutesEditorChanged (object sender, System.EventArgs e)
+        {
+            ArrayList spec = tvMinutes.SpecificationList;
+
+            string rawCriteria = txtCriteria.Text;
+            CronSpecification cs = new CronSpecification(rawCriteria);
+
+            cs.Minutes = spec;
+
+            txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void HoursEditorChanged (object sender, System.EventArgs e)
+        {
+            ArrayList spec = tvHours.SpecificationList;
+
+            string rawCriteria = txtCriteria.Text;
+            CronSpecification cs = new CronSpecification(rawCriteria);
+
+            cs.Hours = spec;
+
+            txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void DaysEditorChanged (object sender, System.EventArgs e)
+        {
+            ArrayList spec = tvDays.SpecificationList;
+
+            string rawCriteria = txtCriteria.Text;
+            CronSpecification cs = new CronSpecification(rawCriteria);
+
+            cs.Days = spec;
+
+            txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void MonthsEditorChanged (object sender, System.EventArgs e)
+        {
+            ArrayList spec = tvMonths.SpecificationList;
+
+            string rawCriteria = txtCriteria.Text;
+            CronSpecification cs = new CronSpecification(rawCriteria);
+
+            cs.Months = spec;
+
+            txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void DaysOfWeekEditorChanged (object sender, System.EventArgs e)
+        {
+            ArrayList spec = tvDaysOfWeek.SpecificationList;
+
+            string rawCriteria = txtCriteria.Text;
+            CronSpecification cs = new CronSpecification(rawCriteria);
+
+            cs.DaysOfWeek = spec;
+
+            txtCriteria.Text = cs.ToString();
+
             evListCtl.UpdateSelected();
         }
     }

@@ -63,7 +63,7 @@ namespace ControlWrappers {
             this.toolbar1 = ((Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
             this.toolbar1.Name = "toolbar1";
             this.toolbar1.ShowArrow = false;
-            this.toolbar1.ToolbarStyle = ((Gtk.ToolbarStyle)(2));
+            this.toolbar1.ToolbarStyle = ((Gtk.ToolbarStyle)(0));
             this.toolbar1.IconSize = ((Gtk.IconSize)(3));
             this.vbox2.Add(this.toolbar1);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vbox2[this.toolbar1]));

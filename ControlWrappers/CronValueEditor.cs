@@ -1,19 +1,19 @@
 
 using System;
+using System.ComponentModel;
 using System.Collections;
 using Gtk;
 using CronUtils;
 
 namespace ControlWrappers
 {
-    
     public enum CronValueType
     {
-        Minutes,
-        Hours,
-        Days,
-        Months,
-        DaysOfWeek
+        Minutes = 0,
+        Hours = 1,
+        Days = 2,
+        Months = 3,
+        DaysOfWeek = 4
     }
     
     [System.ComponentModel.ToolboxItem(true)]
@@ -104,12 +104,42 @@ namespace ControlWrappers
             return effective;
         }
 
-        public CronValueType ValueType
+//        [
+//         System.ComponentModel.Browsable(true),
+//         System.ComponentModel.Category("Fancy Category"),
+//         System.ComponentModel.DefaultValue(CronValueType.Minutes),
+//         System.ComponentModel.Description("The type of cron values to display"),
+//         System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Content)
+//         ]
+        [DefaultValue(0)]
+        public int ValueType
         {
-            get { return valueType; }
+            get { return (int) valueType; }
             set
             {
-                valueType = value;
+                // valueType = value;
+                switch (value)
+                {
+                case 0:
+                    valueType = CronValueType.Minutes;
+                    break;
+
+                case 1:
+                    valueType = CronValueType.Hours;
+                    break;
+
+                case 2:
+                    valueType = CronValueType.Days;
+                    break;
+
+                case 3:
+                    valueType = CronValueType.Months;
+                    break;
+
+                case 4:
+                    valueType = CronValueType.DaysOfWeek;
+                    break;
+                }
                 SetUpCronValues();
             }
         }
@@ -153,7 +183,7 @@ namespace ControlWrappers
 
         private void SetUpHours()
         {
-            for (int i=0; i<23; i++)
+            for (int i=0; i<24; i++)
             {
                 listStore.AppendValues(false, i.ToString(), i);
             }
@@ -202,6 +232,8 @@ namespace ControlWrappers
             vc.PackStart(cellRenderer, true);
             vc.AddAttribute(cellRenderer, "text", 1);
             tvList.AppendColumn(vc);
+
+            SetUpCronValues();
         }
 
         private void SetCheckCBList(bool setCheck)
