@@ -1085,10 +1085,15 @@ Production</property>
                   <placeholder />
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="cbApplication">
+                  <widget class="ControlWrappers.BoundComboBox" id="cbApplication">
                     <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="CollectionName">Applications</property>
+                    <property name="LabelAttributeName">Name</property>
+                    <property name="ValueAttributeName">Id</property>
+                    <property name="AttributeName">ApplicationId</property>
+                    <property name="ContextName">DialogContext</property>
+                    <property name="DomainName">DynamicProperty</property>
                   </widget>
                   <packing>
                     <property name="LeftAttach">1</property>
@@ -1105,34 +1110,42 @@ Production</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="cbForm">
+                  <widget class="ControlWrappers.BoundComboBox" id="cbForm">
                     <property name="MemberName" />
                     <property name="WidthRequest">250</property>
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
-                    <signal name="Changed" handler="FormSelectionChanged" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="CollectionName">Forms</property>
+                    <property name="LabelAttributeName">Description</property>
+                    <property name="ValueAttributeName">Id</property>
+                    <property name="ContextName">DialogContext</property>
+                    <signal name="Changed" handler="OnCbFormChanged" />
                   </widget>
                   <packing>
                     <property name="TopAttach">2</property>
                     <property name="BottomAttach">3</property>
                     <property name="LeftAttach">2</property>
                     <property name="RightAttach">3</property>
-                    <property name="AutoSize">True</property>
-                    <property name="XOptions">Fill</property>
-                    <property name="YOptions">Fill</property>
+                    <property name="AutoSize">False</property>
+                    <property name="XOptions">0</property>
+                    <property name="YOptions">0</property>
                     <property name="XExpand">False</property>
-                    <property name="XFill">True</property>
+                    <property name="XFill">False</property>
                     <property name="XShrink">False</property>
                     <property name="YExpand">False</property>
-                    <property name="YFill">True</property>
+                    <property name="YFill">False</property>
                     <property name="YShrink">False</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="cbProperty">
+                  <widget class="ControlWrappers.BoundComboBox" id="cbProperty">
                     <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="CollectionName">PropertyDefinitions</property>
+                    <property name="LabelAttributeName">Name</property>
+                    <property name="ValueAttributeName">Id</property>
+                    <property name="AttributeName">PropertyId</property>
+                    <property name="ContextName">DialogContext</property>
+                    <property name="DomainName">DynamicProperty</property>
                   </widget>
                   <packing>
                     <property name="TopAttach">1</property>
@@ -1225,11 +1238,12 @@ Production</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Entry" id="txtDefaultValue">
+                  <widget class="ControlWrappers.BoundEntry" id="txtDefaultValue">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="IsEditable">True</property>
-                    <property name="InvisibleChar">●</property>
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="AttributeName">DefaultValue</property>
+                    <property name="ContextName">DialogContext</property>
+                    <property name="DomainName">DynamicProperty</property>
                   </widget>
                   <packing>
                     <property name="TopAttach">3</property>
@@ -1248,11 +1262,12 @@ Production</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Entry" id="txtQualifier">
+                  <widget class="ControlWrappers.BoundEntry" id="txtQualifier">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="IsEditable">True</property>
-                    <property name="InvisibleChar">●</property>
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="AttributeName">Qualifier</property>
+                    <property name="ContextName">DialogContext</property>
+                    <property name="DomainName">DynamicProperty</property>
                   </widget>
                   <packing>
                     <property name="TopAttach">2</property>
@@ -1375,6 +1390,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.Label" id="lblEffectiveValues">
                     <property name="MemberName" />
+                    <property name="Xalign">0</property>
                     <property name="LabelProp" translatable="yes">Effective Values:</property>
                   </widget>
                   <packing>
@@ -1393,7 +1409,7 @@ Production</property>
                   <widget class="Gtk.Notebook" id="nbValuePages">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">0</property>
+                    <property name="CurrentPage">1</property>
                     <property name="ShowTabs">False</property>
                     <child>
                       <widget class="Gtk.Label" id="label2">

@@ -72,6 +72,37 @@ namespace ControlWrappers
             }
         }
 
+        public long ActiveId
+        {
+            get 
+            {
+                long id = -1L;
+                TreeIter iter = TreeIter.Zero;
+                if (cbBound.GetActiveIter(out iter))
+                {
+                    id = (long) listStore.GetValue(iter, ID_COLUMN);
+                }
+    
+                return id;
+            }
+        }
+
+        public string ActiveLabel
+        {
+            get 
+            {
+                string label = null;
+                
+                TreeIter iter = TreeIter.Zero;
+                if (cbBound.GetActiveIter(out iter))
+                {
+                    label = (string) listStore.GetValue(iter, LABEL_COLUMN);
+                }
+    
+                return label;
+            }
+        }
+
         #region BoundControl implementation
         public string AttributeName 
         {

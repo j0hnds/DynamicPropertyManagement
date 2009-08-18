@@ -79,5 +79,19 @@ namespace ControlWrappers
         {
             SetToContext();
         }
+
+        public string Text
+        {
+            get
+            {
+                return txtEntry.Text;
+            }
+
+            set
+            {
+                txtEntry.Text = value;
+                SetToContext();
+            }
+        }
     }
 }

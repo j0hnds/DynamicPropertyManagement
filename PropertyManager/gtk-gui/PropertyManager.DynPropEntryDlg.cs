@@ -17,11 +17,11 @@ namespace PropertyManager {
         
         private Gtk.Table table2;
         
-        private Gtk.ComboBox cbApplication;
+        private ControlWrappers.BoundComboBox cbApplication;
         
-        private Gtk.ComboBox cbForm;
+        private ControlWrappers.BoundComboBox cbForm;
         
-        private Gtk.ComboBox cbProperty;
+        private ControlWrappers.BoundComboBox cbProperty;
         
         private Gtk.Label lblApplication;
         
@@ -31,9 +31,9 @@ namespace PropertyManager {
         
         private Gtk.Label lblQualifier;
         
-        private Gtk.Entry txtDefaultValue;
+        private ControlWrappers.BoundEntry txtDefaultValue;
         
-        private Gtk.Entry txtQualifier;
+        private ControlWrappers.BoundEntry txtQualifier;
         
         private Gtk.Table table3;
         
@@ -169,8 +169,15 @@ namespace PropertyManager {
             this.table2.RowSpacing = ((uint)(6));
             this.table2.ColumnSpacing = ((uint)(6));
             // Container child table2.Gtk.Table+TableChild
-            this.cbApplication = Gtk.ComboBox.NewText();
+            this.cbApplication = new ControlWrappers.BoundComboBox();
+            this.cbApplication.Events = ((Gdk.EventMask)(256));
             this.cbApplication.Name = "cbApplication";
+            this.cbApplication.CollectionName = "Applications";
+            this.cbApplication.LabelAttributeName = "Name";
+            this.cbApplication.ValueAttributeName = "Id";
+            this.cbApplication.AttributeName = "ApplicationId";
+            this.cbApplication.ContextName = "DialogContext";
+            this.cbApplication.DomainName = "DynamicProperty";
             this.table2.Add(this.cbApplication);
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table2[this.cbApplication]));
             w2.LeftAttach = ((uint)(1));
@@ -178,20 +185,32 @@ namespace PropertyManager {
             w2.XOptions = ((Gtk.AttachOptions)(4));
             w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
-            this.cbForm = Gtk.ComboBox.NewText();
+            this.cbForm = new ControlWrappers.BoundComboBox();
             this.cbForm.WidthRequest = 250;
+            this.cbForm.Events = ((Gdk.EventMask)(256));
             this.cbForm.Name = "cbForm";
+            this.cbForm.CollectionName = "Forms";
+            this.cbForm.LabelAttributeName = "Description";
+            this.cbForm.ValueAttributeName = "Id";
+            this.cbForm.ContextName = "DialogContext";
             this.table2.Add(this.cbForm);
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table2[this.cbForm]));
             w3.TopAttach = ((uint)(2));
             w3.BottomAttach = ((uint)(3));
             w3.LeftAttach = ((uint)(2));
             w3.RightAttach = ((uint)(3));
-            w3.XOptions = ((Gtk.AttachOptions)(4));
-            w3.YOptions = ((Gtk.AttachOptions)(4));
+            w3.XOptions = ((Gtk.AttachOptions)(0));
+            w3.YOptions = ((Gtk.AttachOptions)(0));
             // Container child table2.Gtk.Table+TableChild
-            this.cbProperty = Gtk.ComboBox.NewText();
+            this.cbProperty = new ControlWrappers.BoundComboBox();
+            this.cbProperty.Events = ((Gdk.EventMask)(256));
             this.cbProperty.Name = "cbProperty";
+            this.cbProperty.CollectionName = "PropertyDefinitions";
+            this.cbProperty.LabelAttributeName = "Name";
+            this.cbProperty.ValueAttributeName = "Id";
+            this.cbProperty.AttributeName = "PropertyId";
+            this.cbProperty.ContextName = "DialogContext";
+            this.cbProperty.DomainName = "DynamicProperty";
             this.table2.Add(this.cbProperty);
             Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table2[this.cbProperty]));
             w4.TopAttach = ((uint)(1));
@@ -239,11 +258,12 @@ namespace PropertyManager {
             w8.XOptions = ((Gtk.AttachOptions)(4));
             w8.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
-            this.txtDefaultValue = new Gtk.Entry();
-            this.txtDefaultValue.CanFocus = true;
+            this.txtDefaultValue = new ControlWrappers.BoundEntry();
+            this.txtDefaultValue.Events = ((Gdk.EventMask)(256));
             this.txtDefaultValue.Name = "txtDefaultValue";
-            this.txtDefaultValue.IsEditable = true;
-            this.txtDefaultValue.InvisibleChar = '●';
+            this.txtDefaultValue.AttributeName = "DefaultValue";
+            this.txtDefaultValue.ContextName = "DialogContext";
+            this.txtDefaultValue.DomainName = "DynamicProperty";
             this.table2.Add(this.txtDefaultValue);
             Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table2[this.txtDefaultValue]));
             w9.TopAttach = ((uint)(3));
@@ -253,11 +273,12 @@ namespace PropertyManager {
             w9.XOptions = ((Gtk.AttachOptions)(4));
             w9.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
-            this.txtQualifier = new Gtk.Entry();
-            this.txtQualifier.CanFocus = true;
+            this.txtQualifier = new ControlWrappers.BoundEntry();
+            this.txtQualifier.Events = ((Gdk.EventMask)(256));
             this.txtQualifier.Name = "txtQualifier";
-            this.txtQualifier.IsEditable = true;
-            this.txtQualifier.InvisibleChar = '●';
+            this.txtQualifier.AttributeName = "Qualifier";
+            this.txtQualifier.ContextName = "DialogContext";
+            this.txtQualifier.DomainName = "DynamicProperty";
             this.table2.Add(this.txtQualifier);
             Gtk.Table.TableChild w10 = ((Gtk.Table.TableChild)(this.table2[this.txtQualifier]));
             w10.TopAttach = ((uint)(2));
@@ -333,6 +354,7 @@ namespace PropertyManager {
             // Container child table3.Gtk.Table+TableChild
             this.lblEffectiveValues = new Gtk.Label();
             this.lblEffectiveValues.Name = "lblEffectiveValues";
+            this.lblEffectiveValues.Xalign = 0F;
             this.lblEffectiveValues.LabelProp = Mono.Unix.Catalog.GetString("Effective Values:");
             this.table3.Add(this.lblEffectiveValues);
             Gtk.Table.TableChild w17 = ((Gtk.Table.TableChild)(this.table3[this.lblEffectiveValues]));
@@ -918,7 +940,7 @@ namespace PropertyManager {
             this.DefaultWidth = 831;
             this.DefaultHeight = 626;
             this.Show();
-            this.cbForm.Changed += new System.EventHandler(this.FormSelectionChanged);
+            this.cbForm.Changed += new System.EventHandler(this.OnCbFormChanged);
             this.tvEffectiveValues.CursorChanged += new System.EventHandler(this.EffectiveValueCursorChanged);
             this.cbStartDateNull.Toggled += new System.EventHandler(this.StartDateNullToggled);
             this.cbEndDateNull.Toggled += new System.EventHandler(this.EndDateNullToggled);

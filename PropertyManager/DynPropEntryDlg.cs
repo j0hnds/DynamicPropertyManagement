@@ -21,7 +21,7 @@ namespace PropertyManager
         DaysOfWeek
     }
     
-    public partial class DynPropEntryDlg : BoundDialog // Gtk.Dialog
+    public partial class DynPropEntryDlg : DataBoundDialog // Gtk.Dialog
     {
         private EffectiveDateListControl evListCtl;
 
@@ -58,55 +58,55 @@ namespace PropertyManager
 
             log = LogManager.GetLogger(GetType());
 
-            DomainDAO appDao = DomainFactory.GetDAO("Application");
-
-            List<Domain> applications = appDao.Get();
-            
-            DomainDAO propDao = DomainFactory.GetDAO("PropertyDefinition");
-
-            List<Domain>properties = propDao.Get();
+//            DomainDAO appDao = DomainFactory.GetDAO("Application");
+//
+//            List<Domain> applications = appDao.Get();
+//            
+//            DomainDAO propDao = DomainFactory.GetDAO("PropertyDefinition");
+//
+//            List<Domain>properties = propDao.Get();
 
             // Set up the binding controls
-            new ComboBoxBoundControl(this, cbApplication, "ApplicationId", applications, "Name", "Id");
-            new ComboBoxBoundControl(this, cbProperty, "PropertyId", properties, "Name", "Id");
-            new EntryBoundControl(this, txtQualifier, "Qualifier");
-            new EntryBoundControl(this, txtDefaultValue, "DefaultValue");
+//            new ComboBoxBoundControl(this, cbApplication, "ApplicationId", applications, "Name", "Id");
+//            new ComboBoxBoundControl(this, cbProperty, "PropertyId", properties, "Name", "Id");
+//            new EntryBoundControl(this, txtQualifier, "Qualifier");
+//            new EntryBoundControl(this, txtDefaultValue, "DefaultValue");
 
             // Set up the form combo-box
-            SetUpForms();
+//            SetUpForms();
 
             evListCtl = new EffectiveDateListControl(tvEffectiveValues);
 
             SetUpCronEditor();
         }
 
-        private void SetUpForms()
-        {
-            DomainDAO dao = DomainFactory.GetDAO("Form");
-            List<Domain> valueList = dao.Get();
-            ListStore listStore = new ListStore(GLib.GType.String, GLib.GType.Int64);
-            foreach (Domain domain in valueList)
-            {
-                object displayValue = domain.GetValue("Description");
-                object valueValue = domain.GetValue("Id");
+//        private void SetUpForms()
+//        {
+//            DomainDAO dao = DomainFactory.GetDAO("Form");
+//            List<Domain> valueList = dao.Get();
+//            ListStore listStore = new ListStore(GLib.GType.String, GLib.GType.Int64);
+//            foreach (Domain domain in valueList)
+//            {
+//                object displayValue = domain.GetValue("Description");
+//                object valueValue = domain.GetValue("Id");
+//
+//                listStore.AppendValues(displayValue, valueValue);
+//            }
+//
+//            cbForm.Model = listStore;
+//        }
 
-                listStore.AppendValues(displayValue, valueValue);
-            }
-
-            cbForm.Model = listStore;
-        }
-
-        protected virtual void FormSelectionChanged (object sender, System.EventArgs e)
-        {
-            TreeModel model = cbForm.Model;
-            TreeIter iter = TreeIter.Zero;
-
-            if (cbForm.GetActiveIter(out iter))
-            {
-                long formId = (long) model.GetValue(iter, 1);
-                txtQualifier.Text = formId.ToString();
-            }
-        }
+//        protected virtual void FormSelectionChanged (object sender, System.EventArgs e)
+//        {
+//            TreeModel model = cbForm.Model;
+//            TreeIter iter = TreeIter.Zero;
+//
+//            if (cbForm.GetActiveIter(out iter))
+//            {
+//                long formId = (long) model.GetValue(iter, 1);
+//                txtQualifier.Text = formId.ToString();
+//            }
+//        }
         
         public override bool DoModal(Window parentWindow, Domain domain)
         {
@@ -756,6 +756,47 @@ namespace PropertyManager
                 calEndDate.Sensitive = false;
                 txtEndTime.Sensitive = false;
             }
+        }
+
+        protected override DataContext CreateDataContext ()
+        {
+            // Create and register the base DialogContext
+            DataContext context = base.CreateDataContext();
+
+            // Set up the collections we need for the various
+            // combo boxes on the form.
+            DomainDAO appDao = DomainFactory.GetDAO("Application");
+
+            List<Domain> applications = appDao.Get();
+
+            context.AddObject("Applications", applications);
+            
+            DomainDAO propDao = DomainFactory.GetDAO("PropertyDefinition");
+
+            List<Domain> properties = propDao.Get();
+
+            context.AddObject("PropertyDefinitions", properties);
+
+            DomainDAO dao = DomainFactory.GetDAO("Form");
+
+            List<Domain> valueList = dao.Get();
+
+            context.AddObject("Forms", valueList);
+
+            // Create a context for use by the Effective Date Editor
+            SetContext("EffectiveDateCtx", new DataContext());
+
+            // Create a context for use by the Value Criteria Editor
+            SetContext("ValueCriteriaCtx", new DataContext());
+            
+            return context;
+        }
+
+        protected virtual void OnCbFormChanged (object sender, System.EventArgs e)
+        {
+            long id = cbForm.ActiveId;
+
+            txtQualifier.Text = id.ToString();
         }
     }
 }
