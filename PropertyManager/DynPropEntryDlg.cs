@@ -51,7 +51,7 @@ namespace PropertyManager
         };
 
         private ILog log;
-        
+
         public DynPropEntryDlg() 
         {
             this.Build();
@@ -107,30 +107,66 @@ namespace PropertyManager
 //                txtQualifier.Text = formId.ToString();
 //            }
 //        }
-        
-        public override bool DoModal(Window parentWindow, Domain domain)
+        private void ContextChangeHandler(string contextName, string itemName)
         {
-            bool ok = false;
-
-            TransientFor = parentWindow;
-
-            DomainToControls(domain);
-
-            evListCtl.Populate(domain);
-
-            evListCtl.DynamicProperty = domain;
-
-            int response = Run();
-            if (response == Gtk.ResponseType.Ok.value__)
+            log.DebugFormat("ContextChangeHandler({0}, {1})", contextName, itemName);
+            
+            // Called when the contents of a context has changed.
+            if ("DialogContext".Equals(contextName))
             {
-                ok = true;
-                ControlsToDomain(domain);
+                Domain domain = GetContext("DialogContext").GetDomain("DynamicProperty");
+                // Load the Effective Value list control
+                evListCtl.Populate(domain);
+
+                evListCtl.DynamicProperty = domain;
             }
+            else if ("ValueCriteriaCtx".Equals(contextName))
+            {
+                Domain domain = GetContext("ValueCriteriaCtx").GetDomain("ValueCriteria");
 
-            Destroy();
-
-            return ok;
+                string rawCriteria = (string) domain.GetValue("RawCriteria");
+                if (rawCriteria == null || rawCriteria.Length == 0)
+                {
+                    rawCriteria = "* * * * *";
+                }
+                
+                // Here is where we set up the cron editor; we always
+                // do this when a new ValueCriteria is set up.
+                CronSpecification cs = new CronSpecification(rawCriteria);
+    
+                // Set up the values in the editors based on the value
+                // of the specification
+                SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
+                SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
+                SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
+                SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
+                SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
+            }
         }
+        
+//        public override bool DoModal(Window parentWindow, Domain domain)
+//        {
+//            bool ok = false;
+//
+//            TransientFor = parentWindow;
+//
+//            DomainToControls(domain);
+//
+//            evListCtl.Populate(domain);
+//
+//            evListCtl.DynamicProperty = domain;
+//
+//            int response = Run();
+//            if (response == Gtk.ResponseType.Ok.value__)
+//            {
+//                ok = true;
+//                ControlsToDomain(domain);
+//            }
+//
+//            Destroy();
+//
+//            return ok;
+//        }
 
         protected virtual void EffectiveValueCursorChanged (object sender, System.EventArgs e)
         {
@@ -156,65 +192,71 @@ namespace PropertyManager
         {
             Domain domain = evListCtl.GetSelectedDomain();
 
-            DateTime effectiveStartDate = (DateTime) domain.GetValue("EffectiveStartDate");
-            DateTime effectiveEndDate = (DateTime) domain.GetValue("EffectiveEndDate");
+            // Set the EffectiveValue domain object on the appropriate
+            // context
+            GetContext("EffectiveDateCtx").AddObject(domain);
 
-            if (effectiveStartDate == DateTime.MinValue)
-            {
-                cbStartDateNull.Active = false;
-                calStartDate.Sensitive = false;
-                txtStartTime.Sensitive = false;
-                txtStartTime.Text = "00:00";
-            }
-            else
-            {
-                calStartDate.Date = effectiveStartDate;
-                cbStartDateNull.Active = true;
-                calStartDate.Sensitive = true;
-                txtStartTime.Sensitive = true;
-                txtStartTime.Text = effectiveStartDate.ToString("HH:mm");
-            }
-            if (effectiveEndDate == DateTime.MinValue)
-            {
-                cbEndDateNull.Active = false;
-                calEndDate.Sensitive = false;
-                txtEndTime.Sensitive = false;
-                txtEndTime.Text = "00:00";
-            }
-            else
-            {
-                calEndDate.Date = effectiveEndDate;
-                cbEndDateNull.Active = true;
-                calEndDate.Sensitive = true;
-                txtEndTime.Sensitive = true;
-                txtEndTime.Text = effectiveEndDate.ToString("HH:mm");
-            }
+//            DateTime effectiveStartDate = (DateTime) domain.GetValue("EffectiveStartDate");
+//            DateTime effectiveEndDate = (DateTime) domain.GetValue("EffectiveEndDate");
+//
+//            if (effectiveStartDate == DateTime.MinValue)
+//            {
+//                cbStartDateNull.Active = false;
+//                calStartDate.Sensitive = false;
+//                txtStartTime.Sensitive = false;
+//                txtStartTime.Text = "00:00";
+//            }
+//            else
+//            {
+//                calStartDate.Date = effectiveStartDate;
+//                cbStartDateNull.Active = true;
+//                calStartDate.Sensitive = true;
+//                txtStartTime.Sensitive = true;
+//                txtStartTime.Text = effectiveStartDate.ToString("HH:mm");
+//            }
+//            if (effectiveEndDate == DateTime.MinValue)
+//            {
+//                cbEndDateNull.Active = false;
+//                calEndDate.Sensitive = false;
+//                txtEndTime.Sensitive = false;
+//                txtEndTime.Text = "00:00";
+//            }
+//            else
+//            {
+//                calEndDate.Date = effectiveEndDate;
+//                cbEndDateNull.Active = true;
+//                calEndDate.Sensitive = true;
+//                txtEndTime.Sensitive = true;
+//                txtEndTime.Text = effectiveEndDate.ToString("HH:mm");
+//            }
         }
 
         private void LoadSelectedValueCriteriaValues()
         {
             Domain domain = evListCtl.GetSelectedDomain();
 
-            string rawCriteria = (string) domain.GetValue("RawCriteria");
-            string domainValue = (string) domain.GetValue("Value");
+            GetContext("ValueCriteriaCtx").AddObject(domain);
 
-            if (rawCriteria == null)
-            {
-                rawCriteria = "* * * * *";
-            }
+//            string rawCriteria = (string) domain.GetValue("RawCriteria");
+//            string domainValue = (string) domain.GetValue("Value");
+//
+//            if (rawCriteria == null)
+//            {
+//                rawCriteria = "* * * * *";
+//            }
+//
+//            txtCriteria.Text = rawCriteria;
+//            txtValue.Text = domainValue;
 
-            txtCriteria.Text = rawCriteria;
-            txtValue.Text = domainValue;
-
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            // Set up the values in the editors based on the value
-            // of the specification
-            SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
-            SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
-            SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
-            SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
-            SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
+//            CronSpecification cs = new CronSpecification(rawCriteria);
+//
+//            // Set up the values in the editors based on the value
+//            // of the specification
+//            SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
+//            SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
+//            SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
+//            SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
+//            SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
         }
 
         private void SetCronEditorValues(ListStore ls, ArrayList cronSpecs)
@@ -490,6 +532,8 @@ namespace PropertyManager
                 CreateDOWSpecification();
                 break;
             }
+
+            evListCtl.UpdateSelected();
         }
 
         protected virtual void CronEditorCursorChanged (object sender, System.EventArgs e)
@@ -658,105 +702,105 @@ namespace PropertyManager
             return specArray;
         }
 
-        protected virtual void ApplyButtonClicked (object sender, System.EventArgs e)
-        {
-            switch (evListCtl.SelectedLevel)
-            {
-            case EffectiveDateLevels.EffectiveDate:
-                UpdateEffectiveDate();
-                break;
+//        protected virtual void ApplyButtonClicked (object sender, System.EventArgs e)
+//        {
+//            switch (evListCtl.SelectedLevel)
+//            {
+//            case EffectiveDateLevels.EffectiveDate:
+//                UpdateEffectiveDate();
+//                break;
+//
+//            case EffectiveDateLevels.ValueCriteria:
+//                UpdateValueCriteria();
+//                break;
+//            }
+//        }
 
-            case EffectiveDateLevels.ValueCriteria:
-                UpdateValueCriteria();
-                break;
-            }
-        }
+//        private void UpdateEffectiveDate()
+//        {
+//            DateTime startDate = DateTime.MinValue;
+//            if (cbStartDateNull.Active)
+//            {
+//                startDate = calStartDate.Date;
+//                
+//                // Get the time
+//                string startTime = txtStartTime.Text;
+//                if (startTime.Length > 0)
+//                {
+//                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
+//                    DateTime stTime = DateTime.ParseExact(startTime, "HH:mm", dtfi);
+//
+//                    startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, stTime.Hour, stTime.Minute, 0);
+//                }
+//            }
+//            
+//            DateTime endDate = DateTime.MinValue;
+//            if (cbEndDateNull.Active)
+//            {
+//                endDate = calEndDate.Date;
+//                
+//                // Get the time
+//                string endTime = txtEndTime.Text;
+//                if (endTime.Length > 0)
+//                {
+//                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
+//                    DateTime stTime = DateTime.ParseExact(endTime, "HH:mm", dtfi);
+//
+//                    endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, stTime.Hour, stTime.Minute, 0);
+//                }
+//            }
+//
+//            Domain domain = evListCtl.GetSelectedDomain();
+//            domain.SetValue("EffectiveStartDate", startDate);
+//            domain.SetValue("EffectiveEndDate", endDate);
+//
+//            log.DebugFormat("Applying values, EffectiveStartDate = {0}, EffectiveEndDate = {1}", startDate, endDate);
+//
+//            evListCtl.UpdateSelected();
+//        }
 
-        private void UpdateEffectiveDate()
-        {
-            DateTime startDate = DateTime.MinValue;
-            if (cbStartDateNull.Active)
-            {
-                startDate = calStartDate.Date;
-                
-                // Get the time
-                string startTime = txtStartTime.Text;
-                if (startTime.Length > 0)
-                {
-                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
-                    DateTime stTime = DateTime.ParseExact(startTime, "HH:mm", dtfi);
+//        private void UpdateValueCriteria()
+//        {
+//            Domain domain = evListCtl.GetSelectedDomain();
+//
+//            string criteria = txtCriteria.Text;
+//            string val = txtValue.Text;
+//
+//            log.DebugFormat("Applying values, Criteria = {0}, Value = {1}", criteria, val);
+//
+//            domain.SetValue("RawCriteria", criteria);
+//            domain.SetValue("Value", val);
+//
+//            evListCtl.UpdateSelected();
+//        }
 
-                    startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, stTime.Hour, stTime.Minute, 0);
-                }
-            }
-            
-            DateTime endDate = DateTime.MinValue;
-            if (cbEndDateNull.Active)
-            {
-                endDate = calEndDate.Date;
-                
-                // Get the time
-                string endTime = txtEndTime.Text;
-                if (endTime.Length > 0)
-                {
-                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
-                    DateTime stTime = DateTime.ParseExact(endTime, "HH:mm", dtfi);
+//        protected virtual void StartDateNullToggled (object sender, System.EventArgs e)
+//        {
+//            if (cbStartDateNull.Active)
+//            {
+//                calStartDate.Sensitive = true;
+//                txtStartTime.Sensitive = true;
+//            }
+//            else
+//            {
+//                calStartDate.Sensitive = false;
+//                txtStartTime.Sensitive = false;
+//            }
+//        }
 
-                    endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, stTime.Hour, stTime.Minute, 0);
-                }
-            }
-
-            Domain domain = evListCtl.GetSelectedDomain();
-            domain.SetValue("EffectiveStartDate", startDate);
-            domain.SetValue("EffectiveEndDate", endDate);
-
-            log.DebugFormat("Applying values, EffectiveStartDate = {0}, EffectiveEndDate = {1}", startDate, endDate);
-
-            evListCtl.UpdateSelected();
-        }
-
-        private void UpdateValueCriteria()
-        {
-            Domain domain = evListCtl.GetSelectedDomain();
-
-            string criteria = txtCriteria.Text;
-            string val = txtValue.Text;
-
-            log.DebugFormat("Applying values, Criteria = {0}, Value = {1}", criteria, val);
-
-            domain.SetValue("RawCriteria", criteria);
-            domain.SetValue("Value", val);
-
-            evListCtl.UpdateSelected();
-        }
-
-        protected virtual void StartDateNullToggled (object sender, System.EventArgs e)
-        {
-            if (cbStartDateNull.Active)
-            {
-                calStartDate.Sensitive = true;
-                txtStartTime.Sensitive = true;
-            }
-            else
-            {
-                calStartDate.Sensitive = false;
-                txtStartTime.Sensitive = false;
-            }
-        }
-
-        protected virtual void EndDateNullToggled (object sender, System.EventArgs e)
-        {
-            if (cbEndDateNull.Active)
-            {
-                calEndDate.Sensitive = true;
-                txtEndTime.Sensitive = true;
-            }
-            else
-            {
-                calEndDate.Sensitive = false;
-                txtEndTime.Sensitive = false;
-            }
-        }
+//        protected virtual void EndDateNullToggled (object sender, System.EventArgs e)
+//        {
+//            if (cbEndDateNull.Active)
+//            {
+//                calEndDate.Sensitive = true;
+//                txtEndTime.Sensitive = true;
+//            }
+//            else
+//            {
+//                calEndDate.Sensitive = false;
+//                txtEndTime.Sensitive = false;
+//            }
+//        }
 
         protected override DataContext CreateDataContext ()
         {
@@ -784,10 +828,15 @@ namespace PropertyManager
             context.AddObject("Forms", valueList);
 
             // Create a context for use by the Effective Date Editor
-            SetContext("EffectiveDateCtx", new DataContext());
+            SetContext(new DataContext("EffectiveDateCtx"));
 
+            DataContext vcContext = new DataContext("ValueCriteriaCtx");
             // Create a context for use by the Value Criteria Editor
-            SetContext("ValueCriteriaCtx", new DataContext());
+            SetContext(vcContext);
+
+            // Register interest in when the contexts change...
+            context.ContextChanged += ContextChangeHandler;
+            vcContext.ContextChanged += ContextChangeHandler;
             
             return context;
         }
@@ -797,6 +846,22 @@ namespace PropertyManager
             long id = cbForm.ActiveId;
 
             txtQualifier.Text = id.ToString();
+        }
+
+        protected virtual void StartDateChanged (object sender, System.EventArgs e)
+        {
+            // Update the currently selected label on the tree
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void EndDateChanged (object sender, System.EventArgs e)
+        {
+            evListCtl.UpdateSelected();
+        }
+
+        protected virtual void VCValueChanged (object sender, System.EventArgs e)
+        {
+            evListCtl.UpdateSelected();
         }
     }
 }

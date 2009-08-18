@@ -115,6 +115,10 @@ namespace ControlWrappers {
                 this.Child.ShowAll();
             }
             this.Hide();
+            this.calBound.DaySelected += new System.EventHandler(this.CalendarDaySelected);
+            this.calBound.DaySelectedDoubleClick += new System.EventHandler(this.CalendarDaySelectedDoubleClick);
+            this.sbHour.ValueChanged += new System.EventHandler(this.HourValueChanged);
+            this.sbMinute.ValueChanged += new System.EventHandler(this.MinuteValueChanged);
             this.cbNullDateTime.Toggled += new System.EventHandler(this.NullDateTimeToggled);
         }
     }

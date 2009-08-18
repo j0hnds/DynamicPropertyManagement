@@ -40,17 +40,17 @@ namespace ControlWrappers
             return Data[name] as DataContext;
         }
 
-        public void SetContext (string name, DataContext context)
+        public void SetContext (DataContext context)
         {
-            Data[name] = context;
+            Data[context.Name] = context;
         }
         #endregion
 
         protected virtual DataContext CreateDataContext()
         {
-            DataContext context = new DataContext();
+            DataContext context = new DataContext("DialogContext");
 
-            SetContext("DialogContext", context);
+            SetContext(context);
 
             return context;
         }

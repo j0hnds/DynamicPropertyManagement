@@ -10,6 +10,8 @@ namespace ControlWrappers
     public partial class BoundEntry : Bin, BoundControl
     {
         private BoundControlDelegate bcd;
+
+        public event EventHandler Changed;
         
         public BoundEntry()
         {
@@ -21,6 +23,12 @@ namespace ControlWrappers
         private void ContextChangeHandler(string contextName, string itemName)
         {
             SetFromContext();
+        }
+
+        public bool IsEditable
+        {
+            get { return txtEntry.IsEditable; }
+            set { txtEntry.IsEditable = value; }
         }
 
         public string AttributeName
@@ -78,6 +86,17 @@ namespace ControlWrappers
         protected virtual void TextEntryChanged (object sender, System.EventArgs e)
         {
             SetToContext();
+            NotifyEntryValueChanged(e);
+        }
+
+        private void NotifyEntryValueChanged(EventArgs e)
+        {
+            EventHandler handler = Changed;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         public string Text

@@ -100,6 +100,8 @@
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="DisplayOptions">35</property>
+            <signal name="DaySelected" handler="CalendarDaySelected" />
+            <signal name="DaySelectedDoubleClick" handler="CalendarDaySelectedDoubleClick" />
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -133,6 +135,7 @@
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
                 <property name="Numeric">True</property>
+                <signal name="ValueChanged" handler="HourValueChanged" />
               </widget>
               <packing>
                 <property name="Position">1</property>
@@ -162,6 +165,7 @@
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
                 <property name="Numeric">True</property>
+                <signal name="ValueChanged" handler="MinuteValueChanged" />
               </widget>
               <packing>
                 <property name="Position">3</property>

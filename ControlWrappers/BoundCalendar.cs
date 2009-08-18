@@ -9,12 +9,26 @@ namespace ControlWrappers
     public partial class BoundCalendar : Gtk.Bin, BoundControl
     {
         private BoundControlDelegate bcd;
+        private bool connected = false;
+        private bool initializing = false;
+
+        public event EventHandler DateTimeChanged;
         
         public BoundCalendar()
         {
             this.Build();
             bcd = new BoundControlDelegate(this);
             bcd.ContextChanged += ContextChangeHandler;
+        }
+
+        private void NotifyDateTimeChanged(EventArgs e)
+        {
+            EventHandler handler = DateTimeChanged;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         private void ContextChangeHandler(string contextName, string itemName)
@@ -47,6 +61,7 @@ namespace ControlWrappers
             }
             set 
             {
+                initializing = true;
                 if (value == DateTime.MinValue)
                 {
                     cbNullDateTime.Active = false;
@@ -63,10 +78,12 @@ namespace ControlWrappers
                     calBound.Date = value;
                     sbHour.Value = value.Hour;
                     sbMinute.Value = value.Minute;
+                    cbNullDateTime.Active = true;
                     calBound.Sensitive = true;
                     sbHour.Sensitive = true;
                     sbMinute.Sensitive = true;
                 }
+                initializing = false;
             }
         }
 
@@ -84,6 +101,9 @@ namespace ControlWrappers
                 sbHour.Sensitive = false;
                 sbMinute.Sensitive = false;
             }
+
+            SetToContext();
+            NotifyDateTimeChanged(e);
         }
 
         #region BoundControl implementation
@@ -96,6 +116,7 @@ namespace ControlWrappers
         public void ConnectControl ()
         {
             bcd.ConnectControl();
+            connected = true;
         }
       
         
@@ -112,15 +133,46 @@ namespace ControlWrappers
         
         public void SetFromContext ()
         {
-            Date = (DateTime) bcd.DomainValue;
+            object oDate = bcd.DomainValue;
+            if (oDate != null)
+            {
+                Date = (DateTime) oDate;
+            }
         }
       
         
         public void SetToContext ()
         {
-            bcd.DomainValue = Date;
+            if (connected && ! initializing)
+            {
+                bcd.DomainValue = Date;
+            }
         }
+
         #endregion
 
+        protected virtual void CalendarDaySelected (object sender, System.EventArgs e)
+        {
+            SetToContext();
+            NotifyDateTimeChanged(e);
+        }
+
+        protected virtual void CalendarDaySelectedDoubleClick (object sender, System.EventArgs e)
+        {
+            SetToContext();
+            NotifyDateTimeChanged(e);
+        }
+
+        protected virtual void HourValueChanged (object sender, System.EventArgs e)
+        {
+            SetToContext();
+            NotifyDateTimeChanged(e);
+        }
+
+        protected virtual void MinuteValueChanged (object sender, System.EventArgs e)
+        {
+            SetToContext();
+            NotifyDateTimeChanged(e);
+        }
     }
 }

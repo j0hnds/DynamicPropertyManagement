@@ -33,9 +33,9 @@ namespace ControlWrappers
             // data bound controls.
         }
 
-        public void SetContext(string name, DataContext context)
+        public void SetContext(DataContext context)
         {
-            Data[name] = context;
+            Data[context.Name] = context;
 
             context.ContextChanged += ContextChangeHandler;
 

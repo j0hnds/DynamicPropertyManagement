@@ -508,6 +508,7 @@ Production</property>
               <widget class="ControlWrappers.BoundEntry" id="txtApplicationName">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="IsEditable">True</property>
                 <property name="AttributeName">Name</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Application</property>
@@ -806,6 +807,7 @@ Production</property>
               <widget class="ControlWrappers.BoundEntry" id="txtCategories">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="IsEditable">True</property>
                 <property name="AttributeName">Category</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">PropertyDefinition</property>
@@ -828,6 +830,7 @@ Production</property>
               <widget class="ControlWrappers.BoundEntry" id="txtName">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="IsEditable">True</property>
                 <property name="AttributeName">Name</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">PropertyDefinition</property>
@@ -961,6 +964,7 @@ Production</property>
               <widget class="ControlWrappers.BoundEntry" id="txtDescription">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="IsEditable">True</property>
                 <property name="AttributeName">Description</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Form</property>
@@ -984,6 +988,7 @@ Production</property>
               <widget class="ControlWrappers.BoundEntry" id="txtFormId">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="IsEditable">True</property>
                 <property name="AttributeName">Id</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Form</property>
@@ -1054,7 +1059,7 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="831 626">
+  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="896 626">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
@@ -1241,6 +1246,7 @@ Production</property>
                   <widget class="ControlWrappers.BoundEntry" id="txtDefaultValue">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
+                    <property name="IsEditable">True</property>
                     <property name="AttributeName">DefaultValue</property>
                     <property name="ContextName">DialogContext</property>
                     <property name="DomainName">DynamicProperty</property>
@@ -1265,6 +1271,7 @@ Production</property>
                   <widget class="ControlWrappers.BoundEntry" id="txtQualifier">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
+                    <property name="IsEditable">True</property>
                     <property name="AttributeName">Qualifier</property>
                     <property name="ContextName">DialogContext</property>
                     <property name="DomainName">DynamicProperty</property>
@@ -1306,22 +1313,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.HButtonBox" id="btnBoxApplySettings">
                     <property name="MemberName" />
-                    <property name="Size">1</property>
-                    <child>
-                      <widget class="Gtk.Button" id="btnApplySettings">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="UseStock">True</property>
-                        <property name="Type">StockItem</property>
-                        <property name="StockId">gtk-apply</property>
-                        <signal name="Clicked" handler="ApplyButtonClicked" />
-                        <property name="label">gtk-apply</property>
-                      </widget>
-                      <packing>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
+                    <property name="Size">0</property>
                   </widget>
                   <packing>
                     <property name="TopAttach">2</property>
@@ -1409,7 +1401,7 @@ Production</property>
                   <widget class="Gtk.Notebook" id="nbValuePages">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">1</property>
+                    <property name="CurrentPage">2</property>
                     <property name="ShowTabs">False</property>
                     <child>
                       <widget class="Gtk.Label" id="label2">
@@ -1429,91 +1421,50 @@ Production</property>
                     <child>
                       <widget class="Gtk.Table" id="table4">
                         <property name="MemberName" />
-                        <property name="NRows">4</property>
-                        <property name="NColumns">4</property>
+                        <property name="NRows">2</property>
+                        <property name="NColumns">2</property>
                         <property name="RowSpacing">6</property>
                         <property name="ColumnSpacing">6</property>
                         <property name="BorderWidth">6</property>
                         <child>
-                          <widget class="Gtk.Calendar" id="calEndDate">
+                          <widget class="ControlWrappers.BoundCalendar" id="calEndDate">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="DisplayOptions">35</property>
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="Date">0</property>
+                            <property name="AttributeName">EffectiveEndDate</property>
+                            <property name="ContextName">EffectiveDateCtx</property>
+                            <property name="DomainName">EffectiveValue</property>
+                            <signal name="DateTimeChanged" handler="EndDateChanged" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>
                             <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Calendar" id="calStartDate">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="DisplayOptions">35</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.CheckButton" id="cbEndDateNull">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="Label" translatable="yes" />
-                            <property name="DrawIndicator">True</property>
-                            <property name="HasLabel">True</property>
-                            <property name="UseUnderline">True</property>
-                            <signal name="Toggled" handler="EndDateNullToggled" />
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.CheckButton" id="cbStartDateNull">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="Label" translatable="yes" />
-                            <property name="DrawIndicator">True</property>
-                            <property name="HasLabel">True</property>
-                            <property name="UseUnderline">True</property>
-                            <signal name="Toggled" handler="StartDateNullToggled" />
-                          </widget>
-                          <packing>
                             <property name="LeftAttach">1</property>
                             <property name="RightAttach">2</property>
+                            <property name="AutoSize">True</property>
+                            <property name="XOptions">Fill</property>
+                            <property name="YOptions">Fill</property>
+                            <property name="XExpand">False</property>
+                            <property name="XFill">True</property>
+                            <property name="XShrink">False</property>
+                            <property name="YExpand">False</property>
+                            <property name="YFill">True</property>
+                            <property name="YShrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="ControlWrappers.BoundCalendar" id="calStartDate">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="Date">0</property>
+                            <property name="AttributeName">EffectiveStartDate</property>
+                            <property name="ContextName">EffectiveDateCtx</property>
+                            <property name="DomainName">EffectiveValue</property>
+                            <signal name="DateTimeChanged" handler="StartDateChanged" />
+                          </widget>
+                          <packing>
+                            <property name="TopAttach">1</property>
+                            <property name="BottomAttach">2</property>
                             <property name="AutoSize">True</property>
                             <property name="XOptions">Fill</property>
                             <property name="YOptions">Fill</property>
@@ -1532,30 +1483,8 @@ Production</property>
                             <property name="LabelProp" translatable="yes">End Date:</property>
                           </widget>
                           <packing>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Label" id="lblEndTime">
-                            <property name="MemberName" />
-                            <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">End Time:</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">4</property>
+                            <property name="LeftAttach">1</property>
+                            <property name="RightAttach">2</property>
                             <property name="AutoSize">True</property>
                             <property name="XOptions">Fill</property>
                             <property name="YOptions">Fill</property>
@@ -1574,72 +1503,6 @@ Production</property>
                             <property name="LabelProp" translatable="yes">Start Date:</property>
                           </widget>
                           <packing>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Label" id="lblStartTime">
-                            <property name="MemberName" />
-                            <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Start Time:</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Entry" id="txtEndTime">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="IsEditable">True</property>
-                            <property name="InvisibleChar">●</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Entry" id="txtStartTime">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="IsEditable">True</property>
-                            <property name="InvisibleChar">●</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">3</property>
-                            <property name="BottomAttach">4</property>
-                            <property name="RightAttach">2</property>
                             <property name="AutoSize">True</property>
                             <property name="XOptions">Fill</property>
                             <property name="YOptions">Fill</property>
@@ -2218,11 +2081,13 @@ Production</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.Entry" id="txtCriteria">
+                          <widget class="ControlWrappers.BoundEntry" id="txtCriteria">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
+                            <property name="Events">ButtonPressMask</property>
                             <property name="IsEditable">False</property>
-                            <property name="InvisibleChar">●</property>
+                            <property name="AttributeName">RawCriteria</property>
+                            <property name="ContextName">ValueCriteriaCtx</property>
+                            <property name="DomainName">ValueCriteria</property>
                           </widget>
                           <packing>
                             <property name="TopAttach">5</property>
@@ -2240,11 +2105,14 @@ Production</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.Entry" id="txtValue">
+                          <widget class="ControlWrappers.BoundEntry" id="txtValue">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
+                            <property name="Events">ButtonPressMask</property>
                             <property name="IsEditable">True</property>
-                            <property name="InvisibleChar">●</property>
+                            <property name="AttributeName">Value</property>
+                            <property name="ContextName">ValueCriteriaCtx</property>
+                            <property name="DomainName">ValueCriteria</property>
+                            <signal name="Changed" handler="VCValueChanged" />
                           </widget>
                           <packing>
                             <property name="TopAttach">7</property>

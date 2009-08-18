@@ -39,8 +39,6 @@ namespace PropertyManager {
         
         private Gtk.HButtonBox btnBoxApplySettings;
         
-        private Gtk.Button btnApplySettings;
-        
         private Gtk.HButtonBox hbuttonbox2;
         
         private Gtk.Button btnAddItem;
@@ -57,25 +55,13 @@ namespace PropertyManager {
         
         private Gtk.Table table4;
         
-        private Gtk.Calendar calEndDate;
+        private ControlWrappers.BoundCalendar calEndDate;
         
-        private Gtk.Calendar calStartDate;
-        
-        private Gtk.CheckButton cbEndDateNull;
-        
-        private Gtk.CheckButton cbStartDateNull;
+        private ControlWrappers.BoundCalendar calStartDate;
         
         private Gtk.Label lblEndDate;
         
-        private Gtk.Label lblEndTime;
-        
         private Gtk.Label lblStartDate;
-        
-        private Gtk.Label lblStartTime;
-        
-        private Gtk.Entry txtEndTime;
-        
-        private Gtk.Entry txtStartTime;
         
         private Gtk.Label label6;
         
@@ -135,9 +121,9 @@ namespace PropertyManager {
         
         private Gtk.TreeView tvDOWs;
         
-        private Gtk.Entry txtCriteria;
+        private ControlWrappers.BoundEntry txtCriteria;
         
-        private Gtk.Entry txtValue;
+        private ControlWrappers.BoundEntry txtValue;
         
         private Gtk.Label label7;
         
@@ -261,6 +247,7 @@ namespace PropertyManager {
             this.txtDefaultValue = new ControlWrappers.BoundEntry();
             this.txtDefaultValue.Events = ((Gdk.EventMask)(256));
             this.txtDefaultValue.Name = "txtDefaultValue";
+            this.txtDefaultValue.IsEditable = true;
             this.txtDefaultValue.AttributeName = "DefaultValue";
             this.txtDefaultValue.ContextName = "DialogContext";
             this.txtDefaultValue.DomainName = "DynamicProperty";
@@ -276,6 +263,7 @@ namespace PropertyManager {
             this.txtQualifier = new ControlWrappers.BoundEntry();
             this.txtQualifier.Events = ((Gdk.EventMask)(256));
             this.txtQualifier.Name = "txtQualifier";
+            this.txtQualifier.IsEditable = true;
             this.txtQualifier.AttributeName = "Qualifier";
             this.txtQualifier.ContextName = "DialogContext";
             this.txtQualifier.DomainName = "DynamicProperty";
@@ -300,25 +288,14 @@ namespace PropertyManager {
             // Container child table3.Gtk.Table+TableChild
             this.btnBoxApplySettings = new Gtk.HButtonBox();
             this.btnBoxApplySettings.Name = "btnBoxApplySettings";
-            // Container child btnBoxApplySettings.Gtk.ButtonBox+ButtonBoxChild
-            this.btnApplySettings = new Gtk.Button();
-            this.btnApplySettings.CanFocus = true;
-            this.btnApplySettings.Name = "btnApplySettings";
-            this.btnApplySettings.UseStock = true;
-            this.btnApplySettings.UseUnderline = true;
-            this.btnApplySettings.Label = "gtk-apply";
-            this.btnBoxApplySettings.Add(this.btnApplySettings);
-            Gtk.ButtonBox.ButtonBoxChild w12 = ((Gtk.ButtonBox.ButtonBoxChild)(this.btnBoxApplySettings[this.btnApplySettings]));
-            w12.Expand = false;
-            w12.Fill = false;
             this.table3.Add(this.btnBoxApplySettings);
-            Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.table3[this.btnBoxApplySettings]));
-            w13.TopAttach = ((uint)(2));
-            w13.BottomAttach = ((uint)(3));
-            w13.LeftAttach = ((uint)(1));
-            w13.RightAttach = ((uint)(2));
-            w13.XOptions = ((Gtk.AttachOptions)(4));
-            w13.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w12 = ((Gtk.Table.TableChild)(this.table3[this.btnBoxApplySettings]));
+            w12.TopAttach = ((uint)(2));
+            w12.BottomAttach = ((uint)(3));
+            w12.LeftAttach = ((uint)(1));
+            w12.RightAttach = ((uint)(2));
+            w12.XOptions = ((Gtk.AttachOptions)(4));
+            w12.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table3.Gtk.Table+TableChild
             this.hbuttonbox2 = new Gtk.HButtonBox();
             this.hbuttonbox2.Name = "hbuttonbox2";
@@ -330,9 +307,9 @@ namespace PropertyManager {
             this.btnAddItem.UseUnderline = true;
             this.btnAddItem.Label = "gtk-add";
             this.hbuttonbox2.Add(this.btnAddItem);
-            Gtk.ButtonBox.ButtonBoxChild w14 = ((Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnAddItem]));
-            w14.Expand = false;
-            w14.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnAddItem]));
+            w13.Expand = false;
+            w13.Fill = false;
             // Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
             this.btnRemove = new Gtk.Button();
             this.btnRemove.CanFocus = true;
@@ -341,30 +318,30 @@ namespace PropertyManager {
             this.btnRemove.UseUnderline = true;
             this.btnRemove.Label = "gtk-remove";
             this.hbuttonbox2.Add(this.btnRemove);
-            Gtk.ButtonBox.ButtonBoxChild w15 = ((Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnRemove]));
-            w15.Position = 1;
-            w15.Expand = false;
-            w15.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w14 = ((Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnRemove]));
+            w14.Position = 1;
+            w14.Expand = false;
+            w14.Fill = false;
             this.table3.Add(this.hbuttonbox2);
-            Gtk.Table.TableChild w16 = ((Gtk.Table.TableChild)(this.table3[this.hbuttonbox2]));
-            w16.TopAttach = ((uint)(2));
-            w16.BottomAttach = ((uint)(3));
-            w16.XOptions = ((Gtk.AttachOptions)(4));
-            w16.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w15 = ((Gtk.Table.TableChild)(this.table3[this.hbuttonbox2]));
+            w15.TopAttach = ((uint)(2));
+            w15.BottomAttach = ((uint)(3));
+            w15.XOptions = ((Gtk.AttachOptions)(4));
+            w15.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table3.Gtk.Table+TableChild
             this.lblEffectiveValues = new Gtk.Label();
             this.lblEffectiveValues.Name = "lblEffectiveValues";
             this.lblEffectiveValues.Xalign = 0F;
             this.lblEffectiveValues.LabelProp = Mono.Unix.Catalog.GetString("Effective Values:");
             this.table3.Add(this.lblEffectiveValues);
-            Gtk.Table.TableChild w17 = ((Gtk.Table.TableChild)(this.table3[this.lblEffectiveValues]));
-            w17.XOptions = ((Gtk.AttachOptions)(4));
-            w17.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w16 = ((Gtk.Table.TableChild)(this.table3[this.lblEffectiveValues]));
+            w16.XOptions = ((Gtk.AttachOptions)(4));
+            w16.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table3.Gtk.Table+TableChild
             this.nbValuePages = new Gtk.Notebook();
             this.nbValuePages.CanFocus = true;
             this.nbValuePages.Name = "nbValuePages";
-            this.nbValuePages.CurrentPage = 0;
+            this.nbValuePages.CurrentPage = 2;
             this.nbValuePages.ShowTabs = false;
             // Container child nbValuePages.Gtk.Notebook+NotebookChild
             this.label2 = new Gtk.Label();
@@ -378,137 +355,64 @@ namespace PropertyManager {
             this.nbValuePages.SetTabLabel(this.label2, this.label1);
             this.label1.ShowAll();
             // Container child nbValuePages.Gtk.Notebook+NotebookChild
-            this.table4 = new Gtk.Table(((uint)(4)), ((uint)(4)), false);
+            this.table4 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table4.Name = "table4";
             this.table4.RowSpacing = ((uint)(6));
             this.table4.ColumnSpacing = ((uint)(6));
             this.table4.BorderWidth = ((uint)(6));
             // Container child table4.Gtk.Table+TableChild
-            this.calEndDate = new Gtk.Calendar();
-            this.calEndDate.CanFocus = true;
+            this.calEndDate = new ControlWrappers.BoundCalendar();
+            this.calEndDate.Events = ((Gdk.EventMask)(256));
             this.calEndDate.Name = "calEndDate";
-            this.calEndDate.DisplayOptions = ((Gtk.CalendarDisplayOptions)(35));
+            this.calEndDate.Date = new System.DateTime(0);
+            this.calEndDate.AttributeName = "EffectiveEndDate";
+            this.calEndDate.ContextName = "EffectiveDateCtx";
+            this.calEndDate.DomainName = "EffectiveValue";
             this.table4.Add(this.calEndDate);
-            Gtk.Table.TableChild w19 = ((Gtk.Table.TableChild)(this.table4[this.calEndDate]));
+            Gtk.Table.TableChild w18 = ((Gtk.Table.TableChild)(this.table4[this.calEndDate]));
+            w18.TopAttach = ((uint)(1));
+            w18.BottomAttach = ((uint)(2));
+            w18.LeftAttach = ((uint)(1));
+            w18.RightAttach = ((uint)(2));
+            w18.XOptions = ((Gtk.AttachOptions)(4));
+            w18.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table4.Gtk.Table+TableChild
+            this.calStartDate = new ControlWrappers.BoundCalendar();
+            this.calStartDate.Events = ((Gdk.EventMask)(256));
+            this.calStartDate.Name = "calStartDate";
+            this.calStartDate.Date = new System.DateTime(0);
+            this.calStartDate.AttributeName = "EffectiveStartDate";
+            this.calStartDate.ContextName = "EffectiveDateCtx";
+            this.calStartDate.DomainName = "EffectiveValue";
+            this.table4.Add(this.calStartDate);
+            Gtk.Table.TableChild w19 = ((Gtk.Table.TableChild)(this.table4[this.calStartDate]));
             w19.TopAttach = ((uint)(1));
             w19.BottomAttach = ((uint)(2));
-            w19.LeftAttach = ((uint)(2));
-            w19.RightAttach = ((uint)(4));
             w19.XOptions = ((Gtk.AttachOptions)(4));
             w19.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.calStartDate = new Gtk.Calendar();
-            this.calStartDate.CanFocus = true;
-            this.calStartDate.Name = "calStartDate";
-            this.calStartDate.DisplayOptions = ((Gtk.CalendarDisplayOptions)(35));
-            this.table4.Add(this.calStartDate);
-            Gtk.Table.TableChild w20 = ((Gtk.Table.TableChild)(this.table4[this.calStartDate]));
-            w20.TopAttach = ((uint)(1));
-            w20.BottomAttach = ((uint)(2));
-            w20.RightAttach = ((uint)(2));
-            w20.XOptions = ((Gtk.AttachOptions)(4));
-            w20.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.cbEndDateNull = new Gtk.CheckButton();
-            this.cbEndDateNull.CanFocus = true;
-            this.cbEndDateNull.Name = "cbEndDateNull";
-            this.cbEndDateNull.Label = "";
-            this.cbEndDateNull.DrawIndicator = true;
-            this.cbEndDateNull.UseUnderline = true;
-            this.table4.Add(this.cbEndDateNull);
-            Gtk.Table.TableChild w21 = ((Gtk.Table.TableChild)(this.table4[this.cbEndDateNull]));
-            w21.LeftAttach = ((uint)(3));
-            w21.RightAttach = ((uint)(4));
-            w21.XOptions = ((Gtk.AttachOptions)(4));
-            w21.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.cbStartDateNull = new Gtk.CheckButton();
-            this.cbStartDateNull.CanFocus = true;
-            this.cbStartDateNull.Name = "cbStartDateNull";
-            this.cbStartDateNull.Label = "";
-            this.cbStartDateNull.DrawIndicator = true;
-            this.cbStartDateNull.UseUnderline = true;
-            this.table4.Add(this.cbStartDateNull);
-            Gtk.Table.TableChild w22 = ((Gtk.Table.TableChild)(this.table4[this.cbStartDateNull]));
-            w22.LeftAttach = ((uint)(1));
-            w22.RightAttach = ((uint)(2));
-            w22.XOptions = ((Gtk.AttachOptions)(4));
-            w22.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table4.Gtk.Table+TableChild
             this.lblEndDate = new Gtk.Label();
             this.lblEndDate.Name = "lblEndDate";
             this.lblEndDate.Xalign = 0F;
             this.lblEndDate.LabelProp = Mono.Unix.Catalog.GetString("End Date:");
             this.table4.Add(this.lblEndDate);
-            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.table4[this.lblEndDate]));
-            w23.LeftAttach = ((uint)(2));
-            w23.RightAttach = ((uint)(3));
-            w23.XOptions = ((Gtk.AttachOptions)(4));
-            w23.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.lblEndTime = new Gtk.Label();
-            this.lblEndTime.Name = "lblEndTime";
-            this.lblEndTime.Xalign = 0F;
-            this.lblEndTime.LabelProp = Mono.Unix.Catalog.GetString("End Time:");
-            this.table4.Add(this.lblEndTime);
-            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.table4[this.lblEndTime]));
-            w24.TopAttach = ((uint)(2));
-            w24.BottomAttach = ((uint)(3));
-            w24.LeftAttach = ((uint)(2));
-            w24.RightAttach = ((uint)(4));
-            w24.XOptions = ((Gtk.AttachOptions)(4));
-            w24.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w20 = ((Gtk.Table.TableChild)(this.table4[this.lblEndDate]));
+            w20.LeftAttach = ((uint)(1));
+            w20.RightAttach = ((uint)(2));
+            w20.XOptions = ((Gtk.AttachOptions)(4));
+            w20.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table4.Gtk.Table+TableChild
             this.lblStartDate = new Gtk.Label();
             this.lblStartDate.Name = "lblStartDate";
             this.lblStartDate.Xalign = 0F;
             this.lblStartDate.LabelProp = Mono.Unix.Catalog.GetString("Start Date:");
             this.table4.Add(this.lblStartDate);
-            Gtk.Table.TableChild w25 = ((Gtk.Table.TableChild)(this.table4[this.lblStartDate]));
-            w25.XOptions = ((Gtk.AttachOptions)(4));
-            w25.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.lblStartTime = new Gtk.Label();
-            this.lblStartTime.Name = "lblStartTime";
-            this.lblStartTime.Xalign = 0F;
-            this.lblStartTime.LabelProp = Mono.Unix.Catalog.GetString("Start Time:");
-            this.table4.Add(this.lblStartTime);
-            Gtk.Table.TableChild w26 = ((Gtk.Table.TableChild)(this.table4[this.lblStartTime]));
-            w26.TopAttach = ((uint)(2));
-            w26.BottomAttach = ((uint)(3));
-            w26.RightAttach = ((uint)(2));
-            w26.XOptions = ((Gtk.AttachOptions)(4));
-            w26.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.txtEndTime = new Gtk.Entry();
-            this.txtEndTime.CanFocus = true;
-            this.txtEndTime.Name = "txtEndTime";
-            this.txtEndTime.IsEditable = true;
-            this.txtEndTime.InvisibleChar = '●';
-            this.table4.Add(this.txtEndTime);
-            Gtk.Table.TableChild w27 = ((Gtk.Table.TableChild)(this.table4[this.txtEndTime]));
-            w27.TopAttach = ((uint)(3));
-            w27.BottomAttach = ((uint)(4));
-            w27.LeftAttach = ((uint)(2));
-            w27.RightAttach = ((uint)(4));
-            w27.XOptions = ((Gtk.AttachOptions)(4));
-            w27.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table4.Gtk.Table+TableChild
-            this.txtStartTime = new Gtk.Entry();
-            this.txtStartTime.CanFocus = true;
-            this.txtStartTime.Name = "txtStartTime";
-            this.txtStartTime.IsEditable = true;
-            this.txtStartTime.InvisibleChar = '●';
-            this.table4.Add(this.txtStartTime);
-            Gtk.Table.TableChild w28 = ((Gtk.Table.TableChild)(this.table4[this.txtStartTime]));
-            w28.TopAttach = ((uint)(3));
-            w28.BottomAttach = ((uint)(4));
-            w28.RightAttach = ((uint)(2));
-            w28.XOptions = ((Gtk.AttachOptions)(4));
-            w28.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w21 = ((Gtk.Table.TableChild)(this.table4[this.lblStartDate]));
+            w21.XOptions = ((Gtk.AttachOptions)(4));
+            w21.YOptions = ((Gtk.AttachOptions)(4));
             this.nbValuePages.Add(this.table4);
-            Gtk.Notebook.NotebookChild w29 = ((Gtk.Notebook.NotebookChild)(this.nbValuePages[this.table4]));
-            w29.Position = 1;
+            Gtk.Notebook.NotebookChild w22 = ((Gtk.Notebook.NotebookChild)(this.nbValuePages[this.table4]));
+            w22.Position = 1;
             // Notebook tab
             this.label6 = new Gtk.Label();
             this.label6.Name = "label6";
@@ -528,13 +432,13 @@ namespace PropertyManager {
             this.btnAllDays.UseUnderline = true;
             this.btnAllDays.Label = "gtk-select-all";
             this.table5.Add(this.btnAllDays);
-            Gtk.Table.TableChild w30 = ((Gtk.Table.TableChild)(this.table5[this.btnAllDays]));
-            w30.TopAttach = ((uint)(2));
-            w30.BottomAttach = ((uint)(3));
-            w30.LeftAttach = ((uint)(2));
-            w30.RightAttach = ((uint)(3));
-            w30.XOptions = ((Gtk.AttachOptions)(4));
-            w30.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.table5[this.btnAllDays]));
+            w23.TopAttach = ((uint)(2));
+            w23.BottomAttach = ((uint)(3));
+            w23.LeftAttach = ((uint)(2));
+            w23.RightAttach = ((uint)(3));
+            w23.XOptions = ((Gtk.AttachOptions)(4));
+            w23.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnAllDOWs = new Gtk.Button();
             this.btnAllDOWs.CanFocus = true;
@@ -543,13 +447,13 @@ namespace PropertyManager {
             this.btnAllDOWs.UseUnderline = true;
             this.btnAllDOWs.Label = "gtk-select-all";
             this.table5.Add(this.btnAllDOWs);
-            Gtk.Table.TableChild w31 = ((Gtk.Table.TableChild)(this.table5[this.btnAllDOWs]));
-            w31.TopAttach = ((uint)(2));
-            w31.BottomAttach = ((uint)(3));
-            w31.LeftAttach = ((uint)(4));
-            w31.RightAttach = ((uint)(5));
-            w31.XOptions = ((Gtk.AttachOptions)(4));
-            w31.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.table5[this.btnAllDOWs]));
+            w24.TopAttach = ((uint)(2));
+            w24.BottomAttach = ((uint)(3));
+            w24.LeftAttach = ((uint)(4));
+            w24.RightAttach = ((uint)(5));
+            w24.XOptions = ((Gtk.AttachOptions)(4));
+            w24.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnAllHours = new Gtk.Button();
             this.btnAllHours.CanFocus = true;
@@ -558,13 +462,13 @@ namespace PropertyManager {
             this.btnAllHours.UseUnderline = true;
             this.btnAllHours.Label = "gtk-select-all";
             this.table5.Add(this.btnAllHours);
-            Gtk.Table.TableChild w32 = ((Gtk.Table.TableChild)(this.table5[this.btnAllHours]));
-            w32.TopAttach = ((uint)(2));
-            w32.BottomAttach = ((uint)(3));
-            w32.LeftAttach = ((uint)(1));
-            w32.RightAttach = ((uint)(2));
-            w32.XOptions = ((Gtk.AttachOptions)(4));
-            w32.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w25 = ((Gtk.Table.TableChild)(this.table5[this.btnAllHours]));
+            w25.TopAttach = ((uint)(2));
+            w25.BottomAttach = ((uint)(3));
+            w25.LeftAttach = ((uint)(1));
+            w25.RightAttach = ((uint)(2));
+            w25.XOptions = ((Gtk.AttachOptions)(4));
+            w25.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnAllMinutes = new Gtk.Button();
             this.btnAllMinutes.CanFocus = true;
@@ -573,11 +477,11 @@ namespace PropertyManager {
             this.btnAllMinutes.UseUnderline = true;
             this.btnAllMinutes.Label = "gtk-select-all";
             this.table5.Add(this.btnAllMinutes);
-            Gtk.Table.TableChild w33 = ((Gtk.Table.TableChild)(this.table5[this.btnAllMinutes]));
-            w33.TopAttach = ((uint)(2));
-            w33.BottomAttach = ((uint)(3));
-            w33.XOptions = ((Gtk.AttachOptions)(4));
-            w33.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w26 = ((Gtk.Table.TableChild)(this.table5[this.btnAllMinutes]));
+            w26.TopAttach = ((uint)(2));
+            w26.BottomAttach = ((uint)(3));
+            w26.XOptions = ((Gtk.AttachOptions)(4));
+            w26.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnAllMonths = new Gtk.Button();
             this.btnAllMonths.CanFocus = true;
@@ -586,13 +490,13 @@ namespace PropertyManager {
             this.btnAllMonths.UseUnderline = true;
             this.btnAllMonths.Label = "gtk-select-all";
             this.table5.Add(this.btnAllMonths);
-            Gtk.Table.TableChild w34 = ((Gtk.Table.TableChild)(this.table5[this.btnAllMonths]));
-            w34.TopAttach = ((uint)(2));
-            w34.BottomAttach = ((uint)(3));
-            w34.LeftAttach = ((uint)(3));
-            w34.RightAttach = ((uint)(4));
-            w34.XOptions = ((Gtk.AttachOptions)(4));
-            w34.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w27 = ((Gtk.Table.TableChild)(this.table5[this.btnAllMonths]));
+            w27.TopAttach = ((uint)(2));
+            w27.BottomAttach = ((uint)(3));
+            w27.LeftAttach = ((uint)(3));
+            w27.RightAttach = ((uint)(4));
+            w27.XOptions = ((Gtk.AttachOptions)(4));
+            w27.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnNoneDays = new Gtk.Button();
             this.btnNoneDays.CanFocus = true;
@@ -601,13 +505,13 @@ namespace PropertyManager {
             this.btnNoneDays.UseUnderline = true;
             this.btnNoneDays.Label = "gtk-clear";
             this.table5.Add(this.btnNoneDays);
-            Gtk.Table.TableChild w35 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneDays]));
-            w35.TopAttach = ((uint)(3));
-            w35.BottomAttach = ((uint)(4));
-            w35.LeftAttach = ((uint)(2));
-            w35.RightAttach = ((uint)(3));
-            w35.XOptions = ((Gtk.AttachOptions)(4));
-            w35.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w28 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneDays]));
+            w28.TopAttach = ((uint)(3));
+            w28.BottomAttach = ((uint)(4));
+            w28.LeftAttach = ((uint)(2));
+            w28.RightAttach = ((uint)(3));
+            w28.XOptions = ((Gtk.AttachOptions)(4));
+            w28.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnNoneDOWs = new Gtk.Button();
             this.btnNoneDOWs.CanFocus = true;
@@ -616,13 +520,13 @@ namespace PropertyManager {
             this.btnNoneDOWs.UseUnderline = true;
             this.btnNoneDOWs.Label = "gtk-clear";
             this.table5.Add(this.btnNoneDOWs);
-            Gtk.Table.TableChild w36 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneDOWs]));
-            w36.TopAttach = ((uint)(3));
-            w36.BottomAttach = ((uint)(4));
-            w36.LeftAttach = ((uint)(4));
-            w36.RightAttach = ((uint)(5));
-            w36.XOptions = ((Gtk.AttachOptions)(4));
-            w36.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w29 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneDOWs]));
+            w29.TopAttach = ((uint)(3));
+            w29.BottomAttach = ((uint)(4));
+            w29.LeftAttach = ((uint)(4));
+            w29.RightAttach = ((uint)(5));
+            w29.XOptions = ((Gtk.AttachOptions)(4));
+            w29.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnNoneHours = new Gtk.Button();
             this.btnNoneHours.CanFocus = true;
@@ -631,13 +535,13 @@ namespace PropertyManager {
             this.btnNoneHours.UseUnderline = true;
             this.btnNoneHours.Label = "gtk-clear";
             this.table5.Add(this.btnNoneHours);
-            Gtk.Table.TableChild w37 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneHours]));
-            w37.TopAttach = ((uint)(3));
-            w37.BottomAttach = ((uint)(4));
-            w37.LeftAttach = ((uint)(1));
-            w37.RightAttach = ((uint)(2));
-            w37.XOptions = ((Gtk.AttachOptions)(4));
-            w37.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w30 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneHours]));
+            w30.TopAttach = ((uint)(3));
+            w30.BottomAttach = ((uint)(4));
+            w30.LeftAttach = ((uint)(1));
+            w30.RightAttach = ((uint)(2));
+            w30.XOptions = ((Gtk.AttachOptions)(4));
+            w30.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnNoneMinutes = new Gtk.Button();
             this.btnNoneMinutes.CanFocus = true;
@@ -646,11 +550,11 @@ namespace PropertyManager {
             this.btnNoneMinutes.UseUnderline = true;
             this.btnNoneMinutes.Label = "gtk-clear";
             this.table5.Add(this.btnNoneMinutes);
-            Gtk.Table.TableChild w38 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneMinutes]));
-            w38.TopAttach = ((uint)(3));
-            w38.BottomAttach = ((uint)(4));
-            w38.XOptions = ((Gtk.AttachOptions)(4));
-            w38.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w31 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneMinutes]));
+            w31.TopAttach = ((uint)(3));
+            w31.BottomAttach = ((uint)(4));
+            w31.XOptions = ((Gtk.AttachOptions)(4));
+            w31.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.btnNoneMonths = new Gtk.Button();
             this.btnNoneMonths.CanFocus = true;
@@ -659,90 +563,90 @@ namespace PropertyManager {
             this.btnNoneMonths.UseUnderline = true;
             this.btnNoneMonths.Label = "gtk-clear";
             this.table5.Add(this.btnNoneMonths);
-            Gtk.Table.TableChild w39 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneMonths]));
-            w39.TopAttach = ((uint)(3));
-            w39.BottomAttach = ((uint)(4));
-            w39.LeftAttach = ((uint)(3));
-            w39.RightAttach = ((uint)(4));
-            w39.XOptions = ((Gtk.AttachOptions)(4));
-            w39.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w32 = ((Gtk.Table.TableChild)(this.table5[this.btnNoneMonths]));
+            w32.TopAttach = ((uint)(3));
+            w32.BottomAttach = ((uint)(4));
+            w32.LeftAttach = ((uint)(3));
+            w32.RightAttach = ((uint)(4));
+            w32.XOptions = ((Gtk.AttachOptions)(4));
+            w32.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblCriteria = new Gtk.Label();
             this.lblCriteria.Name = "lblCriteria";
             this.lblCriteria.Xalign = 0F;
             this.lblCriteria.LabelProp = Mono.Unix.Catalog.GetString("Criteria:");
             this.table5.Add(this.lblCriteria);
-            Gtk.Table.TableChild w40 = ((Gtk.Table.TableChild)(this.table5[this.lblCriteria]));
-            w40.TopAttach = ((uint)(4));
-            w40.BottomAttach = ((uint)(5));
-            w40.RightAttach = ((uint)(5));
-            w40.XOptions = ((Gtk.AttachOptions)(4));
-            w40.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w33 = ((Gtk.Table.TableChild)(this.table5[this.lblCriteria]));
+            w33.TopAttach = ((uint)(4));
+            w33.BottomAttach = ((uint)(5));
+            w33.RightAttach = ((uint)(5));
+            w33.XOptions = ((Gtk.AttachOptions)(4));
+            w33.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblDays = new Gtk.Label();
             this.lblDays.Name = "lblDays";
             this.lblDays.Xalign = 0F;
             this.lblDays.LabelProp = Mono.Unix.Catalog.GetString("Days:");
             this.table5.Add(this.lblDays);
-            Gtk.Table.TableChild w41 = ((Gtk.Table.TableChild)(this.table5[this.lblDays]));
-            w41.LeftAttach = ((uint)(2));
-            w41.RightAttach = ((uint)(3));
-            w41.XOptions = ((Gtk.AttachOptions)(4));
-            w41.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w34 = ((Gtk.Table.TableChild)(this.table5[this.lblDays]));
+            w34.LeftAttach = ((uint)(2));
+            w34.RightAttach = ((uint)(3));
+            w34.XOptions = ((Gtk.AttachOptions)(4));
+            w34.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblDOWs = new Gtk.Label();
             this.lblDOWs.Name = "lblDOWs";
             this.lblDOWs.Xalign = 0F;
             this.lblDOWs.LabelProp = Mono.Unix.Catalog.GetString("DOW:");
             this.table5.Add(this.lblDOWs);
-            Gtk.Table.TableChild w42 = ((Gtk.Table.TableChild)(this.table5[this.lblDOWs]));
-            w42.LeftAttach = ((uint)(4));
-            w42.RightAttach = ((uint)(5));
-            w42.XOptions = ((Gtk.AttachOptions)(4));
-            w42.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w35 = ((Gtk.Table.TableChild)(this.table5[this.lblDOWs]));
+            w35.LeftAttach = ((uint)(4));
+            w35.RightAttach = ((uint)(5));
+            w35.XOptions = ((Gtk.AttachOptions)(4));
+            w35.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblHours = new Gtk.Label();
             this.lblHours.Name = "lblHours";
             this.lblHours.Xalign = 0F;
             this.lblHours.LabelProp = Mono.Unix.Catalog.GetString("Hours:");
             this.table5.Add(this.lblHours);
-            Gtk.Table.TableChild w43 = ((Gtk.Table.TableChild)(this.table5[this.lblHours]));
-            w43.LeftAttach = ((uint)(1));
-            w43.RightAttach = ((uint)(2));
-            w43.XOptions = ((Gtk.AttachOptions)(4));
-            w43.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w36 = ((Gtk.Table.TableChild)(this.table5[this.lblHours]));
+            w36.LeftAttach = ((uint)(1));
+            w36.RightAttach = ((uint)(2));
+            w36.XOptions = ((Gtk.AttachOptions)(4));
+            w36.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblMinutes = new Gtk.Label();
             this.lblMinutes.Name = "lblMinutes";
             this.lblMinutes.Xalign = 0F;
             this.lblMinutes.LabelProp = Mono.Unix.Catalog.GetString("Minutes:");
             this.table5.Add(this.lblMinutes);
-            Gtk.Table.TableChild w44 = ((Gtk.Table.TableChild)(this.table5[this.lblMinutes]));
-            w44.XOptions = ((Gtk.AttachOptions)(4));
-            w44.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w37 = ((Gtk.Table.TableChild)(this.table5[this.lblMinutes]));
+            w37.XOptions = ((Gtk.AttachOptions)(4));
+            w37.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblMonths = new Gtk.Label();
             this.lblMonths.Name = "lblMonths";
             this.lblMonths.Xalign = 0F;
             this.lblMonths.LabelProp = Mono.Unix.Catalog.GetString("Months:");
             this.table5.Add(this.lblMonths);
-            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table5[this.lblMonths]));
-            w45.LeftAttach = ((uint)(3));
-            w45.RightAttach = ((uint)(4));
-            w45.XOptions = ((Gtk.AttachOptions)(4));
-            w45.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w38 = ((Gtk.Table.TableChild)(this.table5[this.lblMonths]));
+            w38.LeftAttach = ((uint)(3));
+            w38.RightAttach = ((uint)(4));
+            w38.XOptions = ((Gtk.AttachOptions)(4));
+            w38.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.lblValue = new Gtk.Label();
             this.lblValue.Name = "lblValue";
             this.lblValue.Xalign = 0F;
             this.lblValue.LabelProp = Mono.Unix.Catalog.GetString("Value:");
             this.table5.Add(this.lblValue);
-            Gtk.Table.TableChild w46 = ((Gtk.Table.TableChild)(this.table5[this.lblValue]));
-            w46.TopAttach = ((uint)(6));
-            w46.BottomAttach = ((uint)(7));
-            w46.RightAttach = ((uint)(5));
-            w46.XOptions = ((Gtk.AttachOptions)(4));
-            w46.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w39 = ((Gtk.Table.TableChild)(this.table5[this.lblValue]));
+            w39.TopAttach = ((uint)(6));
+            w39.BottomAttach = ((uint)(7));
+            w39.RightAttach = ((uint)(5));
+            w39.XOptions = ((Gtk.AttachOptions)(4));
+            w39.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.scrolledwindow2 = new Gtk.ScrolledWindow();
             this.scrolledwindow2.HeightRequest = 150;
@@ -757,10 +661,10 @@ namespace PropertyManager {
             this.tvMinutes.HeadersVisible = false;
             this.scrolledwindow2.Add(this.tvMinutes);
             this.table5.Add(this.scrolledwindow2);
-            Gtk.Table.TableChild w48 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow2]));
-            w48.TopAttach = ((uint)(1));
-            w48.BottomAttach = ((uint)(2));
-            w48.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w41 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow2]));
+            w41.TopAttach = ((uint)(1));
+            w41.BottomAttach = ((uint)(2));
+            w41.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.scrolledwindow3 = new Gtk.ScrolledWindow();
             this.scrolledwindow3.CanFocus = true;
@@ -774,12 +678,12 @@ namespace PropertyManager {
             this.tvHours.HeadersVisible = false;
             this.scrolledwindow3.Add(this.tvHours);
             this.table5.Add(this.scrolledwindow3);
-            Gtk.Table.TableChild w50 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow3]));
-            w50.TopAttach = ((uint)(1));
-            w50.BottomAttach = ((uint)(2));
-            w50.LeftAttach = ((uint)(1));
-            w50.RightAttach = ((uint)(2));
-            w50.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w43 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow3]));
+            w43.TopAttach = ((uint)(1));
+            w43.BottomAttach = ((uint)(2));
+            w43.LeftAttach = ((uint)(1));
+            w43.RightAttach = ((uint)(2));
+            w43.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.scrolledwindow4 = new Gtk.ScrolledWindow();
             this.scrolledwindow4.CanFocus = true;
@@ -793,12 +697,12 @@ namespace PropertyManager {
             this.tvDays.HeadersVisible = false;
             this.scrolledwindow4.Add(this.tvDays);
             this.table5.Add(this.scrolledwindow4);
-            Gtk.Table.TableChild w52 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow4]));
-            w52.TopAttach = ((uint)(1));
-            w52.BottomAttach = ((uint)(2));
-            w52.LeftAttach = ((uint)(2));
-            w52.RightAttach = ((uint)(3));
-            w52.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow4]));
+            w45.TopAttach = ((uint)(1));
+            w45.BottomAttach = ((uint)(2));
+            w45.LeftAttach = ((uint)(2));
+            w45.RightAttach = ((uint)(3));
+            w45.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.scrolledwindow5 = new Gtk.ScrolledWindow();
             this.scrolledwindow5.CanFocus = true;
@@ -812,12 +716,12 @@ namespace PropertyManager {
             this.tvMonths.HeadersVisible = false;
             this.scrolledwindow5.Add(this.tvMonths);
             this.table5.Add(this.scrolledwindow5);
-            Gtk.Table.TableChild w54 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow5]));
-            w54.TopAttach = ((uint)(1));
-            w54.BottomAttach = ((uint)(2));
-            w54.LeftAttach = ((uint)(3));
-            w54.RightAttach = ((uint)(4));
-            w54.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w47 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow5]));
+            w47.TopAttach = ((uint)(1));
+            w47.BottomAttach = ((uint)(2));
+            w47.LeftAttach = ((uint)(3));
+            w47.RightAttach = ((uint)(4));
+            w47.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
             this.scrolledwindow6 = new Gtk.ScrolledWindow();
             this.scrolledwindow6.CanFocus = true;
@@ -831,41 +735,45 @@ namespace PropertyManager {
             this.tvDOWs.HeadersVisible = false;
             this.scrolledwindow6.Add(this.tvDOWs);
             this.table5.Add(this.scrolledwindow6);
-            Gtk.Table.TableChild w56 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow6]));
-            w56.TopAttach = ((uint)(1));
-            w56.BottomAttach = ((uint)(2));
-            w56.LeftAttach = ((uint)(4));
-            w56.RightAttach = ((uint)(5));
-            w56.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w49 = ((Gtk.Table.TableChild)(this.table5[this.scrolledwindow6]));
+            w49.TopAttach = ((uint)(1));
+            w49.BottomAttach = ((uint)(2));
+            w49.LeftAttach = ((uint)(4));
+            w49.RightAttach = ((uint)(5));
+            w49.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
-            this.txtCriteria = new Gtk.Entry();
-            this.txtCriteria.CanFocus = true;
+            this.txtCriteria = new ControlWrappers.BoundEntry();
+            this.txtCriteria.Events = ((Gdk.EventMask)(256));
             this.txtCriteria.Name = "txtCriteria";
             this.txtCriteria.IsEditable = false;
-            this.txtCriteria.InvisibleChar = '●';
+            this.txtCriteria.AttributeName = "RawCriteria";
+            this.txtCriteria.ContextName = "ValueCriteriaCtx";
+            this.txtCriteria.DomainName = "ValueCriteria";
             this.table5.Add(this.txtCriteria);
-            Gtk.Table.TableChild w57 = ((Gtk.Table.TableChild)(this.table5[this.txtCriteria]));
-            w57.TopAttach = ((uint)(5));
-            w57.BottomAttach = ((uint)(6));
-            w57.RightAttach = ((uint)(5));
-            w57.XOptions = ((Gtk.AttachOptions)(4));
-            w57.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w50 = ((Gtk.Table.TableChild)(this.table5[this.txtCriteria]));
+            w50.TopAttach = ((uint)(5));
+            w50.BottomAttach = ((uint)(6));
+            w50.RightAttach = ((uint)(5));
+            w50.XOptions = ((Gtk.AttachOptions)(4));
+            w50.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table5.Gtk.Table+TableChild
-            this.txtValue = new Gtk.Entry();
-            this.txtValue.CanFocus = true;
+            this.txtValue = new ControlWrappers.BoundEntry();
+            this.txtValue.Events = ((Gdk.EventMask)(256));
             this.txtValue.Name = "txtValue";
             this.txtValue.IsEditable = true;
-            this.txtValue.InvisibleChar = '●';
+            this.txtValue.AttributeName = "Value";
+            this.txtValue.ContextName = "ValueCriteriaCtx";
+            this.txtValue.DomainName = "ValueCriteria";
             this.table5.Add(this.txtValue);
-            Gtk.Table.TableChild w58 = ((Gtk.Table.TableChild)(this.table5[this.txtValue]));
-            w58.TopAttach = ((uint)(7));
-            w58.BottomAttach = ((uint)(8));
-            w58.RightAttach = ((uint)(5));
-            w58.XOptions = ((Gtk.AttachOptions)(4));
-            w58.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w51 = ((Gtk.Table.TableChild)(this.table5[this.txtValue]));
+            w51.TopAttach = ((uint)(7));
+            w51.BottomAttach = ((uint)(8));
+            w51.RightAttach = ((uint)(5));
+            w51.XOptions = ((Gtk.AttachOptions)(4));
+            w51.YOptions = ((Gtk.AttachOptions)(4));
             this.nbValuePages.Add(this.table5);
-            Gtk.Notebook.NotebookChild w59 = ((Gtk.Notebook.NotebookChild)(this.nbValuePages[this.table5]));
-            w59.Position = 2;
+            Gtk.Notebook.NotebookChild w52 = ((Gtk.Notebook.NotebookChild)(this.nbValuePages[this.table5]));
+            w52.Position = 2;
             // Notebook tab
             this.label7 = new Gtk.Label();
             this.label7.Name = "label7";
@@ -873,12 +781,12 @@ namespace PropertyManager {
             this.nbValuePages.SetTabLabel(this.table5, this.label7);
             this.label7.ShowAll();
             this.table3.Add(this.nbValuePages);
-            Gtk.Table.TableChild w60 = ((Gtk.Table.TableChild)(this.table3[this.nbValuePages]));
-            w60.TopAttach = ((uint)(1));
-            w60.BottomAttach = ((uint)(2));
-            w60.LeftAttach = ((uint)(1));
-            w60.RightAttach = ((uint)(2));
-            w60.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w53 = ((Gtk.Table.TableChild)(this.table3[this.nbValuePages]));
+            w53.TopAttach = ((uint)(1));
+            w53.BottomAttach = ((uint)(2));
+            w53.LeftAttach = ((uint)(1));
+            w53.RightAttach = ((uint)(2));
+            w53.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table3.Gtk.Table+TableChild
             this.scrolledwindow1 = new Gtk.ScrolledWindow();
             this.scrolledwindow1.CanFocus = true;
@@ -893,22 +801,22 @@ namespace PropertyManager {
             this.tvEffectiveValues.HeadersVisible = false;
             this.scrolledwindow1.Add(this.tvEffectiveValues);
             this.table3.Add(this.scrolledwindow1);
-            Gtk.Table.TableChild w62 = ((Gtk.Table.TableChild)(this.table3[this.scrolledwindow1]));
-            w62.TopAttach = ((uint)(1));
-            w62.BottomAttach = ((uint)(2));
-            w62.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w55 = ((Gtk.Table.TableChild)(this.table3[this.scrolledwindow1]));
+            w55.TopAttach = ((uint)(1));
+            w55.BottomAttach = ((uint)(2));
+            w55.XOptions = ((Gtk.AttachOptions)(4));
             this.vbox2.Add(this.table3);
-            Gtk.Box.BoxChild w63 = ((Gtk.Box.BoxChild)(this.vbox2[this.table3]));
-            w63.Position = 1;
+            Gtk.Box.BoxChild w56 = ((Gtk.Box.BoxChild)(this.vbox2[this.table3]));
+            w56.Position = 1;
             w1.Add(this.vbox2);
-            Gtk.Box.BoxChild w64 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
-            w64.Position = 0;
+            Gtk.Box.BoxChild w57 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            w57.Position = 0;
             // Internal child PropertyManager.DynPropEntryDlg.ActionArea
-            Gtk.HButtonBox w65 = this.ActionArea;
-            w65.Name = "dialog1_ActionArea";
-            w65.Spacing = 6;
-            w65.BorderWidth = ((uint)(5));
-            w65.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w58 = this.ActionArea;
+            w58.Name = "dialog1_ActionArea";
+            w58.Spacing = 6;
+            w58.BorderWidth = ((uint)(5));
+            w58.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -918,9 +826,9 @@ namespace PropertyManager {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w66 = ((Gtk.ButtonBox.ButtonBoxChild)(w65[this.buttonCancel]));
-            w66.Expand = false;
-            w66.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w59 = ((Gtk.ButtonBox.ButtonBoxChild)(w58[this.buttonCancel]));
+            w59.Expand = false;
+            w59.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -930,20 +838,21 @@ namespace PropertyManager {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w67 = ((Gtk.ButtonBox.ButtonBoxChild)(w65[this.buttonOk]));
-            w67.Position = 1;
-            w67.Expand = false;
-            w67.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w60 = ((Gtk.ButtonBox.ButtonBoxChild)(w58[this.buttonOk]));
+            w60.Position = 1;
+            w60.Expand = false;
+            w60.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 831;
+            this.DefaultWidth = 896;
             this.DefaultHeight = 626;
             this.Show();
             this.cbForm.Changed += new System.EventHandler(this.OnCbFormChanged);
             this.tvEffectiveValues.CursorChanged += new System.EventHandler(this.EffectiveValueCursorChanged);
-            this.cbStartDateNull.Toggled += new System.EventHandler(this.StartDateNullToggled);
-            this.cbEndDateNull.Toggled += new System.EventHandler(this.EndDateNullToggled);
+            this.calStartDate.DateTimeChanged += new System.EventHandler(this.StartDateChanged);
+            this.calEndDate.DateTimeChanged += new System.EventHandler(this.EndDateChanged);
+            this.txtValue.Changed += new System.EventHandler(this.VCValueChanged);
             this.tvDOWs.CursorChanged += new System.EventHandler(this.CronEditorCursorChanged);
             this.tvMonths.CursorChanged += new System.EventHandler(this.CronEditorCursorChanged);
             this.tvDays.CursorChanged += new System.EventHandler(this.CronEditorCursorChanged);
@@ -959,7 +868,6 @@ namespace PropertyManager {
             this.btnAllHours.Clicked += new System.EventHandler(this.SelectAllHoursClicked);
             this.btnAllDOWs.Clicked += new System.EventHandler(this.SelectAllDOWClicked);
             this.btnAllDays.Clicked += new System.EventHandler(this.SelectAllDaysClicked);
-            this.btnApplySettings.Clicked += new System.EventHandler(this.ApplyButtonClicked);
         }
     }
 }

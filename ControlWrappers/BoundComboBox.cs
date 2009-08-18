@@ -150,21 +150,25 @@ namespace ControlWrappers
         
         public void SetFromContext ()
         {
-            long id = (long) bcd.DomainValue;
-
-            // Match this value to the ID value in the list store
-            TreeIter iter = TreeIter.Zero;
-            bool more = cbBound.Model.GetIterFirst(out iter);
-            while (more)
+            object oId = bcd.DomainValue;
+            if (oId != null)
             {
-                long cbId = (long) cbBound.Model.GetValue(iter, ID_COLUMN);
-                if (cbId == id)
+                long id = (long) oId;
+    
+                // Match this value to the ID value in the list store
+                TreeIter iter = TreeIter.Zero;
+                bool more = cbBound.Model.GetIterFirst(out iter);
+                while (more)
                 {
-                    cbBound.SetActiveIter(iter);
-                    break;
+                    long cbId = (long) cbBound.Model.GetValue(iter, ID_COLUMN);
+                    if (cbId == id)
+                    {
+                        cbBound.SetActiveIter(iter);
+                        break;
+                    }
+    
+                    more = cbBound.Model.IterNext(ref iter);
                 }
-
-                more = cbBound.Model.IterNext(ref iter);
             }
         }      
         

@@ -66,6 +66,7 @@ namespace PropertyManager {
             this.txtDescription = new ControlWrappers.BoundEntry();
             this.txtDescription.Events = ((Gdk.EventMask)(256));
             this.txtDescription.Name = "txtDescription";
+            this.txtDescription.IsEditable = true;
             this.txtDescription.AttributeName = "Description";
             this.txtDescription.ContextName = "DialogContext";
             this.txtDescription.DomainName = "Form";
@@ -80,6 +81,7 @@ namespace PropertyManager {
             this.txtFormId = new ControlWrappers.BoundEntry();
             this.txtFormId.Events = ((Gdk.EventMask)(256));
             this.txtFormId.Name = "txtFormId";
+            this.txtFormId.IsEditable = true;
             this.txtFormId.AttributeName = "Id";
             this.txtFormId.ContextName = "DialogContext";
             this.txtFormId.DomainName = "Form";

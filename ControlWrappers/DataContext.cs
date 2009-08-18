@@ -14,8 +14,9 @@ namespace ControlWrappers
         private string name;
         private Hashtable contents;
         
-        public DataContext()
+        public DataContext(string name)
         {
+            this.name = name;
             contents = new Hashtable();
         }
 

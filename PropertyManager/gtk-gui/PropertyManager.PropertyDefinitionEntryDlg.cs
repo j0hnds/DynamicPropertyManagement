@@ -129,6 +129,7 @@ namespace PropertyManager {
             this.txtCategories = new ControlWrappers.BoundEntry();
             this.txtCategories.Events = ((Gdk.EventMask)(256));
             this.txtCategories.Name = "txtCategories";
+            this.txtCategories.IsEditable = true;
             this.txtCategories.AttributeName = "Category";
             this.txtCategories.ContextName = "DialogContext";
             this.txtCategories.DomainName = "PropertyDefinition";
@@ -142,6 +143,7 @@ namespace PropertyManager {
             this.txtName = new ControlWrappers.BoundEntry();
             this.txtName.Events = ((Gdk.EventMask)(256));
             this.txtName.Name = "txtName";
+            this.txtName.IsEditable = true;
             this.txtName.AttributeName = "Name";
             this.txtName.ContextName = "DialogContext";
             this.txtName.DomainName = "PropertyDefinition";

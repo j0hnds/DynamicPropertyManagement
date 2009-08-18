@@ -50,6 +50,7 @@ namespace PropertyManager {
             this.txtApplicationName = new ControlWrappers.BoundEntry();
             this.txtApplicationName.Events = ((Gdk.EventMask)(256));
             this.txtApplicationName.Name = "txtApplicationName";
+            this.txtApplicationName.IsEditable = true;
             this.txtApplicationName.AttributeName = "Name";
             this.txtApplicationName.ContextName = "DialogContext";
             this.txtApplicationName.DomainName = "Application";
