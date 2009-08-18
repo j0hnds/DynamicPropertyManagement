@@ -31,6 +31,7 @@ namespace DAOCore
             cut.UserID = "siehd";
             cut.Password = "jordan123";
             IDbConnection conn = cut.Connection;
+            conn.ToString();
             cut.Close();
         }
         [Test]
@@ -44,6 +45,7 @@ namespace DAOCore
             try
             {
                 conn = cut.Connection;
+                conn.ToString();
                 Assert.Fail("Should have thrown an exception");
             }
             catch (MySqlException e)

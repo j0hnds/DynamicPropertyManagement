@@ -13,8 +13,6 @@ namespace PropertyManager
         {
             this.Build();
 
-//            new EntryBoundControl(this, txtFormId, "Id");
-//            new EntryBoundControl(this, txtDescription, "Description");
         }
     }
 }

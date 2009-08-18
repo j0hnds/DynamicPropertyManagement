@@ -74,6 +74,7 @@ namespace DAOCore
             try
             {
                 IDbConnection conn = Connection;
+                conn.ToString();
             }
             catch (Exception e)
             {

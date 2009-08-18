@@ -17,10 +17,6 @@ namespace PropertyManager
 
 //            DomainDAO dao = DomainFactory.GetDAO("DataType");
 //
-//            new EntryBoundControl(this, txtCategories, "Category");
-//            new EntryBoundControl(this, txtName, "Name");
-//            new ComboBoxBoundControl(this, cbDataType, "DataType", dao.Get(), "Name", "Id");
-//            new TextViewBoundControl(this, tvDescription, "Description");
         }
 
         protected override DataContext CreateDataContext ()

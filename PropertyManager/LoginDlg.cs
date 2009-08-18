@@ -43,7 +43,7 @@ namespace PropertyManager
                 ds.Close();
 
                 // Get the environment name
-                string environment = ENVIRONMENT_MAP[cbEnvironment.ActiveText];
+                // string environment = ENVIRONMENT_MAP[cbEnvironment.ActiveText];
 
                 // Get the configuration for that environment
                 DataSourceConfig dsc = ConfigurationManager.GetSection("local-machine") as DataSourceConfig;

@@ -67,10 +67,6 @@ namespace PropertyManager
 //            List<Domain>properties = propDao.Get();
 
             // Set up the binding controls
-//            new ComboBoxBoundControl(this, cbApplication, "ApplicationId", applications, "Name", "Id");
-//            new ComboBoxBoundControl(this, cbProperty, "PropertyId", properties, "Name", "Id");
-//            new EntryBoundControl(this, txtQualifier, "Qualifier");
-//            new EntryBoundControl(this, txtDefaultValue, "DefaultValue");
 
             // Set up the form combo-box
 //            SetUpForms();

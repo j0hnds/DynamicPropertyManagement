@@ -42,15 +42,11 @@
     <Compile Include="BaseTextViewControl.cs" />
     <Compile Include="BaseTreeControl.cs" />
     <Compile Include="ListControl.cs" />
-    <Compile Include="EntryBoundControl.cs" />
-    <Compile Include="ComboBoxBoundControl.cs" />
-    <Compile Include="TextViewBoundControl.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="BoundEntry.cs" />
     <Compile Include="gtk-gui\ControlWrappers.BoundEntry.cs" />
     <Compile Include="BoundControl.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="BoundDialog.cs" />
     <Compile Include="BoundControlDelegate.cs" />
     <Compile Include="ContextContainer.cs" />
     <Compile Include="DataBoundDialog.cs" />

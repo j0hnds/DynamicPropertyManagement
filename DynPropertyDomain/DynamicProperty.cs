@@ -90,15 +90,15 @@ namespace DynPropertyDomain
                     string name = GetString(reader, 6); // NAME
                     string dataType = GetString(reader, 7); // DESCRIPTION
                     string defaultValue = GetString(reader, 8); // DFLT_VALUE
-                    DateTime assignModDt = GetDateTime(reader, 9); // ASSIGN_MOD_DT
+                    /* DateTime assignModDt = */ GetDateTime(reader, 9); // ASSIGN_MOD_DT
                     long effectiveId = GetLong(reader, 10); // DYN_EFFECTIVE_ID
                     DateTime effStartDate = GetDateTime(reader, 11); // EFF_START_DT
                     DateTime effEndDate = GetDateTime(reader, 12); // EFF_END_DT
-                    DateTime effectiveModDt = GetDateTime(reader, 13); // EFFECTIVE_MOD_DT
+                    /* DateTime effectiveModDt = */ GetDateTime(reader, 13); // EFFECTIVE_MOD_DT
                     long valueId = GetLong(reader, 14); // DYN_VALUE_ID
                     string criteria = GetString(reader, 15); // CRITERIA
                     string propValue = GetString(reader, 16); // PROP_VALUE
-                    DateTime valueModDt = GetDateTime(reader, 17); // VALUE_MOD_DT
+                    /* DateTime valueModDt = */ GetDateTime(reader, 17); // VALUE_MOD_DT
 
                     if (qualifier != null && qualifier.Length > 0)
                     {
