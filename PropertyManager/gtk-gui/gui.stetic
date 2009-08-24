@@ -1339,10 +1339,12 @@ Production</property>
                     <child>
                       <widget class="Gtk.Button" id="btnAddItem">
                         <property name="MemberName" />
+                        <property name="Sensitive">False</property>
                         <property name="CanFocus">True</property>
                         <property name="UseStock">True</property>
                         <property name="Type">StockItem</property>
                         <property name="StockId">gtk-add</property>
+                        <signal name="Clicked" handler="AddItemClicked" />
                         <property name="label">gtk-add</property>
                       </widget>
                       <packing>
@@ -1353,10 +1355,12 @@ Production</property>
                     <child>
                       <widget class="Gtk.Button" id="btnRemove">
                         <property name="MemberName" />
+                        <property name="Sensitive">False</property>
                         <property name="CanFocus">True</property>
                         <property name="UseStock">True</property>
                         <property name="Type">StockItem</property>
                         <property name="StockId">gtk-remove</property>
+                        <signal name="Clicked" handler="RemoveItemClicked" />
                         <property name="label">gtk-remove</property>
                       </widget>
                       <packing>

@@ -277,6 +277,7 @@ namespace PropertyManager {
             this.hbuttonbox2.Name = "hbuttonbox2";
             // Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
             this.btnAddItem = new Gtk.Button();
+            this.btnAddItem.Sensitive = false;
             this.btnAddItem.CanFocus = true;
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.UseStock = true;
@@ -288,6 +289,7 @@ namespace PropertyManager {
             w14.Fill = false;
             // Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
             this.btnRemove = new Gtk.Button();
+            this.btnRemove.Sensitive = false;
             this.btnRemove.CanFocus = true;
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.UseStock = true;
@@ -665,6 +667,8 @@ namespace PropertyManager {
             this.tvHours.Changed += new System.EventHandler(this.HoursEditorChanged);
             this.tvDaysOfWeek.Changed += new System.EventHandler(this.DaysOfWeekEditorChanged);
             this.tvDays.Changed += new System.EventHandler(this.DaysEditorChanged);
+            this.btnAddItem.Clicked += new System.EventHandler(this.AddItemClicked);
+            this.btnRemove.Clicked += new System.EventHandler(this.RemoveItemClicked);
         }
     }
 }

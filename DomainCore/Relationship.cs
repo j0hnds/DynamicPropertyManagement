@@ -28,18 +28,20 @@ namespace DomainCore
             }
         }
 
+        private bool RemoveNewObject(Domain domain)
+        {
+            return domain.NewObject;
+        }
+
         public void Revert()
         {
+            // Eliminate all the new objects first
+            domains.RemoveAll(RemoveNewObject);
+
+            // Now revert all remaining domains.
             foreach (Domain domain in domains)
             {
-                if (domain.NewObject)
-                {
-                    domains.Remove(domain);
-                }
-                else
-                {
-                    domain.Revert();
-                }
+                domain.Revert();
             }
         }
 

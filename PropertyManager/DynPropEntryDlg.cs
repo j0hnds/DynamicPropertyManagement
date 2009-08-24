@@ -69,15 +69,27 @@ namespace PropertyManager
             case EffectiveDateLevels.EffectiveDate:
                 nbValuePages.CurrentPage = 1;
                 LoadSelectedEffectiveDateValues();
+                btnAddItem.Sensitive = true;
+                btnRemove.Sensitive = true;
                 break;
 
             case EffectiveDateLevels.ValueCriteria:
                 nbValuePages.CurrentPage = 2;
                 LoadSelectedValueCriteriaValues();
+                btnAddItem.Sensitive = false;
+                btnRemove.Sensitive = true;
+                break;
+
+            case EffectiveDateLevels.TopLevel:
+                nbValuePages.CurrentPage = 0;
+                btnAddItem.Sensitive = true;
+                btnRemove.Sensitive = false;
                 break;
 
             case EffectiveDateLevels.None:
                 nbValuePages.CurrentPage = 0;
+                btnAddItem.Sensitive = false;
+                btnRemove.Sensitive = false;
                 break;
             }
         }
@@ -96,18 +108,6 @@ namespace PropertyManager
             Domain domain = evListCtl.GetSelectedDomain();
 
             GetContext("ValueCriteriaCtx").AddObject(domain);
-        }
-
-        private void SetCheckCBList(ListStore ls, bool setCheck)
-        {
-            TreeIter iter = TreeIter.Zero;
-            
-            bool more = ls.GetIterFirst(out iter);
-            while (more)
-            {
-                ls.SetValue(iter, 0, setCheck);
-                more = ls.IterNext(ref iter);
-            }
         }
 
         protected override DataContext CreateDataContext ()
@@ -240,6 +240,98 @@ namespace PropertyManager
             txtCriteria.Text = cs.ToString();
 
             evListCtl.UpdateSelected();
+        }
+
+        protected virtual void AddItemClicked (object sender, System.EventArgs e)
+        {
+            switch (evListCtl.SelectedLevel)
+            {
+            case EffectiveDateLevels.TopLevel:
+                // Add a new effective date
+                AddNewEffectiveDate();
+                break;
+
+            case EffectiveDateLevels.EffectiveDate:
+                // Add a new value criteria
+                AddNewValueCriteria();
+                break;
+            }
+        }
+
+        private void AddNewEffectiveDate()
+        {
+            // Add the new effective value to the dynamic property
+            CollectionRelationship rel = evListCtl.DynamicProperty.GetRelationship("EffectiveValues") as CollectionRelationship;
+
+            Domain domain = rel.AddNewObject();
+
+            // Now, add the new effective date to the end of the list
+            // of effective values in the tree.
+            evListCtl.AddEffectiveDate(domain);
+
+            EffectiveValueCursorChanged(null, null);
+        }
+
+        private void AddNewValueCriteria()
+        {
+            // Get the owner of the new value criteria
+            Domain effValue = evListCtl.GetSelectedDomain();
+
+            CollectionRelationship rel = effValue.GetRelationship("ValueCriteria") as CollectionRelationship;
+
+            Domain domain = rel.AddNewObject();
+
+            domain.SetValue("RawCriteria", "* * * * *");
+            domain.SetValue("Value", "PropertyValue");
+
+            // Add the new effective date to the end of the list
+            // the value criteria in the tree
+            evListCtl.AddValueCriteria(domain);
+
+            EffectiveValueCursorChanged(null, null);
+        }
+
+        protected virtual void RemoveItemClicked (object sender, System.EventArgs e)
+        {
+            switch (evListCtl.SelectedLevel)
+            {
+            case EffectiveDateLevels.EffectiveDate:
+                // Remove the selected EffectiveDate
+                RemoveSelectedEffectiveValue();
+                break;
+
+            case EffectiveDateLevels.ValueCriteria:
+                // Remove the selected ValueCriteria
+                RemoveSelectedValueCriteria();
+                break;
+            }
+        }
+
+        private void RemoveSelectedEffectiveValue()
+        {
+            Domain domain = evListCtl.GetSelectedDomain();
+            
+            // Remove effective value from the dynamic property
+            CollectionRelationship rel = evListCtl.DynamicProperty.GetRelationship("EffectiveValues") as CollectionRelationship;
+
+            rel.RemoveObject(domain);
+
+            evListCtl.RemoveSelected();
+            EffectiveValueCursorChanged(null, null);
+        }
+
+        private void RemoveSelectedValueCriteria()
+        {
+            Domain domain = evListCtl.GetSelectedDomain();
+            Domain effValue = evListCtl.GetSelectedDomainParent();
+            
+            // Remove value criteria from effective value;
+            CollectionRelationship rel = effValue.GetRelationship("ValueCriteria") as CollectionRelationship;
+
+            rel.RemoveObject(domain);
+
+            evListCtl.RemoveSelected();
+            EffectiveValueCursorChanged(null, null);
         }
     }
 }

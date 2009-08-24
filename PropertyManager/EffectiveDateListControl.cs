@@ -10,6 +10,7 @@ namespace PropertyManager
     public enum EffectiveDateLevels 
     {
         None,
+        TopLevel,
         EffectiveDate,
         ValueCriteria
     }
@@ -53,12 +54,14 @@ namespace PropertyManager
                 TreePath path = treeStore.GetPath(iter);
                 int[] selIndices = path.Indices;
 
+                log.DebugFormat("Length of indices: {0}, {1}", selIndices.Length, selIndices);
+
                 List<Domain> evs = dynProperty.GetCollection("EffectiveValues");
-                Domain ev = evs[selIndices[0]];
-                if (selIndices.Length > 1)
+                Domain ev = evs[selIndices[1]];
+                if (selIndices.Length > 2)
                 {
                     List<Domain> vcs = ev.GetCollection("ValueCriteria");
-                    selectedDomain = vcs[selIndices[1]];
+                    selectedDomain = vcs[selIndices[2]];
                 }
                 else
                 {
@@ -69,6 +72,39 @@ namespace PropertyManager
             return selectedDomain;
         }
 
+        public virtual Domain GetSelectedDomainParent()
+        {
+            Domain selectedDomain = null;
+            Domain dynProperty = DynamicProperty;
+
+            TreeModel model = null;
+            TreeIter iter = TreeIter.Zero;
+
+            if (((TreeView) widget).Selection.GetSelected(out model, out iter))
+            {
+                TreeIter parentIter = TreeIter.Zero;
+                if (model.IterParent(out parentIter, iter))
+                {
+                    TreePath path = treeStore.GetPath(parentIter);
+                    
+                    int[] selIndices = path.Indices;
+                    
+                    List<Domain> evs = dynProperty.GetCollection("EffectiveValues");
+                    Domain ev = evs[selIndices[1]];
+                    if (selIndices.Length > 2)
+                    {
+                        List<Domain> vcs = ev.GetCollection("ValueCriteria");
+                        selectedDomain = vcs[selIndices[2]];
+                    }
+                    else
+                    {
+                        selectedDomain = ev;
+                    }
+                }
+            }
+
+            return selectedDomain;
+        }
         public EffectiveDateLevels SelectedLevel
         {
             get
@@ -80,18 +116,67 @@ namespace PropertyManager
 
                 if (GetSelected(out model, out iter))
                 {
+                    // Something is selected.
                     TreeIter parentIter = TreeIter.Zero;
                     if (model.IterParent(out parentIter, iter))
                     {
-                        level = EffectiveDateLevels.ValueCriteria;
+                        // That something has a parent
+                        TreeIter grandParentIter = TreeIter.Zero;
+                        if (model.IterParent(out grandParentIter, parentIter))
+                        {
+                            // The selected item has a grandparent
+                            level = EffectiveDateLevels.ValueCriteria;
+                        }
+                        else
+                        {
+                            // No grandparent
+                            level = EffectiveDateLevels.EffectiveDate;
+                        }
                     }
                     else
                     {
-                        level =  EffectiveDateLevels.EffectiveDate;
+                        level =  EffectiveDateLevels.TopLevel;
                     }
+                }
+                else
+                {
+                    level = EffectiveDateLevels.None;
                 }
 
                 return level;
+            }
+        }
+
+        public void AddEffectiveDate(Domain effectiveDate)
+        {
+            // Get the iterator for the top of the tree...
+            TreeIter topIter = TreeIter.Zero;
+            
+            if (treeStore.GetIterFirst(out topIter))
+            {
+                TreeIter edIter = treeStore.AppendValues(topIter,
+                                                         RenderLabel(effectiveDate),
+                                                         effectiveDate.IdAttribute.Value,
+                                                         effectiveDate.GetType().Name);
+
+                SelectRow(edIter);
+            }
+        }
+
+        public void AddValueCriteria(Domain valueCriteria)
+        {
+            // Get the iterator of the select item (effective date)
+            TreeModel model = null;
+            TreeIter edIter = TreeIter.Zero;
+            
+            if (GetSelected(out model, out edIter))
+            {
+                TreeIter vcIter = treeStore.AppendValues(edIter,
+                                                         RenderLabel(valueCriteria),
+                                                         valueCriteria.IdAttribute.Value,
+                                                         valueCriteria.GetType().Name);
+
+                SelectRow(vcIter);
             }
         }
 
@@ -99,11 +184,14 @@ namespace PropertyManager
         {
             treeStore.Clear();
 
+            TreeIter topIter = treeStore.AppendValues("Effective Values", -1L, "Nothing");
+
             List<Domain> effectiveValues = dynamicProperty.GetCollection("EffectiveValues");
             foreach (Domain effectiveValue in effectiveValues)
             {
                 TreeIter evIter = TreeIter.Zero;
-                evIter = treeStore.AppendValues(RenderLabel(effectiveValue),
+                evIter = treeStore.AppendValues(topIter,
+                                                RenderLabel(effectiveValue),
                                                 effectiveValue.IdAttribute.Value,
                                                 effectiveValue.GetType().Name);
 
