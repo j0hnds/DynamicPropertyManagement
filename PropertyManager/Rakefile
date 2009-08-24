@@ -58,7 +58,7 @@ file PROJECT_TARGET => SRC do |t|
   c.references = [ "DomainCore.dll", "DAOCore.dll",
                    "STUtils.dll", "ControlWrappers.dll",
                    "System.Data.dll", "System.Configuration.dll",
-                   "Mono.Posix.dll" ]
+                   "Mono.Posix.dll", "CronUtils.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net" ]
   c.debug = DEBUG
   c.exec
@@ -72,7 +72,7 @@ file TEST_PATH => TEST_SRC do |t|
   c.references = [ "DomainCore.dll", "DAOCore.dll",
                    "STUtils.dll", "ControlWrappers.dll",
                    "System.Data.dll", "System.Configuration.dll",
-                   "Mono.Posix.dll" ]
+                   "Mono.Posix.dll", "CronUtils.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net", "nunit" ]
   c.debug = DEBUG
   c.exec

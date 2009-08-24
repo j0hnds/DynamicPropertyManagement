@@ -16,7 +16,8 @@ task :default => [ :deploy ]
 
 # Define all the project dependencies
 task "ControlWrappers.deploy" => [ "DomainCore.deploy", 
-                                   "STUtils.deploy" ]
+                                   "STUtils.deploy",
+                                   "CronUtils.deploy"]
 
 task "DAOCore.deploy" => [ "DomainCore.deploy" ]
 
@@ -28,7 +29,8 @@ task "PropertyManager.deploy" => [ "DomainCore.deploy",
                                    "DAOCore.deploy",
                                    "STUtils.deploy",
                                    "ControlWrappers.deploy",
-                                   "DynPropertyDomain.deploy" ]
+                                   "DynPropertyDomain.deploy",
+                                   "CronUtils.deploy" ]
 
 task :deploy => [ "PropertyManager.deploy" ]
 
