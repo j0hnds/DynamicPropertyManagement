@@ -36,6 +36,9 @@
     <Reference Include="nunit.framework">
       <Package>nunit-2.4</Package>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
+      <Package>log4net-1.2</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain.cs" />

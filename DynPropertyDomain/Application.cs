@@ -4,7 +4,6 @@ using System.Data;
 using System.Collections.Generic;
 using DomainCore;
 using DAOCore;
-using log4net;
 
 namespace DynPropertyDomain
 {
@@ -123,11 +122,6 @@ namespace DynPropertyDomain
         private List<Domain> dynamicProperties;
 
         /// <summary>
-        /// The logger to use for this object.
-        /// </summary>
-        protected ILog log;
-
-        /// <summary>
         /// Constructs a new Application domain object.
         /// </summary>
         /// <param name="dao">
@@ -136,8 +130,6 @@ namespace DynPropertyDomain
         public Application(DomainDAO dao) : 
             base(dao)
         {
-            log = LogManager.GetLogger(typeof(Application));
-            
             new LongAttribute(this, ID_ATTR, true).AttributeValueChanged += HandleAttributeChange;
             new StringAttribute(this, NAME_ATTR, false).AttributeValueChanged += HandleAttributeChange;
         }

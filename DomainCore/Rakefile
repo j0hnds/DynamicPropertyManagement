@@ -49,6 +49,7 @@ TEST_SRC = FileList['*.cs']
 # of the source files.
 file PROJECT_TARGET => SRC do |t|
   c = Gmcs.new "library", t.name, t.prerequisites
+  c.packages = [ "log4net" ]
   c.debug = DEBUG
   c.exec
 end
@@ -57,7 +58,7 @@ end
 # of the source files.
 file TEST_PATH => TEST_SRC do |t|
   c = Gmcs.new "library", t.name, t.prerequisites
-  c.packages = [ "nunit" ]
+  c.packages = [ "nunit", "log4net" ]
   c.debug = DEBUG
   c.exec
 end

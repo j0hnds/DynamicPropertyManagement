@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using log4net;
 
 namespace DomainCore
 {
@@ -436,6 +437,11 @@ namespace DomainCore
         private Dictionary<string,Relationship> relationships;
 
         /// <summary>
+        /// The logger for all domain objects.
+        /// </summary>
+        protected ILog log;
+
+        /// <summary>
         /// Constructs a new domain object.
         /// </summary>
         /// <param name="dao">
@@ -443,6 +449,8 @@ namespace DomainCore
         /// </param>
         public Domain(DomainDAO dao)
         {
+            log = LogManager.GetLogger(GetType().Name);
+            
             this.dao = dao;
             newObject = false;
             forDelete = false;
