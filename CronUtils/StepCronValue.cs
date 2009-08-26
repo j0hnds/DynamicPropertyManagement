@@ -7,12 +7,12 @@ namespace CronUtils
     /// <summary>
     /// Provides the implementation of a step Cron Value.
     /// </summary>
-    /// <description>
+    /// <remarks>
     /// This type of Cron Value allows the definition of a step value against 
     /// which other values are tested for effectiveness. For example, if the 
     /// step value specified was 3, then any value that is evenly divisible 
     /// by 3 is deemed effective.
-    /// </description>
+    /// </remarks>
     public class StepCronValue : CronValueBase, CronEffectiveValue
     {
         // The step value used to determine effectiveness.
@@ -44,6 +44,9 @@ namespace CronUtils
             this.stepValue = stepValue;
         }
 
+        /// <value>
+        /// The step value.
+        /// </value>
         public int StepValue
         {
             get { return this.stepValue; }

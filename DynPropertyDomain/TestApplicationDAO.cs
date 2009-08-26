@@ -27,7 +27,7 @@ namespace DynPropertyDomain
             Assert.IsTrue(domain.Dirty);
 
             // Now, save the domain
-            string sql = domain.SaveSQL();
+            /* string sql = */ domain.SaveSQL();
             domain.Save();
 
             Assert.IsTrue((long) domain.GetValue("Id") > 0);
@@ -40,7 +40,7 @@ namespace DynPropertyDomain
             Assert.IsTrue(domain.Dirty);
 
             // Save it again
-            sql = domain.SaveSQL();
+            /* sql = */ domain.SaveSQL();
             domain.Save();
 
             // Now retrieve the domain by it's id
@@ -68,7 +68,7 @@ namespace DynPropertyDomain
 
             // Now, delete the domain object
             domain.ForDelete = true;
-            sql = domain.SaveSQL();
+            /* sql = */ domain.SaveSQL();
             domain.Save();
         }
     }

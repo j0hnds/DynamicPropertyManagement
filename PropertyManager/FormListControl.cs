@@ -6,10 +6,18 @@ using Gtk;
 namespace PropertyManager
 {
     
-    
+    /// <summary>
+    /// Wrapper class to provide support for display of Form domain objects.
+    /// </summary>
     public class FormListControl : ListControl
     {
-        
+
+        /// <summary>
+        /// Constructs a new FormListControl wrapper object.
+        /// </summary>
+        /// <param name="widget">
+        /// The TreeView to be wrapped.
+        /// </param>
         public FormListControl(Widget widget) :
             base(widget)
         {

@@ -7,11 +7,24 @@ using DomainCore;
 namespace DAOCore
 {
     
-    
+    /// <summary>
+    /// This class is responsible for building SQL UPDATE statements for
+    /// domain objects.
+    /// </summary>
     public class UpdateBuilder : BuilderBase
     {
-        
-        public UpdateBuilder(string tableName, Dictionary<string,string> mappings) :
+
+        /// <summary>
+        /// Constructs a new UpdateBuilder object.
+        /// </summary>
+        /// <param name="tableName">
+        /// The name of the data base table.
+        /// </param>
+        /// <param name="mappings">
+        /// The domain attribute name DB column mappings.
+        /// </param>
+        public UpdateBuilder(string tableName, 
+                             Dictionary<string,string> mappings) :
             base(tableName, mappings)
         {
         }

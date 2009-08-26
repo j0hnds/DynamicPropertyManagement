@@ -12,126 +12,86 @@ using CronUtils;
 namespace PropertyManager
 {
 
-    public enum CronEditorType
+    /// <summary>
+    /// Dialog to allow creation/modification of DynamicProperty information.
+    /// </summary>
+    public partial class DynPropEntryDlg : DataBoundDialog
     {
-        Minutes,
-        Hours,
-        Days,
-        Months,
-        DaysOfWeek
-    }
-    
-    public partial class DynPropEntryDlg : BoundDialog // Gtk.Dialog
-    {
+        /// <summary>
+        /// Wrapper class for the effective date tree.
+        /// </summary>
         private EffectiveDateListControl evListCtl;
 
-        private static readonly string[] MONTHS = {
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-        };
-
-        private static readonly string[] DOWS = {
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat"
-        };
-
+        /// <summary>
+        /// The logger class.
+        /// </summary>
         private ILog log;
-        
+
+        /// <summary>
+        /// Constructs a new DynPropEntryDlg dialog object.
+        /// </summary>
         public DynPropEntryDlg() 
         {
             this.Build();
 
             log = LogManager.GetLogger(GetType());
 
-            DomainDAO appDao = DomainFactory.GetDAO("Application");
-
-            List<Domain> applications = appDao.Get();
-            
-            DomainDAO propDao = DomainFactory.GetDAO("PropertyDefinition");
-
-            List<Domain>properties = propDao.Get();
-
-            // Set up the binding controls
-            new ComboBoxBoundControl(this, cbApplication, "ApplicationId", applications, "Name", "Id");
-            new ComboBoxBoundControl(this, cbProperty, "PropertyId", properties, "Name", "Id");
-            new EntryBoundControl(this, txtQualifier, "Qualifier");
-            new EntryBoundControl(this, txtDefaultValue, "DefaultValue");
-
-            // Set up the form combo-box
-            SetUpForms();
-
             evListCtl = new EffectiveDateListControl(tvEffectiveValues);
-
-            SetUpCronEditor();
         }
 
-        private void SetUpForms()
+        /// <summary>
+        /// Signal handler for ContextChanged event.
+        /// </summary>
+        /// <param name="contextName">
+        /// The name of the data context that changed.
+        /// </param>
+        /// <param name="itemName">
+        /// The name of the item in the data context that changed.
+        /// </param>
+        private void ContextChangeHandler(string contextName, string itemName)
         {
-            DomainDAO dao = DomainFactory.GetDAO("Form");
-            List<Domain> valueList = dao.Get();
-            ListStore listStore = new ListStore(GLib.GType.String, GLib.GType.Int64);
-            foreach (Domain domain in valueList)
+            log.DebugFormat("ContextChangeHandler({0}, {1})", contextName, itemName);
+            
+            // Called when the contents of a context has changed.
+            if ("DialogContext".Equals(contextName))
             {
-                object displayValue = domain.GetValue("Description");
-                object valueValue = domain.GetValue("Id");
+                Domain domain = GetContext("DialogContext").GetDomain("DynamicProperty");
+                // Load the Effective Value list control
+                evListCtl.Populate(domain);
 
-                listStore.AppendValues(displayValue, valueValue);
+                evListCtl.DynamicProperty = domain;
             }
+            else if ("ValueCriteriaCtx".Equals(contextName))
+            {
+                Domain domain = GetContext("ValueCriteriaCtx").GetDomain("ValueCriteria");
 
-            cbForm.Model = listStore;
+                string rawCriteria = (string) domain.GetValue("RawCriteria");
+                if (rawCriteria == null || rawCriteria.Length == 0)
+                {
+                    rawCriteria = "* * * * *";
+                }
+                
+                // Here is where we set up the cron editor; we always
+                // do this when a new ValueCriteria is set up.
+                CronSpecification cs = new CronSpecification(rawCriteria);
+
+                tvMinutes.SpecificationList = cs.Minutes;
+                tvHours.SpecificationList = cs.Hours;
+                tvDays.SpecificationList = cs.Days;
+                tvMonths.SpecificationList = cs.Months;
+                tvDaysOfWeek.SpecificationList = cs.DaysOfWeek;
+            }
         }
 
-        protected virtual void FormSelectionChanged (object sender, System.EventArgs e)
-        {
-            TreeModel model = cbForm.Model;
-            TreeIter iter = TreeIter.Zero;
-
-            if (cbForm.GetActiveIter(out iter))
-            {
-                long formId = (long) model.GetValue(iter, 1);
-                txtQualifier.Text = formId.ToString();
-            }
-        }
-        
-        public override bool DoModal(Window parentWindow, Domain domain)
-        {
-            bool ok = false;
-
-            TransientFor = parentWindow;
-
-            DomainToControls(domain);
-
-            evListCtl.Populate(domain);
-
-            evListCtl.DynamicProperty = domain;
-
-            int response = Run();
-            if (response == Gtk.ResponseType.Ok.value__)
-            {
-                ok = true;
-                ControlsToDomain(domain);
-            }
-
-            Destroy();
-
-            return ok;
-        }
-
+        /// <summary>
+        /// Signal handler for a Cursor Change in the Effective Value tree.
+        /// </summary>
+        /// <param name="sender">
+        /// The Effective Value tree control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void EffectiveValueCursorChanged (object sender, System.EventArgs e)
         {
             switch (evListCtl.SelectedLevel)
@@ -139,368 +99,164 @@ namespace PropertyManager
             case EffectiveDateLevels.EffectiveDate:
                 nbValuePages.CurrentPage = 1;
                 LoadSelectedEffectiveDateValues();
+                btnAddItem.Sensitive = true;
+                btnRemove.Sensitive = true;
                 break;
 
             case EffectiveDateLevels.ValueCriteria:
                 nbValuePages.CurrentPage = 2;
                 LoadSelectedValueCriteriaValues();
+                btnAddItem.Sensitive = false;
+                btnRemove.Sensitive = true;
+                break;
+
+            case EffectiveDateLevels.TopLevel:
+                nbValuePages.CurrentPage = 0;
+                btnAddItem.Sensitive = true;
+                btnRemove.Sensitive = false;
                 break;
 
             case EffectiveDateLevels.None:
                 nbValuePages.CurrentPage = 0;
+                btnAddItem.Sensitive = false;
+                btnRemove.Sensitive = false;
                 break;
             }
         }
 
+        /// <summary>
+        /// Updates the EffectiveDateCtx with the selected EffectiveValue domain
+        /// object.
+        /// </summary>
         private void LoadSelectedEffectiveDateValues()
         {
             Domain domain = evListCtl.GetSelectedDomain();
 
-            DateTime effectiveStartDate = (DateTime) domain.GetValue("EffectiveStartDate");
-            DateTime effectiveEndDate = (DateTime) domain.GetValue("EffectiveEndDate");
-
-            if (effectiveStartDate == DateTime.MinValue)
-            {
-                cbStartDateNull.Active = false;
-                calStartDate.Sensitive = false;
-                txtStartTime.Sensitive = false;
-                txtStartTime.Text = "00:00";
-            }
-            else
-            {
-                calStartDate.Date = effectiveStartDate;
-                cbStartDateNull.Active = true;
-                calStartDate.Sensitive = true;
-                txtStartTime.Sensitive = true;
-                txtStartTime.Text = effectiveStartDate.ToString("HH:mm");
-            }
-            if (effectiveEndDate == DateTime.MinValue)
-            {
-                cbEndDateNull.Active = false;
-                calEndDate.Sensitive = false;
-                txtEndTime.Sensitive = false;
-                txtEndTime.Text = "00:00";
-            }
-            else
-            {
-                calEndDate.Date = effectiveEndDate;
-                cbEndDateNull.Active = true;
-                calEndDate.Sensitive = true;
-                txtEndTime.Sensitive = true;
-                txtEndTime.Text = effectiveEndDate.ToString("HH:mm");
-            }
+            // Set the EffectiveValue domain object on the appropriate
+            // context
+            GetContext("EffectiveDateCtx").AddObject(domain);
         }
 
+        /// <summary>
+        /// Updates the ValueCriteriaCtx with the selected ValueCriteria domain object.
+        /// </summary>
         private void LoadSelectedValueCriteriaValues()
         {
             Domain domain = evListCtl.GetSelectedDomain();
 
-            string rawCriteria = (string) domain.GetValue("RawCriteria");
-            string domainValue = (string) domain.GetValue("Value");
-
-            if (rawCriteria == null)
-            {
-                rawCriteria = "* * * * *";
-            }
-
-            txtCriteria.Text = rawCriteria;
-            txtValue.Text = domainValue;
-
-            CronSpecification cs = new CronSpecification(rawCriteria);
-
-            // Set up the values in the editors based on the value
-            // of the specification
-            SetCronEditorValues(tvMinutes.Model as ListStore, cs.Minutes);
-            SetCronEditorValues(tvHours.Model as ListStore, cs.Hours);
-            SetCronEditorValues(tvDays.Model as ListStore, cs.Days);
-            SetCronEditorValues(tvMonths.Model as ListStore, cs.Months);
-            SetCronEditorValues(tvDOWs.Model as ListStore, cs.DaysOfWeek);
+            GetContext("ValueCriteriaCtx").AddObject(domain);
         }
 
-        private void SetCronEditorValues(ListStore ls, ArrayList cronSpecs)
+        protected override DataContext CreateDataContext ()
         {
-            TreeIter iter = TreeIter.Zero;
-            bool more = ls.GetIterFirst(out iter);
-            while (more)
-            {
-                int val = (int) ls.GetValue(iter, 2);
-                ls.SetValue(iter, 0, IsValueEffective(cronSpecs, val));
-                more = ls.IterNext(ref iter);
-            }
-        }
+            // Create and register the base DialogContext
+            DataContext context = base.CreateDataContext();
 
-        private bool IsValueEffective(ArrayList cronSpecs, int val)
-        {
-            bool effective = false;
+            // Set up the collections we need for the various
+            // combo boxes on the form.
+            DomainDAO appDao = DomainFactory.GetDAO("Application");
+
+            List<Domain> applications = appDao.Get();
+
+            context.AddObject("Applications", applications);
             
-            foreach (object cronSpec in cronSpecs)
-            {
-                CronEffectiveValue cev = (CronEffectiveValue) cronSpec;
-                effective = cev.IsEffective(val);
-                if (effective)
-                {
-                    break;
-                }
-            }
+            DomainDAO propDao = DomainFactory.GetDAO("PropertyDefinition");
 
-            return effective;
-        }
+            List<Domain> properties = propDao.Get();
 
-        private void SetUpCronEditor()
-        {
-            SetUpCronMinuteEditor();
-            SetUpCronHourEditor();
-            SetUpCronDayEditor();
-            SetUpCronMonthEditor();
-            SetUpCronDOWEditor();
-        }
+            context.AddObject("PropertyDefinitions", properties);
 
-        private void SetUpCronMinuteEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvMinutes.Model = listStore;
-            tvMinutes.Data["EditorType"] = CronEditorType.Minutes;
+            DomainDAO dao = DomainFactory.GetDAO("Form");
 
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvMinutes.AppendColumn(vc);
+            List<Domain> valueList = dao.Get();
 
-            vc = new TreeViewColumn();
-            vc.Title = "Minute";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvMinutes.AppendColumn(vc);
+            context.AddObject("Forms", valueList);
 
-            for (int i=0; i<60; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
+            // Create a context for use by the Effective Date Editor
+            SetContext(new DataContext("EffectiveDateCtx"));
 
-        private void SetUpCronHourEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvHours.Model = listStore;
-            tvHours.Data["EditorType"] = CronEditorType.Hours;
+            DataContext vcContext = new DataContext("ValueCriteriaCtx");
+            // Create a context for use by the Value Criteria Editor
+            SetContext(vcContext);
 
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvHours.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Minute";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvHours.AppendColumn(vc);
-
-            for (int i=0; i<24; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
-
-        private void SetUpCronDayEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvDays.Model = listStore;
-            tvDays.Data["EditorType"] = CronEditorType.Days;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvDays.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Day";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvDays.AppendColumn(vc);
-
-            for (int i=1; i<32; i++)
-            {
-                listStore.AppendValues(true, i.ToString(), i);
-            }
-        }
-
-        private void SetUpCronMonthEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvMonths.Model = listStore;
-            tvMonths.Data["EditorType"] = CronEditorType.Months;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvMonths.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "Month";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvMonths.AppendColumn(vc);
-
-            for (int i=0; i<MONTHS.Length; i++)
-            {
-                listStore.AppendValues(true, MONTHS[i], i+1);
-            }
-        }
-
-        private void SetUpCronDOWEditor()
-        {
-            ListStore listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
-            tvDOWs.Model = listStore;
-            tvDOWs.Data["EditorType"] = CronEditorType.DaysOfWeek;
-
-            TreeViewColumn vc = new TreeViewColumn();
-            vc.Title = "Checked";
-            CellRenderer cellRenderer = new CellRendererToggle();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "active", 0);
-            tvDOWs.AppendColumn(vc);
-
-            vc = new TreeViewColumn();
-            vc.Title = "DOW";
-            cellRenderer = new CellRendererText();
-            vc.PackStart(cellRenderer, true);
-            vc.AddAttribute(cellRenderer, "text", 1);
-            tvDOWs.AppendColumn(vc);
-
-            for (int i=0; i<DOWS.Length; i++)
-            {
-                listStore.AppendValues(true, DOWS[i], i);
-            }
-        }
-
-        private void SetCheckCBList(ListStore ls, bool setCheck)
-        {
-            TreeIter iter = TreeIter.Zero;
+            // Register interest in when the contexts change...
+            context.ContextChanged += ContextChangeHandler;
+            vcContext.ContextChanged += ContextChangeHandler;
             
-            bool more = ls.GetIterFirst(out iter);
-            while (more)
-            {
-                ls.SetValue(iter, 0, setCheck);
-                more = ls.IterNext(ref iter);
-            }
+            return context;
         }
 
-        protected virtual void SelectAllMinutesClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Signal handler for selection of a form item in the combo box.
+        /// </summary>
+        /// <param name="sender">
+        /// The form combo box.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void OnCbFormChanged (object sender, System.EventArgs e)
         {
-            SetCheckCBList(tvMinutes.Model as ListStore, true);
-            CreateMinuteSpecification();
+            long id = cbForm.ActiveId;
+
+            txtQualifier.Text = id.ToString();
         }
 
-        protected virtual void ClearMinutesClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Signal handler for when the start date time has been changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The bound date time control.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void StartDateChanged (object sender, System.EventArgs e)
         {
-            SetCheckCBList(tvMinutes.Model as ListStore, false);
-            CreateMinuteSpecification();
+            // Update the currently selected label on the tree
+            evListCtl.UpdateSelected();
         }
 
-        protected virtual void SelectAllHoursClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Signal handler for when the end date time has changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The bound date time control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void EndDateChanged (object sender, System.EventArgs e)
         {
-            SetCheckCBList(tvHours.Model as ListStore, true);
-            CreateHourSpecification();
+            evListCtl.UpdateSelected();
         }
 
-        protected virtual void ClearHoursClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Signal handler for a change to the Value Criteria Value.
+        /// </summary>
+        /// <param name="sender">
+        /// The value entry field.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void VCValueChanged (object sender, System.EventArgs e)
         {
-            SetCheckCBList(tvHours.Model as ListStore, false);
-            CreateHourSpecification();
+            evListCtl.UpdateSelected();
         }
 
-        protected virtual void SelectAllDaysClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Signal handler for a change in the Minutes cron editor.
+        /// </summary>
+        /// <param name="sender">
+        /// The cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void MinutesEditorChanged (object sender, System.EventArgs e)
         {
-            SetCheckCBList(tvDays.Model as ListStore, true);
-            CreateDaySpecification();
-        }
-
-        protected virtual void ClearDaysClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDays.Model as ListStore, false);
-            CreateDaySpecification();
-        }
-
-        protected virtual void SelectAllMonthsClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMonths.Model as ListStore, true);
-            CreateMonthSpecification();
-        }
-
-        protected virtual void ClearMonthsClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvMonths.Model as ListStore, false);
-            CreateMonthSpecification();
-        }
-
-        protected virtual void SelectAllDOWClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDOWs.Model as ListStore, true);
-            CreateDOWSpecification();
-        }
-
-        protected virtual void ClearDOWClicked (object sender, System.EventArgs e)
-        {
-            SetCheckCBList(tvDOWs.Model as ListStore, false);
-            CreateDOWSpecification();
-        }
-
-        private void ToggleValue(TreeView treeView)
-        {
-            TreeModel model = null;
-            TreeIter iter = TreeIter.Zero;
-
-            if (treeView.Selection.GetSelected(out model, out iter))
-            {
-                bool bValue = (bool) model.GetValue(iter, 0);
-                model.SetValue(iter, 0, ! bValue);
-            }
-
-            switch ((CronEditorType) treeView.Data["EditorType"])
-            {
-            case CronEditorType.Minutes:
-                CreateMinuteSpecification();
-                break;
-
-            case CronEditorType.Hours:
-                CreateHourSpecification();
-                break;
-
-            case CronEditorType.Days:
-                CreateDaySpecification();
-                break;
-
-            case CronEditorType.Months:
-                CreateMonthSpecification();
-                break;
-
-            case CronEditorType.DaysOfWeek:
-                CreateDOWSpecification();
-                break;
-            }
-        }
-
-        protected virtual void CronEditorCursorChanged (object sender, System.EventArgs e)
-        {
-            log.DebugFormat("CronEditorCursorChanged: {0}", sender.GetType().Name);
-            ToggleValue(sender as TreeView);
-        }
-
-        private void CreateMinuteSpecification()
-        {
-            ArrayList spec = CreateSpecification(tvMinutes.Model as ListStore, 2, "0-59", CronValueFactory.GetMinuteCreator());
+            ArrayList spec = tvMinutes.SpecificationList;
 
             string rawCriteria = txtCriteria.Text;
             CronSpecification cs = new CronSpecification(rawCriteria);
@@ -508,11 +264,22 @@ namespace PropertyManager
             cs.Minutes = spec;
 
             txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
         }
 
-        private void CreateHourSpecification()
+        /// <summary>
+        /// Signal handler for a change in the hours cron editor.
+        /// </summary>
+        /// <param name="sender">
+        /// The hour cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void HoursEditorChanged (object sender, System.EventArgs e)
         {
-            ArrayList spec = CreateSpecification(tvHours.Model as ListStore, 2, "0-23", CronValueFactory.GetHourCreator());
+            ArrayList spec = tvHours.SpecificationList;
 
             string rawCriteria = txtCriteria.Text;
             CronSpecification cs = new CronSpecification(rawCriteria);
@@ -520,11 +287,22 @@ namespace PropertyManager
             cs.Hours = spec;
 
             txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
         }
 
-        private void CreateDaySpecification()
+        /// <summary>
+        /// Signal handler for a change in the day cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The day cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void DaysEditorChanged (object sender, System.EventArgs e)
         {
-            ArrayList spec = CreateSpecification(tvDays.Model as ListStore, 2, "1-31", CronValueFactory.GetDayCreator());
+            ArrayList spec = tvDays.SpecificationList;
 
             string rawCriteria = txtCriteria.Text;
             CronSpecification cs = new CronSpecification(rawCriteria);
@@ -532,11 +310,22 @@ namespace PropertyManager
             cs.Days = spec;
 
             txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
         }
 
-        private void CreateMonthSpecification()
+        /// <summary>
+        /// Signal handler for a change in the month cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The month cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void MonthsEditorChanged (object sender, System.EventArgs e)
         {
-            ArrayList spec = CreateSpecification(tvMonths.Model as ListStore, 2, "1-12", CronValueFactory.GetMonthCreator());
+            ArrayList spec = tvMonths.SpecificationList;
 
             string rawCriteria = txtCriteria.Text;
             CronSpecification cs = new CronSpecification(rawCriteria);
@@ -544,11 +333,22 @@ namespace PropertyManager
             cs.Months = spec;
 
             txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
         }
 
-        private void CreateDOWSpecification()
+        /// <summary>
+        /// Signal handler for a change in the dow cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The dow cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void DaysOfWeekEditorChanged (object sender, System.EventArgs e)
         {
-            ArrayList spec = CreateSpecification(tvDOWs.Model as ListStore, 2, "0-6", CronValueFactory.GetDOWCreator());
+            ArrayList spec = tvDaysOfWeek.SpecificationList;
 
             string rawCriteria = txtCriteria.Text;
             CronSpecification cs = new CronSpecification(rawCriteria);
@@ -556,206 +356,130 @@ namespace PropertyManager
             cs.DaysOfWeek = spec;
 
             txtCriteria.Text = cs.ToString();
+
+            evListCtl.UpdateSelected();
         }
 
-        private ArrayList CreateSpecification(ListStore model, int valueIndex, string wildcardPattern, CronValueFactory.CronValueCreator creator)
+        /// <summary>
+        /// Signal handler for click of Add Item button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Add Item button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void AddItemClicked (object sender, System.EventArgs e)
         {
-            ArrayList specArray = new ArrayList();
-            TreeIter iter = TreeIter.Zero;
-            bool done = false;
-            bool more = model.GetIterFirst(out iter);
-            bool isChecked = false;
-            while (! done)
+            switch (evListCtl.SelectedLevel)
             {
-                string spec = "";
-                
-                // Find the first checked item
-                bool foundFirst = false;
-                int firstValueInRange = -1;
-                while (more && ! foundFirst)
-                {
-                    isChecked = (bool) model.GetValue(iter, 0);
-                    if (isChecked)
-                    {
-                        foundFirst = true;
-                        firstValueInRange = (int) model.GetValue(iter, valueIndex);
-                    }
-                    else
-                    {
-                        more = model.IterNext(ref iter);
-                    }
-                }
+            case EffectiveDateLevels.TopLevel:
+                // Add a new effective date
+                AddNewEffectiveDate();
+                break;
 
-                if (foundFirst)
-                {
-                    spec += firstValueInRange.ToString();
-                    bool foundEndOfContiguous = false;
-                    int secondValueInRange = -1;
-
-                    if (more)
-                    {
-                        more = model.IterNext(ref iter);
-                        while (more && ! foundEndOfContiguous)
-                        {
-                            isChecked = (bool) model.GetValue(iter, 0);
-                            if (isChecked)
-                            {
-                                secondValueInRange = (int) model.GetValue(iter, valueIndex);
-                                more = model.IterNext(ref iter);
-                            }
-                            else
-                            {
-                                foundEndOfContiguous = true;
-                            }
-                        }
-
-                        if (foundEndOfContiguous)
-                        {
-                            if (secondValueInRange >= 0)
-                            {
-                                spec += string.Format("-{0}", secondValueInRange);
-                            }
-                        }
-                        else if (secondValueInRange >= 0)
-                        {
-                            spec += string.Format("-{0}", secondValueInRange);
-                        }
-                        specArray.Add(creator.CreateCronValue(spec));
-                        if (more)
-                        {
-                            more = model.IterNext(ref iter);
-                        }
-                        else
-                        {
-                            done = true;
-                        }
-                    }
-                    else
-                    {
-                        done = true;
-                    }
-                }
-                else
-                {
-                    done = true;
-                }
+            case EffectiveDateLevels.EffectiveDate:
+                // Add a new value criteria
+                AddNewValueCriteria();
+                break;
             }
-
-            if (specArray.Count == 0)
-            {
-                specArray.Add(creator.CreateCronValue("*"));
-            }
-            else if (specArray.Count == 1)
-            {
-                string specStr = specArray[0].ToString();
-                if (specStr.Equals(wildcardPattern))
-                {
-                    specArray.Clear();
-                    specArray.Add(creator.CreateCronValue("*"));
-                }
-            }
-
-            return specArray;
         }
 
-        protected virtual void ApplyButtonClicked (object sender, System.EventArgs e)
+        /// <summary>
+        /// Adds a new effective value to the tree control.
+        /// </summary>
+        private void AddNewEffectiveDate()
+        {
+            // Add the new effective value to the dynamic property
+            CollectionRelationship rel = evListCtl.DynamicProperty.GetRelationship("EffectiveValues") as CollectionRelationship;
+
+            Domain domain = rel.AddNewObject();
+
+            // Now, add the new effective date to the end of the list
+            // of effective values in the tree.
+            evListCtl.AddEffectiveDate(domain);
+
+            EffectiveValueCursorChanged(null, null);
+        }
+
+        /// <summary>
+        /// Adds a new value criteria object to the tree control.
+        /// </summary>
+        private void AddNewValueCriteria()
+        {
+            // Get the owner of the new value criteria
+            Domain effValue = evListCtl.GetSelectedDomain();
+
+            CollectionRelationship rel = effValue.GetRelationship("ValueCriteria") as CollectionRelationship;
+
+            Domain domain = rel.AddNewObject();
+
+            domain.SetValue("RawCriteria", "* * * * *");
+            domain.SetValue("Value", "PropertyValue");
+
+            // Add the new effective date to the end of the list
+            // the value criteria in the tree
+            evListCtl.AddValueCriteria(domain);
+
+            EffectiveValueCursorChanged(null, null);
+        }
+
+        /// <summary>
+        /// Signal handler for a click of the Remove Item button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Remove Item button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected virtual void RemoveItemClicked (object sender, System.EventArgs e)
         {
             switch (evListCtl.SelectedLevel)
             {
             case EffectiveDateLevels.EffectiveDate:
-                UpdateEffectiveDate();
+                // Remove the selected EffectiveDate
+                RemoveSelectedEffectiveValue();
                 break;
 
             case EffectiveDateLevels.ValueCriteria:
-                UpdateValueCriteria();
+                // Remove the selected ValueCriteria
+                RemoveSelectedValueCriteria();
                 break;
             }
         }
 
-        private void UpdateEffectiveDate()
+        /// <summary>
+        /// Removes the selected effective value from the tree control.
+        /// </summary>
+        private void RemoveSelectedEffectiveValue()
         {
-            DateTime startDate = DateTime.MinValue;
-            if (cbStartDateNull.Active)
-            {
-                startDate = calStartDate.Date;
-                
-                // Get the time
-                string startTime = txtStartTime.Text;
-                if (startTime.Length > 0)
-                {
-                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
-                    DateTime stTime = DateTime.ParseExact(startTime, "HH:mm", dtfi);
-
-                    startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, stTime.Hour, stTime.Minute, 0);
-                }
-            }
+            Domain domain = evListCtl.GetSelectedDomain();
             
-            DateTime endDate = DateTime.MinValue;
-            if (cbEndDateNull.Active)
-            {
-                endDate = calEndDate.Date;
-                
-                // Get the time
-                string endTime = txtEndTime.Text;
-                if (endTime.Length > 0)
-                {
-                    DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
-                    DateTime stTime = DateTime.ParseExact(endTime, "HH:mm", dtfi);
+            // Remove effective value from the dynamic property
+            CollectionRelationship rel = evListCtl.DynamicProperty.GetRelationship("EffectiveValues") as CollectionRelationship;
 
-                    endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, stTime.Hour, stTime.Minute, 0);
-                }
-            }
+            rel.RemoveObject(domain);
 
-            Domain domain = evListCtl.GetSelectedDomain();
-            domain.SetValue("EffectiveStartDate", startDate);
-            domain.SetValue("EffectiveEndDate", endDate);
-
-            log.DebugFormat("Applying values, EffectiveStartDate = {0}, EffectiveEndDate = {1}", startDate, endDate);
-
-            evListCtl.UpdateSelected();
+            evListCtl.RemoveSelected();
+            EffectiveValueCursorChanged(null, null);
         }
 
-        private void UpdateValueCriteria()
+        /// <summary>
+        /// Removes the selected value criteria from the tree control.
+        /// </summary>
+        private void RemoveSelectedValueCriteria()
         {
             Domain domain = evListCtl.GetSelectedDomain();
+            Domain effValue = evListCtl.GetSelectedDomainParent();
+            
+            // Remove value criteria from effective value;
+            CollectionRelationship rel = effValue.GetRelationship("ValueCriteria") as CollectionRelationship;
 
-            string criteria = txtCriteria.Text;
-            string val = txtValue.Text;
+            rel.RemoveObject(domain);
 
-            log.DebugFormat("Applying values, Criteria = {0}, Value = {1}", criteria, val);
-
-            domain.SetValue("RawCriteria", criteria);
-            domain.SetValue("Value", val);
-
-            evListCtl.UpdateSelected();
-        }
-
-        protected virtual void StartDateNullToggled (object sender, System.EventArgs e)
-        {
-            if (cbStartDateNull.Active)
-            {
-                calStartDate.Sensitive = true;
-                txtStartTime.Sensitive = true;
-            }
-            else
-            {
-                calStartDate.Sensitive = false;
-                txtStartTime.Sensitive = false;
-            }
-        }
-
-        protected virtual void EndDateNullToggled (object sender, System.EventArgs e)
-        {
-            if (cbEndDateNull.Active)
-            {
-                calEndDate.Sensitive = true;
-                txtEndTime.Sensitive = true;
-            }
-            else
-            {
-                calEndDate.Sensitive = false;
-                txtEndTime.Sensitive = false;
-            }
+            evListCtl.RemoveSelected();
+            EffectiveValueCursorChanged(null, null);
         }
     }
 }

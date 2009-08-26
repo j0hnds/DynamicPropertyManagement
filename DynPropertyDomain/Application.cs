@@ -12,16 +12,28 @@ namespace DynPropertyDomain
     
     namespace DAO
     {
+        /// <summary>
+        /// The DAO to be used for the Application domain object.
+        /// </summary>
         class ApplicationDAO : DAOBase
         {
+            /// <summary>
+            /// The mapping between attribute names and db column names.
+            /// </summary>
             private static readonly Dictionary<string,string> ATTR_COL_MAPPINGS = new Dictionary<string, string>();
 
+            /// <summary>
+            /// Static constructor to initialize the column mappings.
+            /// </summary>
             static ApplicationDAO()
             {
                 ATTR_COL_MAPPINGS["Id"] = "DYN_APPLICATION_ID";
                 ATTR_COL_MAPPINGS["Name"] = "APPLICATION_NAME";
             }
-            
+
+            /// <summary>
+            /// Constructs a new ApplicationDAO object.
+            /// </summary>
             public ApplicationDAO() : 
                 base("Application", "DYN_APPLICATION", ATTR_COL_MAPPINGS)
             {
@@ -89,16 +101,38 @@ namespace DynPropertyDomain
             }
         }
     }
-    
+
+    /// <summary>
+    /// This class holds application data.
+    /// </summary>
     public class Application : Domain
     {
+        /// <summary>
+        /// The name of the Name attribute
+        /// </summary>
         private const string NAME_ATTR = "Name";
+        /// <summary>
+        /// The name of the Id attribute.
+        /// </summary>
         private const string ID_ATTR = "Id";
 
+        /// <summary>
+        /// The list of dynamic properties that are associated with
+        /// this application.
+        /// </summary>
         private List<Domain> dynamicProperties;
 
+        /// <summary>
+        /// The logger to use for this object.
+        /// </summary>
         protected ILog log;
-        
+
+        /// <summary>
+        /// Constructs a new Application domain object.
+        /// </summary>
+        /// <param name="dao">
+        /// The DAO object for Application.
+        /// </param>
         public Application(DomainDAO dao) : 
             base(dao)
         {
@@ -108,30 +142,45 @@ namespace DynPropertyDomain
             new StringAttribute(this, NAME_ATTR, false).AttributeValueChanged += HandleAttributeChange;
         }
 
+        /// <summary>
+        /// Event handler for the AttributeChange event on application's attribute values.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the attribute whose value changed.
+        /// </param>
+        /// <param name="oldValue">
+        /// The previous value of the attribute.
+        /// </param>
+        /// <param name="newValue">
+        /// The new value of the attribute.
+        /// </param>
         private void HandleAttributeChange(string name, object oldValue, object newValue)
         {
             log.Debug("Clearing cached collections");
             dynamicProperties = null;
         }
 
-//        public object this[string name]
-//        {
-//            get { return GetValue(name); }
-//            set { SetValue(name, value); }
-//        }
-//
+        /// <value>
+        /// The unique identifier of the Application.
+        /// </value>
         public long Id
         {
             get { return (long) GetValue(ID_ATTR); }
             set { SetValue(ID_ATTR, value); }
         }
 
+        /// <value>
+        /// The Name of the application.
+        /// </value>
         public string Name
         {
             get { return (string) GetValue(NAME_ATTR); }
             set { SetValue(NAME_ATTR, value); }
         }
 
+        /// <value>
+        /// The list of dynamic properties associated with this application.
+        /// </value>
         public List<Domain> DynamicProperties
         {
             get

@@ -15,15 +15,53 @@ namespace DAOCore
     /// </summary>
     public class DAOBase : DomainDAO
     {
+        /// <summary>
+        /// The builder to construct SQL Insert statements.
+        /// </summary>
         private InsertBuilder insertBuilder;
+        /// <summary>
+        /// The builder to construct SQL Update statements.
+        /// </summary>
         private UpdateBuilder updateBuilder;
+        /// <summary>
+        /// The builder to construct SQL Delete statements.
+        /// </summary>
         private DeleteBuilder deleteBuilder;
+        /// <summary>
+        /// If true, the ID of the domain object must be populated in
+        /// inserts and updates.
+        /// </summary>
         private bool populateId = true;
+        /// <summary>
+        /// The name of the domain object. Used by the domain factory when
+        /// creating new instances.
+        /// </summary>
         private string domainName;
+        /// <summary>
+        /// The domain attribute name DB column mappings.
+        /// </summary>
         private Dictionary<string,string> mappings;
+        /// <summary>
+        /// The logger to use for this class.
+        /// </summary>
         protected ILog log;
 
-        public DAOBase(string domainName, string tableName, Dictionary<string,string> mappings)
+        /// <summary>
+        /// Constructs a new DAOBase object.
+        /// </summary>
+        /// <param name="domainName">
+        /// The name of the domain object. Used by the domain factory when
+        /// creating new instances.
+        /// </param>
+        /// <param name="tableName">
+        /// The name of the data base table.
+        /// </param>
+        /// <param name="mappings">
+        /// The domain attribute DB column mappings.
+        /// </param>
+        public DAOBase(string domainName, 
+                       string tableName, 
+                       Dictionary<string,string> mappings)
         {
             log = LogManager.GetLogger(this.GetType().Name);
             this.domainName = domainName;
@@ -33,22 +71,41 @@ namespace DAOCore
             deleteBuilder = new DeleteBuilder(tableName, mappings);
         }
 
+        /// <value>
+        /// The data base connection.
+        /// </value>
         protected IDbConnection Connection
         {
             get { return DataSource.Instance.Connection; }
         }
 
+        /// <summary>
+        /// Closes the current data base connection.
+        /// </summary>
         protected void CloseConnection()
         {
             DataSource.Instance.Close();
         }
 
+        /// <value>
+        /// If <c>true</c>, the domain object's ID should be populated in
+        /// insert and update statements.
+        /// </value>
         protected virtual bool PopulateId
         {
             get { return populateId; }
             set { populateId = value; }
         }
 
+        /// <summary>
+        /// Populates the domain object with information from a SQL result set.
+        /// </summary>
+        /// <param name="reader">
+        /// A reader on the SQL result set.
+        /// </param>
+        /// <returns>
+        /// Reference to a newly created and populated domain object.
+        /// </returns>
         protected virtual Domain PopulateDomain(IDataReader reader)
         {
             Domain domain = DomainFactory.Create(domainName, false);
@@ -64,6 +121,19 @@ namespace DAOCore
             return domain;
         }
 
+        /// <summary>
+        /// Helper method to extract a long value from the data base result set.
+        /// </summary>
+        /// <param name="reader">
+        /// The result set reader
+        /// </param>
+        /// <param name="index">
+        /// The index of the result set to read.
+        /// </param>
+        /// <returns>
+        /// The long value from the data base. If the data base value is null,
+        /// returns -1L.
+        /// </returns>
         protected long GetLong(IDataReader reader, int index)
         {
             long val = -1L;
@@ -76,6 +146,19 @@ namespace DAOCore
             return val;
         }
 
+        /// <summary>
+        /// Helper method to extract a string from a data base result set.
+        /// </summary>
+        /// <param name="reader">
+        /// A reader on the data base result set.
+        /// </param>
+        /// <param name="index">
+        /// The index of the value to read from the result set.
+        /// </param>
+        /// <returns>
+        /// The string value from the data base. If the data base value is null,
+        /// then <c>null</c> is returned.
+        /// </returns>
         protected string GetString(IDataReader reader, int index)
         {
             string val = null;
@@ -88,6 +171,19 @@ namespace DAOCore
             return val;
         }
 
+        /// <summary>
+        /// Helper method to extract a DateTime value from a data base result set.
+        /// </summary>
+        /// <param name="reader">
+        /// A reader on a data base result set.
+        /// </param>
+        /// <param name="index">
+        /// The index of the column to read from the result set.
+        /// </param>
+        /// <returns>
+        /// The DateTime value from the data base. If the data base value is null,
+        /// DateTime.MinValue is returned.
+        /// </returns>
         protected DateTime GetDateTime(IDataReader reader, int index)
         {
             DateTime val = DateTime.MinValue;
@@ -131,7 +227,6 @@ namespace DAOCore
         
         public void Insert (Domain obj)
         {
-            Console.Out.WriteLine("Starting the Insert");
             IDbCommand cmd = Connection.CreateCommand();
             cmd.CommandText = InsertSQL(obj);
 
@@ -143,21 +238,17 @@ namespace DAOCore
 
             if (PopulateId)
             {
-                Console.Out.WriteLine("Populating ID");
                 // Now, get the ID of the newly inserted record
                 cmd.CommandText = "SELECT last_insert_id()";
                 object oid = cmd.ExecuteScalar();
                 long id = Convert.ToInt64(oid);
-                Console.Out.WriteLine(String.Format("ID assigned to domain = {0}", oid));
                 obj.IdAttribute.Value = id;
-                Console.Out.WriteLine("Done Populating ID");
             }
 
             obj.Clean();
             obj.NewObject = false;
 
             CloseConnection();
-            Console.Out.WriteLine("Done with Insert");
         }
         
         public void Update (Domain obj)

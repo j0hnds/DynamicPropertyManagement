@@ -40,7 +40,7 @@ namespace DynPropertyDomain
             dp.SetValue("PropertyId", prop.GetValue("Id"));
             dp.SetValue("Qualifier", "__Qual");
             dp.SetValue("DefaultValue", "__DFLT");
-            string sql = dp.SaveSQL();
+            /* string sql = */ dp.SaveSQL();
             dp.Save();
 
             // Construct an effective value and save it

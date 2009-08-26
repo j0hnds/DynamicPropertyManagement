@@ -7,11 +7,11 @@ namespace CronUtils
     /// <summary>
     /// Provides the implementation of a wildcard Cron Value. 
     /// </summary>
-    /// <description>
+    /// <remarks>
     /// This type of Cron Value provides a scenario where all tested values are 
     /// deemed effective. This is used when the value of a particular cron 
     /// component is not material to the determination of effectiveness.
-    /// </description>
+    /// </remarks>
     public class WildcardCronValue : CronValueBase, CronEffectiveValue
     {
 

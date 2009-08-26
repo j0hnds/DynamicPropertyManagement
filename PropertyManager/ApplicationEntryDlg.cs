@@ -1,19 +1,23 @@
 
 using System;
+using Gtk;
 using DomainCore;
 using ControlWrappers;
 
 namespace PropertyManager
 {
     
-    
-    public partial class ApplicationEntryDlg : BoundDialog //Gtk.Dialog
+    /// <summary>
+    /// Dialog to allow creation/editing of application object.
+    /// </summary>
+    public partial class ApplicationEntryDlg : DataBoundDialog 
     {
+        /// <summary>
+        /// Constructs a new ApplicationDlg object.
+        /// </summary>
         public ApplicationEntryDlg()
         {
             this.Build();
-
-            new EntryBoundControl(this, txtApplicationName, "Name");
         }
 
     }

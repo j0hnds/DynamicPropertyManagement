@@ -10,22 +10,23 @@
     <AssemblyName>ControlWrappers</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -33,6 +34,8 @@
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=a5715cc6d5c3540b">
       <Package>log4net-1.2</Package>
     </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseControl.cs" />
@@ -40,9 +43,24 @@
     <Compile Include="BaseTextViewControl.cs" />
     <Compile Include="BaseTreeControl.cs" />
     <Compile Include="ListControl.cs" />
-    <Compile Include="EntryBoundControl.cs" />
-    <Compile Include="ComboBoxBoundControl.cs" />
-    <Compile Include="TextViewBoundControl.cs" />
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="BoundEntry.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundEntry.cs" />
+    <Compile Include="BoundControl.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="BoundControlDelegate.cs" />
+    <Compile Include="ContextContainer.cs" />
+    <Compile Include="DataBoundDialog.cs" />
+    <Compile Include="BoundTime.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundTime.cs" />
+    <Compile Include="BoundCalendar.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundCalendar.cs" />
+    <Compile Include="BoundComboBox.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundComboBox.cs" />
+    <Compile Include="BoundTextView.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.BoundTextView.cs" />
+    <Compile Include="CronValueEditor.cs" />
+    <Compile Include="gtk-gui\ControlWrappers.CronValueEditor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -54,5 +72,14 @@
       <Project>{261E235C-0CCB-40B6-86ED-FADEADE0B122}</Project>
       <Name>STUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CronUtils\CronUtils.csproj">
+      <Project>{924287B6-61A5-42C3-BB98-38E746C82ECD}</Project>
+      <Name>CronUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

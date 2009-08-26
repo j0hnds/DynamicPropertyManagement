@@ -41,7 +41,7 @@ task :testinit do
 end
 
 # Source files excluding the test files.
-SRC = FileList['*.cs'].exclude("Test*.cs")
+SRC = FileList['**/*.cs'].exclude("Test*.cs")
 # Source files including the test files
 TEST_SRC = FileList['*.cs']
 
@@ -50,7 +50,8 @@ TEST_SRC = FileList['*.cs']
 file PROJECT_TARGET => SRC do |t|
   c = Gmcs.new "library", t.name, t.prerequisites
   c.libs = [ LIB_DIR ]
-  c.references = [ "DomainCore.dll", "STUtils.dll" ]
+  c.references = [ "DomainCore.dll", "STUtils.dll", "CronUtils.dll",
+                   "Mono.Posix.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net" ]
   c.debug = DEBUG
   c.exec
@@ -61,7 +62,8 @@ end
 file TEST_PATH => TEST_SRC do |t|
   c = Gmcs.new "library", t.name, t.prerequisites
   c.libs = [ LIB_DIR ]
-  c.references = [ "DomainCore.dll", "STUtils.dll" ]
+  c.references = [ "DomainCore.dll", "STUtils.dll", "CronUtils.dll",
+                   "Mono.Posix.dll" ]
   c.packages = [ "gtk-sharp-2.0", "log4net", "nunit" ]
   c.debug = DEBUG
   c.exec

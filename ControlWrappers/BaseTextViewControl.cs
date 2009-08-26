@@ -4,18 +4,43 @@ using Gtk;
 
 namespace ControlWrappers
 {
-    
-    
-    public class BaseTextViewControl : BaseControl
+
+    /// <summary>
+    /// A base class for all wrapped TextView controls.
+    /// </summary>
+    /// <remarks>
+    /// Provides a set of methods that are generally useful for TextView controls
+    /// in the context of templated text.
+    /// </remarks>
+    public abstract class BaseTextViewControl : BaseControl
     {
+        /// <summary>
+        /// The text buffer for the TextView control
+        /// </summary>
         protected TextBuffer buffer;
-        
+
+        /// <summary>
+        /// Constructs a new BaseTextViewControl.
+        /// </summary>
+        /// <param name="widget">
+        /// The TextView widget to be wrapped.
+        /// </param>
         public BaseTextViewControl(Widget widget) : 
             base(widget)
         {
             this.buffer = ((TextView) widget).Buffer;
         }
 
+        /// <summary>
+        /// Replaces the text currently in the control's buffer with the specified
+        /// tagged text.
+        /// </summary>
+        /// <param name="tag">
+        /// The tag to apply to the text in the control.
+        /// </param>
+        /// <param name="text">
+        /// The text to be placed in the control with the specified tag.
+        /// </param>
         public void TagText(string tag, string text)
         {
             TextIter startIter = buffer.StartIter;
@@ -27,6 +52,22 @@ namespace ControlWrappers
             buffer.InsertWithTagsByName(ref startIter, text, tag);
         }
 
+        /// <summary>
+        /// Renders the specified text into the control's text buffer.
+        /// </summary>
+        /// <remarks>
+        /// It is assumed that the supplied text string could contain embedded tag specifications
+        /// which control the display of portions of the text. The markup for the tags is
+        /// relatively straightforward: to tag text, simply provide the markup as follows:
+        /// <code>untagged_text{{tag_name}}text_to_tag{{/}}untagged_text</code>
+        /// where:
+        /// <list type="bullet">
+        /// <item></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="text">
+        /// A <see cref="System.String"/>
+        /// </param>
         public void Render(string text)
         {
             TextIter startIter = buffer.StartIter;
