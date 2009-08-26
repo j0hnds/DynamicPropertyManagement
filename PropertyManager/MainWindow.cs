@@ -933,6 +933,15 @@ public partial class MainWindow: Gtk.Window
         HandleToolBarSensitivity();
     }
 
+    /// <summary>
+    /// Signal handler for activation of Test action.
+    /// </summary>
+    /// <param name="sender">
+    /// The Test action
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void TestDynamicPropertyAction (object sender, System.EventArgs e)
     {
         Domain domain = dynPropertyListCtl.GetSelectedDomain();

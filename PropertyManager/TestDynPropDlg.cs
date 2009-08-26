@@ -9,12 +9,23 @@ using DynPropertyDomain;
 namespace PropertyManager
 {
     
-    
+    /// <summary>
+    /// Dialog to test different effective values for a Dynamic Property.
+    /// </summary>
     public partial class TestDynPropDlg : Gtk.Dialog
     {
+        /// <summary>
+        /// Wrapper for text view.
+        /// </summary>
         private TestDynPropertyTextViewControl tvDynPropCtl;
+        /// <summary>
+        /// The Dynamic Property being tested.
+        /// </summary>
         private DynamicProperty dynProp;
-        
+
+        /// <summary>
+        /// Constructs a new TestDynPropDlg dialog.
+        /// </summary>
         public TestDynPropDlg()
         {
             this.Build();
@@ -22,6 +33,15 @@ namespace PropertyManager
             tvDynPropCtl = new TestDynPropertyTextViewControl(tvPropertyInformation);
         }
 
+        /// <summary>
+        /// Signal handler for click of Revert button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Revert button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void RevertSimulatedDateClicked (object sender, System.EventArgs e)
         {
             // Get the current date/time
@@ -34,6 +54,15 @@ namespace PropertyManager
             ApplySimulatedDateTime(dtNow);
         }           
 
+        /// <summary>
+        /// The signal handler for click of Apply button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Apply button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void ApplySimulatedDateClicked (object sender, System.EventArgs e)
         {
             // Collect up the date/time information
@@ -47,6 +76,12 @@ namespace PropertyManager
             ApplySimulatedDateTime(simDt);
         }
 
+        /// <summary>
+        /// Use the simulated date/time to determine the effective value.
+        /// </summary>
+        /// <param name="simDateTime">
+        /// The simulated date time to apply.
+        /// </param>
         private void ApplySimulatedDateTime(DateTime simDateTime)
         {
             string effValue = dynProp.GetEffectiveValue(simDateTime) as string;
@@ -59,7 +94,19 @@ namespace PropertyManager
                 txtEffectiveValue.Text = "";
             }
         }
-        
+
+        /// <summary>
+        /// Display the dialog modally.
+        /// </summary>
+        /// <param name="parentWindow">
+        /// The parent window to the dialog
+        /// </param>
+        /// <param name="domain">
+        /// The DynamicProperty domain object to evaluate.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the user clicked OK.
+        /// </returns>
         public virtual bool DoModal(Window parentWindow, Domain domain)
         {
             bool ok = false;

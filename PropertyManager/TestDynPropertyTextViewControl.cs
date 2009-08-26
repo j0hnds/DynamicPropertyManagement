@@ -7,10 +7,18 @@ using Pango;
 namespace PropertyManager
 {
     
-    
+    /// <summary>
+    /// Wrapper class for textual test information.
+    /// </summary>
     public class TestDynPropertyTextViewControl : BaseTextViewControl
     {
-        
+
+        /// <summary>
+        /// Constructs a new TestDynPropertyTextViewControl wrapper.
+        /// </summary>
+        /// <param name="widget">
+        /// The TextView widget to wrap.
+        /// </param>
         public TestDynPropertyTextViewControl(Widget widget) :
             base(widget)
         {
