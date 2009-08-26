@@ -2110,55 +2110,13 @@ Production</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Calendar" id="calSimEffectiveDate">
+                              <widget class="ControlWrappers.BoundCalendar" id="calSimEffectiveDate">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="DisplayOptions">35</property>
+                                <property name="Events">ButtonPressMask</property>
+                                <property name="Date">0</property>
                               </widget>
                               <packing>
-                                <property name="RightAttach">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="XOptions">Fill</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XExpand">False</property>
-                                <property name="XFill">True</property>
-                                <property name="XShrink">False</property>
-                                <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="YShrink">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Label" id="lblSimTime">
-                                <property name="MemberName" />
-                                <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">Time:</property>
-                              </widget>
-                              <packing>
-                                <property name="TopAttach">1</property>
                                 <property name="BottomAttach">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="XOptions">Fill</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XExpand">False</property>
-                                <property name="XFill">True</property>
-                                <property name="XShrink">False</property>
-                                <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="YShrink">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Entry" id="txtSimTime">
-                                <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="IsEditable">True</property>
-                                <property name="InvisibleChar">●</property>
-                              </widget>
-                              <packing>
-                                <property name="TopAttach">1</property>
-                                <property name="BottomAttach">2</property>
-                                <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
@@ -2176,7 +2134,7 @@ Production</property>
                       </widget>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="GtkLabel2">
+                      <widget class="Gtk.Label" id="GtkLabel3">
                         <property name="MemberName" />
                         <property name="LabelProp" translatable="yes">&lt;b&gt;Simulated Effective Date&lt;/b&gt;</property>
                         <property name="UseMarkup">True</property>
@@ -2194,7 +2152,7 @@ Production</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.HBox" id="hbox2">
+                  <widget class="Gtk.HBox" id="hbox3">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>

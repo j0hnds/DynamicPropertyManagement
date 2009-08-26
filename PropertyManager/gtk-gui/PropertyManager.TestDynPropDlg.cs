@@ -37,15 +37,11 @@ namespace PropertyManager {
         
         private Gtk.Button btnApply;
         
-        private Gtk.Calendar calSimEffectiveDate;
+        private ControlWrappers.BoundCalendar calSimEffectiveDate;
         
-        private Gtk.Label lblSimTime;
+        private Gtk.Label GtkLabel3;
         
-        private Gtk.Entry txtSimTime;
-        
-        private Gtk.Label GtkLabel2;
-        
-        private Gtk.HBox hbox2;
+        private Gtk.HBox hbox3;
         
         private Gtk.Label lblEffectiveValue;
         
@@ -157,95 +153,71 @@ namespace PropertyManager {
             w8.RightAttach = ((uint)(2));
             w8.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.calSimEffectiveDate = new Gtk.Calendar();
-            this.calSimEffectiveDate.CanFocus = true;
+            this.calSimEffectiveDate = new ControlWrappers.BoundCalendar();
+            this.calSimEffectiveDate.Events = ((Gdk.EventMask)(256));
             this.calSimEffectiveDate.Name = "calSimEffectiveDate";
-            this.calSimEffectiveDate.DisplayOptions = ((Gtk.CalendarDisplayOptions)(35));
+            this.calSimEffectiveDate.Date = new System.DateTime(0);
             this.table1.Add(this.calSimEffectiveDate);
             Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table1[this.calSimEffectiveDate]));
+            w9.BottomAttach = ((uint)(2));
             w9.RightAttach = ((uint)(2));
             w9.XOptions = ((Gtk.AttachOptions)(4));
             w9.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.lblSimTime = new Gtk.Label();
-            this.lblSimTime.Name = "lblSimTime";
-            this.lblSimTime.Xalign = 0F;
-            this.lblSimTime.LabelProp = Mono.Unix.Catalog.GetString("Time:");
-            this.table1.Add(this.lblSimTime);
-            Gtk.Table.TableChild w10 = ((Gtk.Table.TableChild)(this.table1[this.lblSimTime]));
-            w10.TopAttach = ((uint)(1));
-            w10.BottomAttach = ((uint)(2));
-            w10.XOptions = ((Gtk.AttachOptions)(4));
-            w10.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.txtSimTime = new Gtk.Entry();
-            this.txtSimTime.CanFocus = true;
-            this.txtSimTime.Name = "txtSimTime";
-            this.txtSimTime.IsEditable = true;
-            this.txtSimTime.InvisibleChar = '●';
-            this.table1.Add(this.txtSimTime);
-            Gtk.Table.TableChild w11 = ((Gtk.Table.TableChild)(this.table1[this.txtSimTime]));
-            w11.TopAttach = ((uint)(1));
-            w11.BottomAttach = ((uint)(2));
-            w11.LeftAttach = ((uint)(1));
-            w11.RightAttach = ((uint)(2));
-            w11.XOptions = ((Gtk.AttachOptions)(4));
-            w11.YOptions = ((Gtk.AttachOptions)(4));
             this.GtkAlignment2.Add(this.table1);
             this.frmSimulatedEffectiveDate.Add(this.GtkAlignment2);
-            this.GtkLabel2 = new Gtk.Label();
-            this.GtkLabel2.Name = "GtkLabel2";
-            this.GtkLabel2.LabelProp = Mono.Unix.Catalog.GetString("<b>Simulated Effective Date</b>");
-            this.GtkLabel2.UseMarkup = true;
-            this.frmSimulatedEffectiveDate.LabelWidget = this.GtkLabel2;
+            this.GtkLabel3 = new Gtk.Label();
+            this.GtkLabel3.Name = "GtkLabel3";
+            this.GtkLabel3.LabelProp = Mono.Unix.Catalog.GetString("<b>Simulated Effective Date</b>");
+            this.GtkLabel3.UseMarkup = true;
+            this.frmSimulatedEffectiveDate.LabelWidget = this.GtkLabel3;
             this.vbox3.Add(this.frmSimulatedEffectiveDate);
-            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox3[this.frmSimulatedEffectiveDate]));
-            w14.Position = 0;
-            w14.Expand = false;
-            w14.Fill = false;
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox3[this.frmSimulatedEffectiveDate]));
+            w12.Position = 0;
+            w12.Expand = false;
+            w12.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
-            this.hbox2 = new Gtk.HBox();
-            this.hbox2.Name = "hbox2";
-            this.hbox2.Spacing = 6;
-            // Container child hbox2.Gtk.Box+BoxChild
+            this.hbox3 = new Gtk.HBox();
+            this.hbox3.Name = "hbox3";
+            this.hbox3.Spacing = 6;
+            // Container child hbox3.Gtk.Box+BoxChild
             this.lblEffectiveValue = new Gtk.Label();
             this.lblEffectiveValue.Name = "lblEffectiveValue";
             this.lblEffectiveValue.LabelProp = Mono.Unix.Catalog.GetString("Effective Value:");
-            this.hbox2.Add(this.lblEffectiveValue);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox2[this.lblEffectiveValue]));
-            w15.Position = 0;
-            w15.Expand = false;
-            w15.Fill = false;
-            // Container child hbox2.Gtk.Box+BoxChild
+            this.hbox3.Add(this.lblEffectiveValue);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox3[this.lblEffectiveValue]));
+            w13.Position = 0;
+            w13.Expand = false;
+            w13.Fill = false;
+            // Container child hbox3.Gtk.Box+BoxChild
             this.txtEffectiveValue = new Gtk.Entry();
             this.txtEffectiveValue.CanFocus = true;
             this.txtEffectiveValue.Name = "txtEffectiveValue";
             this.txtEffectiveValue.IsEditable = false;
             this.txtEffectiveValue.InvisibleChar = '●';
-            this.hbox2.Add(this.txtEffectiveValue);
-            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox2[this.txtEffectiveValue]));
+            this.hbox3.Add(this.txtEffectiveValue);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox3[this.txtEffectiveValue]));
+            w14.Position = 1;
+            this.vbox3.Add(this.hbox3);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox3]));
+            w15.Position = 1;
+            w15.Expand = false;
+            w15.Fill = false;
+            this.hbox1.Add(this.vbox3);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
             w16.Position = 1;
-            this.vbox3.Add(this.hbox2);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox2]));
-            w17.Position = 1;
+            w16.Expand = false;
+            w16.Fill = false;
+            w1.Add(this.hbox1);
+            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(w1[this.hbox1]));
+            w17.Position = 0;
             w17.Expand = false;
             w17.Fill = false;
-            this.hbox1.Add(this.vbox3);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
-            w18.Position = 1;
-            w18.Expand = false;
-            w18.Fill = false;
-            w1.Add(this.hbox1);
-            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(w1[this.hbox1]));
-            w19.Position = 0;
-            w19.Expand = false;
-            w19.Fill = false;
             // Internal child PropertyManager.TestDynPropDlg.ActionArea
-            Gtk.HButtonBox w20 = this.ActionArea;
-            w20.Name = "dialog1_ActionArea";
-            w20.Spacing = 6;
-            w20.BorderWidth = ((uint)(5));
-            w20.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w18 = this.ActionArea;
+            w18.Name = "dialog1_ActionArea";
+            w18.Spacing = 6;
+            w18.BorderWidth = ((uint)(5));
+            w18.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -255,9 +227,9 @@ namespace PropertyManager {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w21 = ((Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonCancel]));
-            w21.Expand = false;
-            w21.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w19 = ((Gtk.ButtonBox.ButtonBoxChild)(w18[this.buttonCancel]));
+            w19.Expand = false;
+            w19.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -267,10 +239,10 @@ namespace PropertyManager {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w22 = ((Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonOk]));
-            w22.Position = 1;
-            w22.Expand = false;
-            w22.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w20 = ((Gtk.ButtonBox.ButtonBoxChild)(w18[this.buttonOk]));
+            w20.Position = 1;
+            w20.Expand = false;
+            w20.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
