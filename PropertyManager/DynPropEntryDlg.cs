@@ -12,12 +12,24 @@ using CronUtils;
 namespace PropertyManager
 {
 
-    public partial class DynPropEntryDlg : DataBoundDialog // Gtk.Dialog
+    /// <summary>
+    /// Dialog to allow creation/modification of DynamicProperty information.
+    /// </summary>
+    public partial class DynPropEntryDlg : DataBoundDialog
     {
+        /// <summary>
+        /// Wrapper class for the effective date tree.
+        /// </summary>
         private EffectiveDateListControl evListCtl;
 
+        /// <summary>
+        /// The logger class.
+        /// </summary>
         private ILog log;
 
+        /// <summary>
+        /// Constructs a new DynPropEntryDlg dialog object.
+        /// </summary>
         public DynPropEntryDlg() 
         {
             this.Build();
@@ -27,6 +39,15 @@ namespace PropertyManager
             evListCtl = new EffectiveDateListControl(tvEffectiveValues);
         }
 
+        /// <summary>
+        /// Signal handler for ContextChanged event.
+        /// </summary>
+        /// <param name="contextName">
+        /// The name of the data context that changed.
+        /// </param>
+        /// <param name="itemName">
+        /// The name of the item in the data context that changed.
+        /// </param>
         private void ContextChangeHandler(string contextName, string itemName)
         {
             log.DebugFormat("ContextChangeHandler({0}, {1})", contextName, itemName);
@@ -61,7 +82,16 @@ namespace PropertyManager
                 tvDaysOfWeek.SpecificationList = cs.DaysOfWeek;
             }
         }
-        
+
+        /// <summary>
+        /// Signal handler for a Cursor Change in the Effective Value tree.
+        /// </summary>
+        /// <param name="sender">
+        /// The Effective Value tree control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void EffectiveValueCursorChanged (object sender, System.EventArgs e)
         {
             switch (evListCtl.SelectedLevel)
@@ -94,6 +124,10 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Updates the EffectiveDateCtx with the selected EffectiveValue domain
+        /// object.
+        /// </summary>
         private void LoadSelectedEffectiveDateValues()
         {
             Domain domain = evListCtl.GetSelectedDomain();
@@ -103,6 +137,9 @@ namespace PropertyManager
             GetContext("EffectiveDateCtx").AddObject(domain);
         }
 
+        /// <summary>
+        /// Updates the ValueCriteriaCtx with the selected ValueCriteria domain object.
+        /// </summary>
         private void LoadSelectedValueCriteriaValues()
         {
             Domain domain = evListCtl.GetSelectedDomain();
@@ -149,6 +186,15 @@ namespace PropertyManager
             return context;
         }
 
+        /// <summary>
+        /// Signal handler for selection of a form item in the combo box.
+        /// </summary>
+        /// <param name="sender">
+        /// The form combo box.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void OnCbFormChanged (object sender, System.EventArgs e)
         {
             long id = cbForm.ActiveId;
@@ -156,22 +202,58 @@ namespace PropertyManager
             txtQualifier.Text = id.ToString();
         }
 
+        /// <summary>
+        /// Signal handler for when the start date time has been changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The bound date time control.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void StartDateChanged (object sender, System.EventArgs e)
         {
             // Update the currently selected label on the tree
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for when the end date time has changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The bound date time control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void EndDateChanged (object sender, System.EventArgs e)
         {
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change to the Value Criteria Value.
+        /// </summary>
+        /// <param name="sender">
+        /// The value entry field.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void VCValueChanged (object sender, System.EventArgs e)
         {
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change in the Minutes cron editor.
+        /// </summary>
+        /// <param name="sender">
+        /// The cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void MinutesEditorChanged (object sender, System.EventArgs e)
         {
             ArrayList spec = tvMinutes.SpecificationList;
@@ -186,6 +268,15 @@ namespace PropertyManager
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change in the hours cron editor.
+        /// </summary>
+        /// <param name="sender">
+        /// The hour cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void HoursEditorChanged (object sender, System.EventArgs e)
         {
             ArrayList spec = tvHours.SpecificationList;
@@ -200,6 +291,15 @@ namespace PropertyManager
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change in the day cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The day cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void DaysEditorChanged (object sender, System.EventArgs e)
         {
             ArrayList spec = tvDays.SpecificationList;
@@ -214,6 +314,15 @@ namespace PropertyManager
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change in the month cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The month cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void MonthsEditorChanged (object sender, System.EventArgs e)
         {
             ArrayList spec = tvMonths.SpecificationList;
@@ -228,6 +337,15 @@ namespace PropertyManager
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for a change in the dow cron editor control.
+        /// </summary>
+        /// <param name="sender">
+        /// The dow cron editor control
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void DaysOfWeekEditorChanged (object sender, System.EventArgs e)
         {
             ArrayList spec = tvDaysOfWeek.SpecificationList;
@@ -242,6 +360,15 @@ namespace PropertyManager
             evListCtl.UpdateSelected();
         }
 
+        /// <summary>
+        /// Signal handler for click of Add Item button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Add Item button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void AddItemClicked (object sender, System.EventArgs e)
         {
             switch (evListCtl.SelectedLevel)
@@ -258,6 +385,9 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Adds a new effective value to the tree control.
+        /// </summary>
         private void AddNewEffectiveDate()
         {
             // Add the new effective value to the dynamic property
@@ -272,6 +402,9 @@ namespace PropertyManager
             EffectiveValueCursorChanged(null, null);
         }
 
+        /// <summary>
+        /// Adds a new value criteria object to the tree control.
+        /// </summary>
         private void AddNewValueCriteria()
         {
             // Get the owner of the new value criteria
@@ -291,6 +424,15 @@ namespace PropertyManager
             EffectiveValueCursorChanged(null, null);
         }
 
+        /// <summary>
+        /// Signal handler for a click of the Remove Item button.
+        /// </summary>
+        /// <param name="sender">
+        /// The Remove Item button.
+        /// </param>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected virtual void RemoveItemClicked (object sender, System.EventArgs e)
         {
             switch (evListCtl.SelectedLevel)
@@ -307,6 +449,9 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Removes the selected effective value from the tree control.
+        /// </summary>
         private void RemoveSelectedEffectiveValue()
         {
             Domain domain = evListCtl.GetSelectedDomain();
@@ -320,6 +465,9 @@ namespace PropertyManager
             EffectiveValueCursorChanged(null, null);
         }
 
+        /// <summary>
+        /// Removes the selected value criteria from the tree control.
+        /// </summary>
         private void RemoveSelectedValueCriteria()
         {
             Domain domain = evListCtl.GetSelectedDomain();

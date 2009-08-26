@@ -7,17 +7,33 @@ using ControlWrappers;
 
 namespace PropertyManager
 {
+    /// <summary>
+    /// Enumeration of the different levels of the Property Definition Tree.
+    /// </summary>
     public enum PropertyDefinitionLevels
     {
         None,
         Category,
         Property
     }
-    
+
+    /// <summary>
+    /// Wrapper class to provide application-specific support for displaying
+    /// properties.
+    /// </summary>
     public class PropertyListControl : BaseTreeControl
     {
+        /// <summary>
+        /// The model of this TreeView.
+        /// </summary>
         private TreeStore treeStore;
-        
+
+        /// <summary>
+        /// Constructs a new PropertyListControl wrapper.
+        /// </summary>
+        /// <param name="widget">
+        /// The TreeView widget to wrap.
+        /// </param>
         public PropertyListControl(Widget widget) :
             base(widget)
         {
@@ -34,6 +50,9 @@ namespace PropertyManager
             ((TreeView) widget).Model = treeStore;
         }
 
+        /// <value>
+        /// The level of the currently selected row in the TreeView.
+        /// </value>
         public PropertyDefinitionLevels SelectedLevel
         {
             get
@@ -60,6 +79,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Adds a new domain object to the TreeView.
+        /// </summary>
+        /// <param name="domain">
+        /// The domain object to add.
+        /// </param>
         public void AddDomain(Domain domain)
         {
             object category = domain.GetValue("Category");
@@ -99,6 +124,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Populates the TreeView with the contents of the list.
+        /// </summary>
+        /// <param name="properties">
+        /// The PropertyDefinition objects to populate list TreeView with.
+        /// </param>
         public void Populate(List<Domain> properties)
         {
             treeStore.Clear();
@@ -125,6 +156,9 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Updates the label of the currently selected object.
+        /// </summary>
         public void UpdateSelectedLabel()
         {
             TreeModel model = null;

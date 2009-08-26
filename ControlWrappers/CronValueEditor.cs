@@ -7,6 +7,9 @@ using CronUtils;
 
 namespace ControlWrappers
 {
+    /// <summary>
+    /// The various categories of information in the cron specification.
+    /// </summary>
     public enum CronValueType
     {
         Minutes = 0,
@@ -15,11 +18,17 @@ namespace ControlWrappers
         Months = 3,
         DaysOfWeek = 4
     }
-    
+
+    /// <summary>
+    /// A custom Gtk control implementing a cron editor.
+    /// </summary>
     [System.ComponentModel.ToolboxItem(true)]
     public partial class CronValueEditor : Gtk.Bin
     {
-        
+        /// <summary>
+        /// The list of short names of the months. Used when the editor
+        /// type is <c>Months</c>.
+        /// </summary>
         private static readonly string[] MONTHS = 
         {
             "Jan",
@@ -36,6 +45,10 @@ namespace ControlWrappers
             "Dec"
         };
 
+        /// <summary>
+        /// The list of short day of week names used if the editor type
+        /// is <c>DaysOfWeek</c>.
+        /// </summary>
         private static readonly string[] DOWS = 
         {
             "Sun",
@@ -47,11 +60,23 @@ namespace ControlWrappers
             "Sat"
         };
 
+        /// <summary>
+        /// The data model for the list control.
+        /// </summary>
         private ListStore listStore;
+        /// <summary>
+        /// The type of editor being constructed.
+        /// </summary>
         private CronValueType valueType = CronValueType.Minutes;
 
+        /// <summary>
+        /// Event fired when the value of the cron editor has changed.
+        /// </summary>
         public event EventHandler Changed;
-        
+
+        /// <summary>
+        /// Constructs a new CronValueEditor control.
+        /// </summary>
         public CronValueEditor()
         {
             this.Build();
@@ -59,6 +84,10 @@ namespace ControlWrappers
             SetUpTreeListControl();
         }
 
+        /// <summary>
+        /// Helper method to notify subscribers when the value of the cron editor
+        /// has changed.
+        /// </summary>
         private void NotifyChanged()
         {
             EventHandler handler = Changed;
@@ -69,12 +98,22 @@ namespace ControlWrappers
             }
         }
 
+        /// <value>
+        /// The list of cron specifications that matches the settings in the
+        /// control.
+        /// </value>
         public ArrayList SpecificationList
         {
             get { return CreateSpecification(); }
             set { SetCronEditorValues(value); }
         }
 
+        /// <summary>
+        /// Sets up the control to reflect the specified cron array list.
+        /// </summary>
+        /// <param name="cronSpecs">
+        /// An array of CronValues.
+        /// </param>
         private void SetCronEditorValues(ArrayList cronSpecs)
         {
             TreeIter iter = TreeIter.Zero;
@@ -87,7 +126,21 @@ namespace ControlWrappers
             }
         }
 
-        private bool IsValueEffective(ArrayList cronSpecs, int val)
+        /// <summary>
+        /// Check to see if specified value is 'effective' with respect to the
+        /// cron specification array.
+        /// </summary>
+        /// <param name="cronSpecs">
+        /// The array of CronValue specifications to check against.
+        /// </param>
+        /// <param name="val">
+        /// The value to check the effectiveness of.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the value is effective with respect to the array of
+        /// cron values.
+        /// </returns>
+        private static bool IsValueEffective(ArrayList cronSpecs, int val)
         {
             bool effective = false;
             
@@ -104,13 +157,14 @@ namespace ControlWrappers
             return effective;
         }
 
-//        [
-//         System.ComponentModel.Browsable(true),
-//         System.ComponentModel.Category("Fancy Category"),
-//         System.ComponentModel.DefaultValue(CronValueType.Minutes),
-//         System.ComponentModel.Description("The type of cron values to display"),
-//         System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Content)
-//         ]
+        /// <value>
+        /// The type of editor to construct.
+        /// </value>
+        /// <remarks>
+        /// This should be a CronValueType, but the stupid property editor in the
+        /// IDE won't recognize it as a valid property, so we are using the integer value
+        /// of the enumeration instead. Hack.
+        /// </remarks>
         [DefaultValue(0)]
         public int ValueType
         {
@@ -144,6 +198,10 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list items to reflect the type of editor we are going
+        /// to be presenting.
+        /// </summary>
         private void SetUpCronValues()
         {
             // First, get rid of everything.
@@ -173,6 +231,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list to display minutes.
+        /// </summary>
         private void SetUpMinutes()
         {
             for (int i=0; i<60; i++)
@@ -181,6 +242,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list to display hours.
+        /// </summary>
         private void SetUpHours()
         {
             for (int i=0; i<24; i++)
@@ -189,6 +253,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list to display days.
+        /// </summary>
         private void SetUpDays()
         {
             for (int i=1; i<32; i++)
@@ -197,6 +264,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list to display months.
+        /// </summary>
         private void SetUpMonths()
         {
             for (int i=1; i<=12; i++)
@@ -205,6 +275,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the list to display days of week.
+        /// </summary>
         private void SetUpDaysOfWeek()
         {
             for (int i=0; i<DOWS.Length; i++)
@@ -213,6 +286,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Sets up the basic look/feel of the list control.
+        /// </summary>
         private void SetUpTreeListControl()
         {
             listStore = new ListStore(GLib.GType.Boolean, GLib.GType.String, GLib.GType.Int);
@@ -236,6 +312,13 @@ namespace ControlWrappers
             SetUpCronValues();
         }
 
+        /// <summary>
+        /// Sets all the toggles in the check list box to the specified boolean
+        /// value.
+        /// </summary>
+        /// <param name="setCheck">
+        /// <c>true</c> if the items are to be all checked.
+        /// </param>
         private void SetCheckCBList(bool setCheck)
         {
             TreeIter iter = TreeIter.Zero;
@@ -248,23 +331,53 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Signal handler for a click of the Select All button.
+        /// </summary>
+        /// <param name="sender">
+        /// Reference to the Select All button.
+        /// </param>
+        /// <param name="e">
+        /// Reference to the event arguments.
+        /// </param>
         protected virtual void SelectAllActivated (object sender, System.EventArgs e)
         {
             SetCheckCBList(true);
             NotifyChanged();
         }
 
+        /// <summary>
+        /// Signal handler for click of the Clear button.
+        /// </summary>
+        /// <param name="sender">
+        /// Reference to the Clear button
+        /// </param>
+        /// <param name="e">
+        /// Reference to the event arguments.
+        /// </param>
         protected virtual void ClearActivated (object sender, System.EventArgs e)
         {
             SetCheckCBList(false);
             NotifyChanged();
         }
 
+        /// <summary>
+        /// Signal handler for cursor change in tree list.
+        /// </summary>
+        /// <param name="sender">
+        /// Reference to the tree list.
+        /// </param>
+        /// <param name="e">
+        /// Reference to the event arguments.
+        /// </param>
         protected virtual void TreeListCursorChanged (object sender, System.EventArgs e)
         {
             ToggleValue();
         }
 
+        /// <summary>
+        /// Toggles the check box on the currently selected tree list item.
+        /// </summary>
         private void ToggleValue()
         {
             TreeModel model = null;
@@ -279,6 +392,12 @@ namespace ControlWrappers
             NotifyChanged();
         }
 
+        /// <summary>
+        /// Constructs an array of cron values from the current settings of the control.
+        /// </summary>
+        /// <returns>
+        /// An array cron values representing the current settings of the control.
+        /// </returns>
         private ArrayList CreateSpecification()
         {
             ArrayList al = null;
@@ -308,7 +427,22 @@ namespace ControlWrappers
 
             return al;
         }
-        
+
+        /// <summary>
+        /// Constructs an array of cron values from the current settings of the control.
+        /// </summary>
+        /// <param name="valueIndex">
+        /// The index of the value column of the tree list store.
+        /// </param>
+        /// <param name="wildcardPattern">
+        /// The cron value pattern which indicates that the value represents all possible values.
+        /// </param>
+        /// <param name="creator">
+        /// The factory method that creates CronValues of the appropriate type.
+        /// </param>
+        /// <returns>
+        /// An array cron values representing the current settings of the control.
+        /// </returns>
         private ArrayList CreateSpecification(int valueIndex, string wildcardPattern, CronValueFactory.CronValueCreator creator)
         {
             ArrayList specArray = new ArrayList();

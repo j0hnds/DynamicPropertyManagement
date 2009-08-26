@@ -7,13 +7,13 @@ namespace CronUtils
     /// <summary>
     /// Abstract base implementation of a CronValue.
     /// </summary>
-    /// <description>
+    /// <remarks>
     /// The point of this class is to
     /// define a set of limits between which a cron value must exist. For example, if
     /// the Cron Value represents a minute, the lower limit would be 0 and the upper
     /// limit would be 59. But if the Cron Value represented an hour, the lower and
     /// upper limits would be 0 and 23 respectively.    
-    /// </description>
+    /// </remarks>
     public abstract class CronValueBase
     {
         // The lower acceptable limit for values
@@ -83,16 +83,26 @@ namespace CronUtils
             return namedValue;
         }
 
+        /// <value>
+        /// The lower acceptable limit for values of this type.
+        /// </value>
         public int LowerLimit
         {
             get { return this.lowerLimit; }
         }
 
+        /// <value>
+        /// The upper acceptable limit for values of this type.
+        /// </value>
         public int UpperLimit
         {
             get { return this.upperLimit; }
         }
 
+        /// <value>
+        /// An array of names for the values. It is assumed that the names array
+        /// will be indexed by the raw value.
+        /// </value>
         public string[] Names
         {
             get { return this.names; }

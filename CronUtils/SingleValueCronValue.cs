@@ -7,10 +7,10 @@ namespace CronUtils
     /// <summary>
     /// Provides the implementation of a single Cron Value.
     /// </summary>
-    /// <description>
+    /// <remarks>
     /// This type of Cron Value allows the definition of a single value against 
     /// which tested values are deemed to be effective.
-    /// </description>
+    /// </remarks>
     public class SingleValueCronValue : CronValueBase, CronEffectiveValue
     {
         // The single value that represents an effective value
@@ -48,6 +48,13 @@ namespace CronUtils
             this.singleValue = singleValue;
         }
 
+        /// <value>
+        /// The value.
+        /// </value>
+        /// <remarks>
+        /// The value must fall within the upper and lower limits for a
+        /// cron value of the type.
+        /// </remarks>
         public int SingleValue
         {
             get { return this.singleValue; }

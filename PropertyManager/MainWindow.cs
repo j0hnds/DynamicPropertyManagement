@@ -7,18 +7,48 @@ using log4net;
 using PropertyManager;
 using STUtils;
 
+/// <summary>
+/// The main window for the PropertyManager application.
+/// </summary>
 public partial class MainWindow: Gtk.Window
 {
+    /// <summary>
+    /// Name of configuration item to determine if SQL should be displayed.
+    /// </summary>
     private const string DISPLAY_SQL_CFG = "DisplaySQL";
+    /// <summary>
+    /// Name of configuration item to determine if data base should actually be updated.
+    /// </summary>
     private const string UPDATE_DB_CFG = "UpdateDB";
-    
+
+    /// <summary>
+    /// Wrapper class for the main summary text area.
+    /// </summary>
     private MainTextViewControl mainTextViewCtl;
+    /// <summary>
+    /// The logger for this class.
+    /// </summary>
     private ILog log;
+    /// <summary>
+    /// Wrapper class for the application list control.
+    /// </summary>
     private ApplicationListControl applicationListCtl;
+    /// <summary>
+    /// Wrapper class for the property list control
+    /// </summary>
     private PropertyListControl propertyListCtl;
+    /// <summary>
+    /// Wrapper class for the form list control.
+    /// </summary>
     private FormListControl formListCtl;
+    /// <summary>
+    /// Wrapper class for the dynamic property list control.
+    /// </summary>
     private DynPropertyListControl dynPropertyListCtl;
-    
+
+    /// <summary>
+    /// Constructs a new MainWindow object.
+    /// </summary>
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
         Build ();
@@ -28,6 +58,13 @@ public partial class MainWindow: Gtk.Window
         mainTextViewCtl = new MainTextViewControl(mainTextView);
     }
 
+    /// <summary>
+    /// Sets up the initial contents of the application.
+    /// </summary>
+    /// <remarks>
+    /// This is separated from the initial application display because we need
+    /// to be logged in prior to displaying the data.
+    /// </remarks>
     public void SetUpApplication()
     {
         SetUpApplicationTree();
@@ -35,18 +72,39 @@ public partial class MainWindow: Gtk.Window
         SetUpFormTree();
         SetUpDynamicPropertyTree();
     }
-    
+
+    /// <summary>
+    /// Signal handler for Delete Event.
+    /// </summary>
+    /// <param name="sender">
+    /// The Delete action.
+    /// </param>
+    /// <param name="a">
+    /// The event arguments.
+    /// </param>
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
     {
         Application.Quit ();
         a.RetVal = true;
     }
 
+    /// <summary>
+    /// Signal handler for the Quit action.
+    /// </summary>
+    /// <param name="sender">
+    /// The Quit action.
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void on_file_quit (object sender, System.EventArgs e)
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Sets up the Property Definition tree.
+    /// </summary>
     protected void SetUpPropertyDefinitionTree()
     {
         propertyListCtl = new PropertyListControl(tvPropertyDefinitions);
@@ -56,6 +114,9 @@ public partial class MainWindow: Gtk.Window
         propertyListCtl.Populate(properties);
     }
 
+    /// <summary>
+    /// Sets up the Dynamic Property tree.
+    /// </summary>
     protected void SetUpDynamicPropertyTree()
     {
         dynPropertyListCtl = new DynPropertyListControl(tvDynamicProperties);
@@ -65,6 +126,9 @@ public partial class MainWindow: Gtk.Window
         dynPropertyListCtl.Populate(applications);
     }
 
+    /// <summary>
+    /// Sets up the Application tree.
+    /// </summary>
     protected void SetUpApplicationTree()
     {
         applicationListCtl = new ApplicationListControl(tvApplications);
@@ -76,6 +140,9 @@ public partial class MainWindow: Gtk.Window
             
     }
 
+    /// <summary>
+    /// Sets up the Form tree.
+    /// </summary>
     protected void SetUpFormTree()
     {
         formListCtl = new FormListControl(tvForms);
@@ -85,6 +152,15 @@ public partial class MainWindow: Gtk.Window
         formListCtl.Populate(forms);
     }
 
+    /// <summary>
+    /// Signal handler for cursor change in Application list.
+    /// </summary>
+    /// <param name="sender">
+    /// The application list control
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void ApplicationCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = applicationListCtl.GetSelectedDomain();
@@ -96,6 +172,15 @@ public partial class MainWindow: Gtk.Window
         HandleToolBarSensitivity();
     }
 
+    /// <summary>
+    /// Signal handler for cursor change in Property Definition tree.
+    /// </summary>
+    /// <param name="sender">
+    /// The property definition tree control
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void PropertyDefinitionCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = propertyListCtl.GetSelectedDomain();
@@ -117,6 +202,15 @@ public partial class MainWindow: Gtk.Window
         HandlePropertyDefinitionToolBarSensitivity();
     }
 
+    /// <summary>
+    /// Signal handler for cursor change in Dynamic Property tree control.
+    /// </summary>
+    /// <param name="sender">
+    /// The Dynamic Property tree control
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void DynamicPropertyCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = dynPropertyListCtl.GetSelectedDomain();
@@ -140,6 +234,15 @@ public partial class MainWindow: Gtk.Window
     }
 
 
+    /// <summary>
+    /// Signal handler for cursor change in Form tree control.
+    /// </summary>
+    /// <param name="sender">
+    /// The form tree control
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void FormCursorChanged (object sender, System.EventArgs e)
     {
         Domain domain = formListCtl.GetSelectedDomain();
@@ -151,6 +254,10 @@ public partial class MainWindow: Gtk.Window
         HandleToolBarSensitivity();
     }
 
+    /// <summary>
+    /// Helper method to handle the sensitivity of the toolbar items with respect
+    /// to a change in the Application tree control.
+    /// </summary>
     private void HandleApplicationToolBarSensitivity()
     {
         bool somethingSelected = applicationListCtl.IsSelected;
@@ -160,6 +267,10 @@ public partial class MainWindow: Gtk.Window
         PropertiesAction.Sensitive = somethingSelected;
     }
 
+    /// <summary>
+    /// Helper method to handle the sensitivity of tool bar items with
+    /// respect to a change in selection on the Property Definition tree.
+    /// </summary>
     private void HandlePropertyDefinitionToolBarSensitivity()
     {
         switch (propertyListCtl.SelectedLevel)
@@ -184,6 +295,10 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Helper method to handle the sensitivity of tool bar items with respect
+    /// to a change in selection in the Dynamic Property tree control.
+    /// </summary>
     private void HandleDynamicPropertyToolBarSensitivity()
     {
         switch (dynPropertyListCtl.SelectedLevel)
@@ -214,6 +329,10 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Helper method to handle the sensitivity of tool bar items with respect
+    /// to selection changes in the Form tree control.
+    /// </summary>
     private void HandleFormToolBarSensitivity()
     {
         bool somethingSelected = formListCtl.IsSelected;
@@ -223,6 +342,9 @@ public partial class MainWindow: Gtk.Window
         PropertiesAction.Sensitive = somethingSelected;
     }
 
+    /// <summary>
+    /// Helper method to handle the default sensitivity of tool bar items.
+    /// </summary>
     private void HandleNoopToolBarSensitivity()
     {
         AddAction.Sensitive = false;
@@ -230,6 +352,9 @@ public partial class MainWindow: Gtk.Window
         PropertiesAction.Sensitive = false;
     }
 
+    /// <summary>
+    /// Helper method to generally handle the sensitivity of tool bar items.
+    /// </summary>
     private void HandleToolBarSensitivity()
     {
         // Determine the current notebook page...
@@ -259,6 +384,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Adds a new application.
+    /// </summary>
     private void AddApplication()
     {
         // Create a new Application domain
@@ -283,6 +411,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Adds a new Property Definition.
+    /// </summary>
     private void AddPropertyDefinition()
     {
         // Create a new Application domain
@@ -310,6 +441,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Adds a new Form
+    /// </summary>
     private void AddForm()
     {
         log.Debug("Adding new form");
@@ -335,6 +469,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Adds a new Dynamic Property.
+    /// </summary>
     private void AddDynamicProperty()
     {
         log.Debug("Adding new Dynamic Property");
@@ -360,6 +497,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Edits the selected application.
+    /// </summary>
     private void EditApplication()
     {
         // Need to get the selected domain
@@ -387,6 +527,9 @@ public partial class MainWindow: Gtk.Window
         log.DebugFormat("Application Name: {0}", domain.GetValue("Name"));
     }
 
+    /// <summary>
+    /// Edits the selected Property Definition.
+    /// </summary>
     private void EditPropertyDefinition()
     {
         // Need to get the selected domain
@@ -413,6 +556,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Edits the selected Form
+    /// </summary>
     private void EditForm()
     {
         log.Debug("Editing form");
@@ -440,6 +586,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Edits the selected Dynamic Property.
+    /// </summary>
     private void EditDynamicProperty()
     {
         log.Debug("Editing dynamic property");
@@ -467,6 +616,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Removes the selected application.
+    /// </summary>
     private void RemoveApplication()
     {
         // Need to get the selected domain
@@ -509,6 +661,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Removes the selected Property Definition.
+    /// </summary>
     private void RemovePropertyDefinition()
     {
         // Need to get the selected domain
@@ -551,6 +706,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Removes the selected form.
+    /// </summary>
     private void RemoveForm()
     {
         log.Debug("Removing form");
@@ -594,6 +752,9 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Removes the selected Dynamic Property.
+    /// </summary>
     private void RemoveDynamicProperty()
     {
         log.Debug("Removing Dynamic Property");
@@ -637,6 +798,15 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Signal handler for activation of Add Item Action.
+    /// </summary>
+    /// <param name="sender">
+    /// The Add Item action.
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void AddItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Add a new item to the current item");
@@ -665,6 +835,15 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Signal handler for activation of Remove Item action.
+    /// </summary>
+    /// <param name="sender">
+    /// The Remove Item action.
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void RemoveItemAction (object sender, System.EventArgs e)
     {
         log.Debug("Remove the selected item.");
@@ -693,6 +872,15 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Signal handler for the activation of the Item Property action.
+    /// </summary>
+    /// <param name="sender">
+    /// The Item Property action.
+    /// </param>
+    /// <param name="e">
+    /// The event arguments.
+    /// </param>
     protected virtual void ItemPropertyAction (object sender, System.EventArgs e)
     {
         log.Debug("Edit the selected item.");
@@ -721,6 +909,15 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
+    /// <summary>
+    /// Signal handler for a notebook switch page action.
+    /// </summary>
+    /// <param name="o">
+    /// The notebook widget.
+    /// </param>
+    /// <param name="args">
+    /// The event arguments.
+    /// </param>
     protected virtual void SwitchPageAction (object o, Gtk.SwitchPageArgs args)
     {
         HandleToolBarSensitivity();

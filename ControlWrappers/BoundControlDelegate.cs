@@ -7,22 +7,61 @@ using DomainCore;
 namespace ControlWrappers
 {
     
-    
+    /// <summary>
+    /// A helper class to which bound controls can delegate to handle the common
+    /// functionality of data bound controls.
+    /// </summary>
     public class BoundControlDelegate : BoundControl
     {
+        /// <summary>
+        /// The data bound widget that is delegating work to us.
+        /// </summary>
         private Widget widget;
+        /// <summary>
+        /// The name of the attribute on the domain object to which this control
+        /// should be bound.
+        /// </summary>
         private string attributeName;
+        /// <summary>
+        /// The name of the DataContext to which this control should be bound.
+        /// </summary>
         private string contextName;
+        /// <summary>
+        /// The name of the domain object to which this control should be bound.
+        /// </summary>
         private string domainName;
+        /// <summary>
+        /// Reference to the data context to which we are connected.
+        /// </summary>
         private DataContext context;
+        /// <summary>
+        /// The logger we will be using to log information about the data binding
+        /// process.
+        /// </summary>
         private ILog log;
-        
+
+        /// <summary>
+        /// Constructs a new BoundControlDelegate object.
+        /// </summary>
+        /// <param name="widget">
+        /// The widget for which we are the delegate for data binding.
+        /// </param>
         public BoundControlDelegate(Widget widget)
         {
             log = LogManager.GetLogger(GetType());
             this.widget = widget;
         }
 
+        /// <summary>
+        /// Signal handler for ContextChange events issued by the data context to which
+        /// we are connected.
+        /// </summary>
+        /// <param name="contextName">
+        /// The name of the data context that changed.
+        /// </param>
+        /// <param name="itemName">
+        /// The name of the item on the data context that changed.
+        /// </param>
         private void ContextChangeHandler(string contextName, string itemName)
         {
             ContextChangeHandler handler = ContextChanged;
@@ -33,8 +72,16 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Event issued when a change has occurred on the data context
+        /// to which we are connected.
+        /// </summary>
         public event ContextChangeHandler ContextChanged;
-        
+
+        /// <value>
+        /// The data context to which we are connected. If not already connected,
+        /// will try to connect to the data context.
+        /// </value>
         public DataContext Context
         {
             get 
@@ -59,6 +106,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <value>
+        /// The domain object to which the control is data bound.
+        /// </value>
         public Domain DomainObject
         {
             get
@@ -86,6 +136,9 @@ namespace ControlWrappers
             }
         }
 
+        /// <value>
+        /// The value associated with the data bound domain object.
+        /// </value>
         public object DomainValue
         {
             get
@@ -126,6 +179,16 @@ namespace ControlWrappers
             }
         }
 
+        /// <summary>
+        /// Recursively searches the widget hierarchy for a data context container
+        /// that has the required data context.
+        /// </summary>
+        /// <param name="widget">
+        /// The widget on which to search for the data context.
+        /// </param>
+        /// <returns>
+        /// A reference to the data context if found. Otherwise, return <c>null</c>.
+        /// </returns>
         private DataContext GetContext(Widget widget)
         {
             DataContext context = null;

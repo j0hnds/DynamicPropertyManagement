@@ -5,8 +5,10 @@ using ControlWrappers;
 namespace PropertyManager
 {
     
-    
-    public partial class FormEntryDlg : DataBoundDialog // Gtk.Dialog
+    /// <summary>
+    /// Dialog class that supports adding/modifying form objects.
+    /// </summary>
+    public partial class FormEntryDlg : DataBoundDialog
     {
         
         public FormEntryDlg()

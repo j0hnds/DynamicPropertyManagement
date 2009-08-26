@@ -7,16 +7,19 @@ using DAOCore;
 namespace PropertyManager
 {
     
-    
-    public partial class PropertyDefinitionEntryDlg : DataBoundDialog // Gtk.Dialog
+    /// <summary>
+    /// Dialog class to support addition/modification of Property Definition objects.
+    /// </summary>
+    public partial class PropertyDefinitionEntryDlg : DataBoundDialog
     {
 
+        /// <summary>
+        /// Constructs a new PropertyDefinitionEntryDlg.
+        /// </summary>
         public PropertyDefinitionEntryDlg()
         {
             this.Build();
 
-//            DomainDAO dao = DomainFactory.GetDAO("DataType");
-//
         }
 
         protected override DataContext CreateDataContext ()

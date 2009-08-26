@@ -5,7 +5,10 @@ using Antlr.StringTemplate;
 namespace STUtils
 {
     
-    
+    /// <summary>
+    /// An IAttributeRenderer used to generate a custom date format
+    /// suitable for our application.
+    /// </summary>
     public class DateRenderer : IAttributeRenderer
     {
 

@@ -7,6 +7,10 @@ using ControlWrappers;
 
 namespace PropertyManager
 {
+    /// <summary>
+    /// Enumeration of the different levels that can be selected in the
+    /// effective value tree.
+    /// </summary>
     public enum EffectiveDateLevels 
     {
         None,
@@ -15,11 +19,24 @@ namespace PropertyManager
         ValueCriteria
     }
     
-    
+
+    /// <summary>
+    /// Wrapper class to provide custom functionality for the
+    /// effective value TreeView.
+    /// </summary>
     public class EffectiveDateListControl : BaseTreeControl
     {
+        /// <summary>
+        /// The model for this TreeView.
+        /// </summary>
         private TreeStore treeStore;
-        
+
+        /// <summary>
+        /// Constructs a new EffectiveDateListControl wrapper object.
+        /// </summary>
+        /// <param name="widget">
+        /// The TreeView to be wrapped.
+        /// </param>
         public EffectiveDateListControl(Widget widget) :
             base(widget)
         {
@@ -36,12 +53,22 @@ namespace PropertyManager
             ((TreeView) widget).Model = treeStore;
         }
 
+        /// <value>
+        /// The DynamicProperty at the root of this TreeView.
+        /// </value>
         public Domain DynamicProperty
         {
             get { return ((TreeView) widget).Data["Domain"] as Domain; }
             set { ((TreeView) widget).Data["Domain"] = value; }
         }
 
+        /// <summary>
+        /// Retrieves the domain object that is represented by the currently
+        /// selected row in the TreeView.
+        /// </summary>
+        /// <returns>
+        /// The domain object represented by the currently selected row.
+        /// </returns>
         public override Domain GetSelectedDomain()
         {
             Domain selectedDomain = null;
@@ -72,6 +99,13 @@ namespace PropertyManager
             return selectedDomain;
         }
 
+        /// <summary>
+        /// Retrieves the domain object that is the parent of the currently
+        /// selected row in the TreeView.
+        /// </summary>
+        /// <returns>
+        /// The domain object that is the parent of the selected row.
+        /// </returns>
         public virtual Domain GetSelectedDomainParent()
         {
             Domain selectedDomain = null;
@@ -105,6 +139,10 @@ namespace PropertyManager
 
             return selectedDomain;
         }
+
+        /// <value>
+        /// The currently selected level of the TreeView.
+        /// </value>
         public EffectiveDateLevels SelectedLevel
         {
             get
@@ -147,6 +185,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Adds a new effective date domain object to the TreeView.
+        /// </summary>
+        /// <param name="effectiveDate">
+        /// The EffectiveValue domain object to add to the TreeView.
+        /// </param>
         public void AddEffectiveDate(Domain effectiveDate)
         {
             // Get the iterator for the top of the tree...
@@ -163,6 +207,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Adds a ValueCriteria domain object to the TreeView.
+        /// </summary>
+        /// <param name="valueCriteria">
+        /// The ValueCriteria domain object to add.
+        /// </param>
         public void AddValueCriteria(Domain valueCriteria)
         {
             // Get the iterator of the select item (effective date)
@@ -180,6 +230,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Populates the tree with the contents of the specified DynamicProperty.
+        /// </summary>
+        /// <param name="dynamicProperty">
+        /// The DynamicProperty from which to populate the TreeView.
+        /// </param>
         public void Populate(Domain dynamicProperty)
         {
             treeStore.Clear();
@@ -206,6 +262,9 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Updates the labels for the selected TreeView item.
+        /// </summary>
         public void UpdateSelected()
         {
             log.Debug("UpdateSelected...");

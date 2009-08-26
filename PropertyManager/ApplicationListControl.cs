@@ -6,10 +6,19 @@ using ControlWrappers;
 namespace PropertyManager
 {
     
-    
+    /// <summary>
+    /// This class provides a wrapper around a TreeView control that
+    /// acts as a list. 
+    /// </summary>
     public class ApplicationListControl : ListControl
     {
-        
+
+        /// <summary>
+        /// Constructs a new ApplicationListControl object.
+        /// </summary>
+        /// <param name="widget">
+        /// The TreeView widget to wrap.
+        /// </param>
         public ApplicationListControl(Widget widget) :
             base(widget)
         {

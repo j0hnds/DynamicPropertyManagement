@@ -7,11 +7,11 @@ namespace CronUtils
     /// <summary>
     /// Provides the implementation of a range Cron Value.
     /// </summary>
-    /// <description>
+    /// <remarks>
     /// This type of Cron Value allows the definition of a lower and upper limit 
     /// between which tested values are deemed to be effective. The inclusion test 
     /// is inclusive to the end points of the range definition.    
-    /// </description>
+    /// </remarks>
     public class RangeCronValue : CronValueBase, CronEffectiveValue
     {
         // The lower value of the range
@@ -61,10 +61,24 @@ namespace CronUtils
             this.rangeUpper = rangeUpper;
         }
 
+        /// <value>
+        /// The lower value of the range.
+        /// </value>
+        /// <remarks>
+        /// This value must fall within the upper and lower limits associated
+        /// with the type of cron value.
+        /// </remarks>
         public int RangeLower {
             get { return this.rangeLower; }
         }
 
+        /// <value>
+        /// The upper value of the range.
+        /// </value>
+        /// <remarks>
+        /// This value must fall within the upper and lower limits associated
+        /// with the type of cron value.
+        /// </remarks>
         public int RangeUpper {
             get { return this.rangeUpper; }
         }
@@ -72,7 +86,6 @@ namespace CronUtils
         #region CronEffectiveValue implementation
         public bool IsEffective (int value)
         {
-            // throw new System.NotImplementedException();
             return RangeLower <= value && value <= RangeUpper;
         }
 

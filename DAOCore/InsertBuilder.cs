@@ -7,11 +7,24 @@ using DomainCore;
 namespace DAOCore
 {
     
-    
+    /// <summary>
+    /// This class is responsible for building SQL INSERT statements for a domain
+    /// object.
+    /// </summary>
     public class InsertBuilder : BuilderBase
     {
-        
-        public InsertBuilder(string tableName, Dictionary<string,string> mappings) :
+
+        /// <summary>
+        /// Constructs a new InsertBuild object.
+        /// </summary>
+        /// <param name="tableName">
+        /// The name of the data base table.
+        /// </param>
+        /// <param name="mappings">
+        /// The domain attribute name DB column mappings.
+        /// </param>
+        public InsertBuilder(string tableName, 
+                             Dictionary<string,string> mappings) :
             base(tableName, mappings)
         {
         }

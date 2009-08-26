@@ -6,8 +6,18 @@ using DomainCore;
 
 namespace PropertyManager
 {
+    /// <summary>
+    /// The Main application class for the Property Manager Application.
+    /// </summary>
     class MainClass
     {
+        /// <summary>
+        /// Configures the domain factory for this application.
+        /// </summary>
+        /// <remarks>
+        /// This tells the factory where to look for domain objects and their
+        /// associated DAO objects.
+        /// </remarks>
         private static void ConfigureDomainFactory()
         {
             ILog log = LogManager.GetLogger(typeof(MainClass));
@@ -32,6 +42,12 @@ namespace PropertyManager
             log.Debug("Done configuring Domain Factory");
         }
 
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        /// <param name="args">
+        /// The command line arguments.
+        /// </param>
         public static void Main (string[] args)
         {
             ILog log = LogManager.GetLogger(typeof(MainClass));

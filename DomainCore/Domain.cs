@@ -7,6 +7,10 @@ using System.Collections.Generic;
 
 namespace DomainCore
 {
+    /// <summary>
+    /// This delegate is used by subscribers to register interest in AttributeValueChanged
+    /// events.
+    /// </summary>
     public delegate void AttributeValueChangeHandler(string attributeName, object oldValue, object newValue);
     
     /// <summary>
@@ -237,50 +241,206 @@ namespace DomainCore
             return ci.Invoke(args) as DomainDAO;
         }
     }
-    
+
+    /// <summary>
+    /// Defines the interface a DAO must have to support data access methods
+    /// for a domain object.
+    /// </summary>
     public interface DomainDAO 
     {
+        /// <summary>
+        /// Constructs the SQL DELETE statement for the domain object.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object for which to construct the DELETE statement.
+        /// </param>
+        /// <returns>
+        /// SQL DELETE statement for the domain object.
+        /// </returns>
         string DeleteSQL(Domain obj);
+        /// <summary>
+        /// Constructs the SQL INSERT statement for the domain object.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object for which to construct the INSERT statement.
+        /// </param>
+        /// <returns>
+        /// SQL INSERT statement for the domain object.
+        /// </returns>
         string InsertSQL(Domain obj);
+        /// <summary>
+        /// Constructs the SQL UPDATE statement for the domain object.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object for which to construct the UPDATE statement.
+        /// </param>
+        /// <returns>
+        /// SQL UPDATE statement for the domain object.
+        /// </returns>
         string UpdateSQL(Domain obj);
+        /// <summary>
+        /// Performs the actual DELETE on the domain object on the backing store.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object to delete.
+        /// </param>
         void Delete(Domain obj);
+        /// <summary>
+        /// Performs the actual INSERT on the domain object on the backing store.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object to insert.
+        /// </param>
         void Insert(Domain obj);
+        /// <summary>
+        /// Performs the actual UPDATE on the domain object on the backing store.
+        /// </summary>
+        /// <param name="obj">
+        /// Reference to the domain object to update.
+        /// </param>
         void Update(Domain obj);
+        /// <summary>
+        /// Returns a domain object from backing store by specifying the unique identifier.
+        /// </summary>
+        /// <param name="id">
+        /// The unique identifier of the domain object.
+        /// </param>
+        /// <returns>
+        /// The domain object returned from backing store.
+        /// </returns>
         Domain GetObject(object id);
+        /// <summary>
+        /// Returns a list of domain objects based on the parameters passed in.
+        /// </summary>
+        /// <param name="argsRest">
+        /// The optional list of parameters to send to the method.
+        /// </param>
+        /// <returns>
+        /// A list of domain objects that satisfy the arguments.
+        /// </returns>
         List<Domain> Get(params object[] argsRest);
     }
 
+    /// <summary>
+    /// The methods and properties required of a domain attribute.
+    /// </summary>
     public interface Attribute
     {
+        /// <value>
+        /// The name of the attribute.
+        /// </value>
         string Name { get; }
+        /// <value>
+        /// The attribute value.
+        /// </value>
         object Value { get; set; }
+        /// <value>
+        /// If <c>true</c>, the value of the attribute has changed since the
+        /// last time it was populated.
+        /// </value>
         bool Dirty { get; set; }
+        /// <value>
+        /// If <c>true</c>, indicates that this attribute is the unique identifier
+        /// of the domain object.
+        /// </value>
         bool Id { get; }
+        /// <value>
+        /// If <c>true</c>, indicates that the values of attributes are being populated.
+        /// </value>
         bool Populating { get; }
+        /// <value>
+        /// If <c>true</c>, indicates that the attribute value is considered to be "empty".
+        /// </value>
         bool Empty { get; }
+        /// <summary>
+        /// Reverts the value of the attribute to the last-saved-value.
+        /// </summary>
         void Revert();
     }
 
+    /// <summary>
+    /// Defines the required interface of a domain relationship.
+    /// </summary>
     public interface Relationship
     {
+        /// <value>
+        /// Name of the relationship
+        /// </value>
         string Name { get; }
+        /// <value>
+        /// The collection of related objects not including deleted objects.
+        /// </value>
         List<Domain> CollectedObjects { get; }
+        /// <value>
+        /// If <c>true</c>, indicates that one or more of the related objects in the
+        /// relationship are "Dirty"
+        /// </value>
         bool Dirty { get; }
+        /// <summary>
+        /// Saves the objects in the relationship.
+        /// </summary>
+        /// <param name="parentId">
+        /// The unique identifier of the owner of the relationship to make
+        /// sure that the child objects have the parent object id.
+        /// </param>
         void Save(object parentId);
+        /// <summary>
+        /// Creates the SQL statements that would be issued if the relationship
+        /// were to be saved.
+        /// </summary>
+        /// <param name="parentId">
+        /// The unique identifier of the owner of the relationship.
+        /// </param>
+        /// <returns>
+        /// SQL statement(s) necessary to perform and required persistence of the
+        /// objects in the relationship.
+        /// </returns>
         string SaveSQL(object parentId);
+        /// <summary>
+        /// Reverts the collection and any collected objects in the relationship.
+        /// </summary>
         void Revert();
     }
 
-    
+
+    /// <summary>
+    /// A domain object is essentially the same as a value object except that
+    /// it incorporates a certain amount of intelligence about itself and its
+    /// surrounding objects.
+    /// </summary>
     public class Domain
     {
-        // The data access object associated with this domain object.
+        /// <summary>
+        /// The data access object associated with this domain object.
+        /// </summary>
         private DomainDAO dao;
+        /// <summary>
+        /// If <c>true</c>, indicates that this object has not yet been saved to
+        /// backing store.
+        /// </summary>
         private bool newObject;
+        /// <summary>
+        /// If <c>true</c>, indicates that this object has been marked for deletion
+        /// from backing store.
+        /// </summary>
         private bool forDelete;
+        /// <summary>
+        /// A map of the attributes associated with this domain. The key to
+        /// the map is the name of the attribute.
+        /// </summary>
         private Dictionary<string,Attribute> attributes;
+        /// <summary>
+        /// A map of the relationships associated with this domain. The key to
+        /// the map is the name of the relationship.
+        /// </summary>
         private Dictionary<string,Relationship> relationships;
-        
+
+        /// <summary>
+        /// Constructs a new domain object.
+        /// </summary>
+        /// <param name="dao">
+        /// Reference to the DAO for this domain object.
+        /// </param>
         public Domain(DomainDAO dao)
         {
             this.dao = dao;
@@ -290,11 +450,18 @@ namespace DomainCore
             relationships = new Dictionary<string,Relationship>(2);
         }
 
+        /// <value>
+        /// The DAO associated with this domain object.
+        /// </value>
         public DomainDAO DAO
         {
             get { return this.dao; }
         }
 
+        /// <summary>
+        /// Revert the values of the attributes and relationships
+        /// to their state as of the last save.
+        /// </summary>
         public void Revert()
         {
             if (! NewObject)
@@ -316,16 +483,37 @@ namespace DomainCore
             }
         }
 
+        /// <summary>
+        /// Returns the collection of related objects.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the relationship for which to return the objects.
+        /// </param>
+        /// <returns>
+        /// The list of related domain objects.
+        /// </returns>
         public List<Domain> GetCollection(string name)
         {
             return GetRelationship(name).CollectedObjects;
         }
 
+        /// <summary>
+        /// Returns the specified relationship.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the relationship
+        /// </param>
+        /// <returns>
+        /// Reference to the relationship.
+        /// </returns>
         public Relationship GetRelationship(string name)
         {
             return relationships[name];
         }
 
+        /// <summary>
+        /// Marks all the attributes of this domain to be not Dirty.
+        /// </summary>
         public void Clean()
         {
             foreach (Attribute attr in attributes.Values)
@@ -334,43 +522,93 @@ namespace DomainCore
             }
         }
 
+        /// <value>
+        /// If <c>true</c>, indicates that this object has not yet been
+        /// saved to backing store.
+        /// </value>
         public bool NewObject
         {
             get { return newObject; }
             set { newObject = value; }
         }
 
+        /// <value>
+        /// If <c>true</c>, indicates that this object has been marked for deletion
+        /// from backing store.
+        /// </value>
         public bool ForDelete
         {
             get { return forDelete; }
             set { forDelete = value; }
         }
 
+        /// <summary>
+        /// Adds a relationship to this domain.
+        /// </summary>
+        /// <param name="rel">
+        /// The relationship to add.
+        /// </param>
         public void AddRelationship(Relationship rel)
         {
             relationships[rel.Name] = rel;
         }
 
+        /// <summary>
+        /// Adds an attribute to this domain.
+        /// </summary>
+        /// <param name="att">
+        /// The attribute to add.
+        /// </param>
         public void AddAttribute(Attribute att)
         {
             attributes[att.Name] = att;
         }
 
+        /// <summary>
+        /// Retrieves the specified attribute.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the attribute
+        /// </param>
+        /// <returns>
+        /// The attribute of the specified name.
+        /// </returns>
         public Attribute GetAttribute(string name)
         {
             return attributes[name];
         }
 
+        /// <summary>
+        /// Retrieves the value of the specified attribute.
+        /// </summary>
+        /// <param name="attrName">
+        /// The name of the attribute.
+        /// </param>
+        /// <returns>
+        /// The current value of the specified attribute.
+        /// </returns>
         public object GetValue(string attrName)
         {
             return attributes[attrName].Value;
         }
 
+        /// <summary>
+        /// Sets the value of the specified attribute.
+        /// </summary>
+        /// <param name="attrName">
+        /// The name of the attribute.
+        /// </param>
+        /// <param name="value">
+        /// The value to which the attribute should be set.
+        /// </param>
         public void SetValue(string attrName, object value)
         {
             attributes[attrName].Value = value;
         }
 
+        /// <value>
+        /// If <c>true</c>, indicates that at least one attribute is Dirty.
+        /// </value>
         private bool AttributesDirty
         {
             get
@@ -390,6 +628,10 @@ namespace DomainCore
             }
         }
 
+        /// <value>
+        /// If <c>true</c>, indicates that the state of the domain object
+        /// requires saving.
+        /// </value>
         public bool Dirty 
         {
             get
@@ -423,6 +665,9 @@ namespace DomainCore
             }
         }
 
+        /// <value>
+        /// The map of attribute on the domain.
+        /// </value>
         public Dictionary<string,Attribute> Attributes
         {
             get
@@ -431,6 +676,9 @@ namespace DomainCore
             }
         }
 
+        /// <value>
+        /// The attribute marked as the Id attribute for the domain.
+        /// </value>
         public Attribute IdAttribute
         {
             get
@@ -450,6 +698,9 @@ namespace DomainCore
             }
         }
 
+        /// <summary>
+        /// Saves the state of the domain object to the backing store.
+        /// </summary>
         public void Save()
         {
             // Only do something if it is necessary
@@ -482,6 +733,13 @@ namespace DomainCore
             }
         }
 
+        /// <summary>
+        /// Returns the SQL that would be issued if the state of the object were to
+        /// be saved to backing store.
+        /// </summary>
+        /// <returns>
+        /// SQL statement(s) required to save the domain object to backing store.
+        /// </returns>
         public string SaveSQL()
         {
             StringBuilder sql = new StringBuilder();

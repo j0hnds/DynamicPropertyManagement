@@ -7,18 +7,48 @@ using Gtk;
 namespace ControlWrappers
 {
     
-    
+    /// <summary>
+    /// Custom Gtk control which provides domain data binding to a combo box.
+    /// </summary>
     [System.ComponentModel.ToolboxItem(true)]
     public partial class BoundComboBox : Gtk.Bin, BoundControl
     {
+        /// <summary>
+        /// A delegate to handle data binding duties.
+        /// </summary>
         private BoundControlDelegate bcd;
+        /// <summary>
+        /// The index of the model column that holds the id of the selectable
+        /// object.
+        /// </summary>
         private const int ID_COLUMN = 1;
+        /// <summary>
+        /// The index of the model column that holds the label of the selectable
+        /// object.
+        /// </summary>
         private const int LABEL_COLUMN = 0;
+        /// <summary>
+        /// The model for the combo box.
+        /// </summary>
         private ListStore listStore;
+        /// <summary>
+        /// The name of the collection to use to populate the combo box.
+        /// </summary>
         private string collectionName;
+        /// <summary>
+        /// The name of the attribute on the collection items that identify the value to
+        /// use for the label column of the model.
+        /// </summary>
         private string labelAttributeName;
+        /// <summary>
+        /// The name of the attribute on the collection items that identify the id value
+        /// to use for the id column of the model.
+        /// </summary>
         private string valueAttributeName;
-        
+
+        /// <summary>
+        /// Constructs a new BoundComboBox.
+        /// </summary>
         public BoundComboBox()
         {
             this.Build();
@@ -31,37 +61,76 @@ namespace ControlWrappers
             cbBound.Model = listStore;
         }
 
+        /// <summary>
+        /// Event fired when the selected value of the combo box has changed.
+        /// </summary>
         public event EventHandler Changed;
 
+        /// <value>
+        /// The name of the attribute on the collection items that identify the value to
+        /// use for the label column of the model.
+        /// </value>
         public string CollectionName
         {
             get { return collectionName; }
             set { collectionName = value; }
         }
 
+        /// <value>
+        /// The name of the attribute on the collection items that identify the value to
+        /// use for the label column of the model.
+        /// </value>
         public string LabelAttributeName
         {
             get { return labelAttributeName; }
             set { labelAttributeName = value; }
         }
 
+        /// <value>
+        /// The name of the attribute on the collection items that identify the id value
+        /// to use for the id column of the model.
+        /// </value>
         public string ValueAttributeName
         {
             get { return valueAttributeName; }
             set { valueAttributeName = value; }
         }
-        
+
+        /// <summary>
+        /// Signal handler for context change.
+        /// </summary>
+        /// <param name="contextName">
+        /// The name of the data context that changed.
+        /// </param>
+        /// <param name="itemName">
+        /// The name of the item on the data context that changed.
+        /// </param>
         private void ContextChangeHandler(string contextName, string itemName)
         {
             SetFromContext();
         }
 
+        /// <summary>
+        /// Signal handler for the selected value to change.
+        /// </summary>
+        /// <param name="sender">
+        /// The combo box control
+        /// </param>
+        /// <param name="e">
+        /// Referece to the event arguments.
+        /// </param>
         protected virtual void BoundComboValueChanged (object sender, System.EventArgs e)
         {
             SetToContext();
             PropagateChangedEvent(e);
         }
 
+        /// <summary>
+        /// Helper method to notify subscribers to the Change event.
+        /// </summary>
+        /// <param name="e">
+        /// Reference to the event arguments.
+        /// </param>
         private void PropagateChangedEvent(System.EventArgs e)
         {
             EventHandler handler = Changed;
@@ -72,6 +141,10 @@ namespace ControlWrappers
             }
         }
 
+        /// <value>
+        /// Readonly property to retrieve the ID of the currently selected
+        /// combo box item. -1L if nothing is selected.
+        /// </value>
         public long ActiveId
         {
             get 
@@ -87,6 +160,10 @@ namespace ControlWrappers
             }
         }
 
+        /// <value>
+        /// Readonly property to retrieve the label of the currently selected
+        /// combo box item. <c>null</c> if nothing is selected.
+        /// </value>
         public string ActiveLabel
         {
             get 

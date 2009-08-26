@@ -10,8 +10,17 @@ namespace DAOCore
     /// </summary>
     public class DAOUtils
     {
+        /// <summary>
+        /// Constant for SQL NULL value.
+        /// </summary>
         private const string NULL_VALUE = "NULL";
+        /// <summary>
+        /// Constant for a SQL single-quote value.
+        /// </summary>
         private const string SINGLE_QUOTE = "'";
+        /// <summary>
+        /// Constant for a two SQL single-quotes.
+        /// </summary>
         private const string DOUBLE_QUOTE = "''";
         
         /// <summary>

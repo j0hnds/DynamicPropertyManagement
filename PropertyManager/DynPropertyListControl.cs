@@ -7,6 +7,10 @@ using DomainCore;
 
 namespace PropertyManager
 {
+    /// <summary>
+    /// An enumeration of the different levels in the Dynamic Property
+    /// control tree.
+    /// </summary>
     public enum DynamicPropertyLevels 
     {
         None,
@@ -14,11 +18,24 @@ namespace PropertyManager
         Category,
         Property
     }
-    
+
+    /// <summary>
+    /// A specialized TreeView control to handle the display and operation of the
+    /// Dynamic Property TreeView control.
+    /// </summary>
     public class DynPropertyListControl : BaseTreeControl
     {
+        /// <summary>
+        /// The model used for this tree.
+        /// </summary>
         private TreeStore treeStore;
-        
+
+        /// <summary>
+        /// Constructs a new DynPropertyListControl wrapper.
+        /// </summary>
+        /// <param name="widget">
+        /// The TreeView control to be wrapped.
+        /// </param>
         public DynPropertyListControl(Widget widget) :
             base(widget)
         {
@@ -35,6 +52,9 @@ namespace PropertyManager
             ((TreeView) widget).Model = treeStore;
         }
 
+        /// <value>
+        /// The level of the tree that is currently selected.
+        /// </value>
         public DynamicPropertyLevels SelectedLevel
         {
             get
@@ -73,6 +93,12 @@ namespace PropertyManager
             }
         }
 
+        /// <summary>
+        /// Populates the TreeView with the list of DynamicProperty domain objects.
+        /// </summary>
+        /// <param name="applications">
+        /// List of DynamicProperty objects.
+        /// </param>
         public void Populate(List<Domain> applications)
         {
             treeStore.Clear();
