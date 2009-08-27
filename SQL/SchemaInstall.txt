@@ -1,0 +1,20 @@
+Steps to set up the schema for the PropertyManager.
+
+1) Create the data base: online_logging
+2) Create the table structures. Execute the scripts in the following order:
+   a) FORM_table.sql
+   b) DYN_APPLICATION_table.sql
+   c) DYN_DATA_TYPE_table.sql
+   d) DYN_PROPERTY_table.sql
+   e) DYN_ASSIGN_table.sql
+   f) DYN_EFFECTIVE_table.sql
+   g) DYN_VALUE_table.sql
+3) Create the Views. Execute the scripts in the following order:
+   a) PROPERTY_VIEW.sql
+   b) NAMED_PROPERTY_VIEW.sql
+4) Load some sample data into the DB. Execute the scripts in the following
+   order:
+   a) Applications.sql
+   b) DataTypes.sql
+   c) Forms.sql
+   
