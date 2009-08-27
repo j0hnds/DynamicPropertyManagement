@@ -2,6 +2,8 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Reflection;
+using System.IO;
 using DomainCore;
 using Antlr.StringTemplate;
 using log4net;
@@ -65,19 +67,26 @@ namespace STUtils
             log = LogManager.GetLogger(typeof(DomainRenderer));
 
             CommonGroupLoader loader = null;
+
+            string location = null;
             
             if (ConfigurationManager.AppSettings[RELATIVE_CONFIG].Equals("true"))
             {
-                log.Info("Obtaining Templates from the Relative location");
-                loader = new CommonGroupLoader(new ConsoleErrorListener());
+                location = Path.GetDirectoryName(Assembly.GetAssembly(GetType()).CodeBase);
+                if (location.IndexOf("file:") == 0)
+                {
+                    location = location.Substring(6);
+                }
+                log.InfoFormat("Obtaining Templates from the Relative location: {0}", location);
             }
             else
             {
-                string location = ConfigurationManager.AppSettings[TEMPLATE_LOCATION_CONFIG];
+                location = ConfigurationManager.AppSettings[TEMPLATE_LOCATION_CONFIG];
                 log.InfoFormat("Obtaining Templates from this location: {0}", location);
-                loader = new CommonGroupLoader(new ConsoleErrorListener(), location);
             }
 
+            loader = new CommonGroupLoader(new ConsoleErrorListener(), location);
+            
             StringTemplateGroup.RegisterGroupLoader(loader);
 
             baseTemplateGroup = StringTemplateGroup.LoadGroup(BASE_TEMPLATES_GROUP);
