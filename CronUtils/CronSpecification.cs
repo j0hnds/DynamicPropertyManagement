@@ -64,6 +64,10 @@ namespace CronUtils
     public class CronSpecification
     {
         /// <summary>
+        /// The default specification if none is specified.
+        /// </summary>
+        private const string DEFAULT_SPECIFICATION = "* * * * *";
+        /// <summary>
         /// Index of the cron specification that relates to MINUTES
         /// </summary>
         private const int MINUTE = 0;
@@ -147,6 +151,15 @@ namespace CronUtils
         private ArrayList daysOfWeek;
 
         /// <summary>
+        /// Constructs a new CronSpecification using the default
+        /// specification ("* * * * *").
+        /// </summary>
+        public CronSpecification() :
+            this(DEFAULT_SPECIFICATION)
+        {
+        }
+
+        /// <summary>
         /// Constructs a new CronSpecification object from a raw specification.
         /// </summary>
         /// <param name="rawSpecification">
@@ -154,9 +167,9 @@ namespace CronUtils
         /// </param>
         public CronSpecification(string rawSpecification)
         {
-            if (rawSpecification == null)
+            if (rawSpecification == null || rawSpecification.Length == 0)
             {
-                throw new ArgumentNullException("rawSpecification");
+                rawSpecification = DEFAULT_SPECIFICATION;
             }
 
             this.rawSpecification = rawSpecification;

@@ -32,6 +32,22 @@ namespace CronUtils
 
             return DateTime.ParseExact(dateString, "yyyy/MM/dd HH:mm:ss", provider);
         }
+
+        [Test]
+        public void TestEmptyConstructor()
+        {
+            // Send in a null.
+            CronSpecification cs = new CronSpecification(null);
+            Assert.IsTrue(cs.IsDateEffective(ConvertDate(JANUARY_1_2009)));
+
+            // Send in an empty string
+            cs = new CronSpecification("");
+            Assert.IsTrue(cs.IsDateEffective(ConvertDate(JANUARY_1_2009)));
+
+            // Use the default constructor
+            cs = new CronSpecification();
+            Assert.IsTrue(cs.IsDateEffective(ConvertDate(JANUARY_1_2009)));
+        }
         
         [Test]
         public void TestIsMinuteOneDateEffective()
