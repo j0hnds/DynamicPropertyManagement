@@ -262,7 +262,7 @@ public partial class MainWindow: Gtk.Window
     {
         bool somethingSelected = applicationListCtl.IsSelected;
 
-        AddAction.Sensitive = somethingSelected;
+        AddAction.Sensitive = true;
         RemoveAction.Sensitive = somethingSelected;
         PropertiesAction.Sensitive = somethingSelected;
         ExecuteAction.Sensitive = false;
@@ -291,7 +291,7 @@ public partial class MainWindow: Gtk.Window
             break;
 
         case PropertyDefinitionLevels.None:
-            AddAction.Sensitive = false;
+            AddAction.Sensitive = true;
             RemoveAction.Sensitive = false;
             PropertiesAction.Sensitive = false;
             ExecuteAction.Sensitive = false;
@@ -345,7 +345,7 @@ public partial class MainWindow: Gtk.Window
     {
         bool somethingSelected = formListCtl.IsSelected;
 
-        AddAction.Sensitive = somethingSelected;
+        AddAction.Sensitive = true;
         RemoveAction.Sensitive = somethingSelected;
         PropertiesAction.Sensitive = somethingSelected;
         ExecuteAction.Sensitive = false;
@@ -356,7 +356,7 @@ public partial class MainWindow: Gtk.Window
     /// </summary>
     private void HandleNoopToolBarSensitivity()
     {
-        AddAction.Sensitive = false;
+        AddAction.Sensitive = true;
         RemoveAction.Sensitive = false;
         PropertiesAction.Sensitive = false;
         ExecuteAction.Sensitive = false;

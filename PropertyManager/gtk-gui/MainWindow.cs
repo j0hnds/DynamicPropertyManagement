@@ -78,7 +78,6 @@ public partial class MainWindow {
         this.QuitAction.ShortLabel = Mono.Unix.Catalog.GetString("_Quit");
         w1.Add(this.QuitAction, null);
         this.AddAction = new Gtk.Action("AddAction", Mono.Unix.Catalog.GetString("_Add"), null, "gtk-add");
-        this.AddAction.Sensitive = false;
         this.AddAction.ShortLabel = Mono.Unix.Catalog.GetString("_Add");
         w1.Add(this.AddAction, null);
         this.RemoveAction = new Gtk.Action("RemoveAction", Mono.Unix.Catalog.GetString("_Remove"), null, "gtk-remove");

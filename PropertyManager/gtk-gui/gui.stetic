@@ -26,7 +26,6 @@
       <action id="AddAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Add</property>
-        <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">_Add</property>
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="AddItemAction" />
