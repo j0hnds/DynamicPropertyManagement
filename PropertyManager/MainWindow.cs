@@ -430,7 +430,10 @@ public partial class MainWindow: Gtk.Window
         Domain selDomain = propertyListCtl.GetSelectedDomain();
         
         Domain domain = DomainFactory.Create("PropertyDefinition");
-        domain.SetValue("Category", selDomain.GetValue("Category"));
+        if (selDomain != null)
+        {
+            domain.SetValue("Category", selDomain.GetValue("Category"));
+        }
 
         PropertyDefinitionEntryDlg dlg = new PropertyDefinitionEntryDlg();
 
