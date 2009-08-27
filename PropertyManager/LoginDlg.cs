@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using DAOCore;
+using log4net;
 
 namespace PropertyManager
 {
@@ -31,11 +32,17 @@ namespace PropertyManager
         }
 
         /// <summary>
+        /// The logger for this class.
+        /// </summary>
+        private ILog log;
+
+        /// <summary>
         /// Constructs a new LogingDlg object.
         /// </summary>
         public LoginDlg()
         {
             this.Build();
+            log = LogManager.GetLogger(GetType().Name);
         }
 
         /// <summary>
@@ -70,15 +77,17 @@ namespace PropertyManager
                 ds.Close();
 
                 // Get the environment name
-                // string environment = ENVIRONMENT_MAP[cbEnvironment.ActiveText];
+                string environment = ENVIRONMENT_MAP[cbEnvironment.ActiveText];
 
                 // Get the configuration for that environment
-                DataSourceConfig dsc = ConfigurationManager.GetSection("local-machine") as DataSourceConfig;
+                DataSourceConfig dsc = ConfigurationManager.GetSection(environment) as DataSourceConfig;
 
                 string host = dsc.HostName;
                 string dbName = dsc.DBName;
                 string userName = txtUserName.Text;
                 string password = txtPassword.Text;
+
+                log.DebugFormat("Logging onto DB: {0} - {1}", host, dbName);
 
                 // Set the data source variables.
                 ds.Host = host;
