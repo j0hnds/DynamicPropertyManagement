@@ -517,6 +517,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="AttributeName">Name</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Application</property>
@@ -816,6 +817,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="AttributeName">Category</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">PropertyDefinition</property>
@@ -839,6 +841,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="AttributeName">Name</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">PropertyDefinition</property>
@@ -973,6 +976,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="AttributeName">Description</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Form</property>
@@ -997,6 +1001,7 @@ Production</property>
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="IsEditable">True</property>
+                <property name="ActivatesDefault">True</property>
                 <property name="AttributeName">Id</property>
                 <property name="ContextName">DialogContext</property>
                 <property name="DomainName">Form</property>
@@ -1051,6 +1056,7 @@ Production</property>
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
             <property name="CanDefault">True</property>
+            <property name="HasDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>
@@ -1256,6 +1262,7 @@ Production</property>
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                     <property name="IsEditable">True</property>
+                    <property name="ActivatesDefault">False</property>
                     <property name="AttributeName">DefaultValue</property>
                     <property name="ContextName">DialogContext</property>
                     <property name="DomainName">DynamicProperty</property>
@@ -1281,6 +1288,7 @@ Production</property>
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                     <property name="IsEditable">True</property>
+                    <property name="ActivatesDefault">False</property>
                     <property name="AttributeName">Qualifier</property>
                     <property name="ContextName">DialogContext</property>
                     <property name="DomainName">DynamicProperty</property>
@@ -1808,6 +1816,7 @@ Production</property>
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
                             <property name="IsEditable">False</property>
+                            <property name="ActivatesDefault">False</property>
                             <property name="AttributeName">RawCriteria</property>
                             <property name="ContextName">ValueCriteriaCtx</property>
                             <property name="DomainName">ValueCriteria</property>
@@ -1832,6 +1841,7 @@ Production</property>
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
                             <property name="IsEditable">True</property>
+                            <property name="ActivatesDefault">False</property>
                             <property name="AttributeName">Value</property>
                             <property name="ContextName">ValueCriteriaCtx</property>
                             <property name="DomainName">ValueCriteria</property>

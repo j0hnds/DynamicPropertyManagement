@@ -48,10 +48,18 @@ namespace ControlWrappers
         /// <value>
         /// <c>true</c> if the contents of the control can be modified.
         /// </value>
+        [System.ComponentModel.DefaultValue(true)]
         public bool IsEditable
         {
             get { return txtEntry.IsEditable; }
             set { txtEntry.IsEditable = value; }
+        }
+
+        [System.ComponentModel.DefaultValue(false)]
+        public bool ActivatesDefault
+        {
+            get { return txtEntry.ActivatesDefault; }
+            set { txtEntry.ActivatesDefault = value; }
         }
 
         #region BoundControl implementation

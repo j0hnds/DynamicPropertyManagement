@@ -67,6 +67,7 @@ namespace PropertyManager {
             this.txtDescription.Events = ((Gdk.EventMask)(256));
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.IsEditable = true;
+            this.txtDescription.ActivatesDefault = true;
             this.txtDescription.AttributeName = "Description";
             this.txtDescription.ContextName = "DialogContext";
             this.txtDescription.DomainName = "Form";
@@ -82,6 +83,7 @@ namespace PropertyManager {
             this.txtFormId.Events = ((Gdk.EventMask)(256));
             this.txtFormId.Name = "txtFormId";
             this.txtFormId.IsEditable = true;
+            this.txtFormId.ActivatesDefault = true;
             this.txtFormId.AttributeName = "Id";
             this.txtFormId.ContextName = "DialogContext";
             this.txtFormId.DomainName = "Form";
@@ -131,6 +133,7 @@ namespace PropertyManager {
             }
             this.DefaultWidth = 400;
             this.DefaultHeight = 128;
+            this.buttonOk.HasDefault = true;
             this.Show();
         }
     }

@@ -224,6 +224,7 @@ namespace PropertyManager {
             this.txtDefaultValue.Events = ((Gdk.EventMask)(256));
             this.txtDefaultValue.Name = "txtDefaultValue";
             this.txtDefaultValue.IsEditable = true;
+            this.txtDefaultValue.ActivatesDefault = false;
             this.txtDefaultValue.AttributeName = "DefaultValue";
             this.txtDefaultValue.ContextName = "DialogContext";
             this.txtDefaultValue.DomainName = "DynamicProperty";
@@ -240,6 +241,7 @@ namespace PropertyManager {
             this.txtQualifier.Events = ((Gdk.EventMask)(256));
             this.txtQualifier.Name = "txtQualifier";
             this.txtQualifier.IsEditable = true;
+            this.txtQualifier.ActivatesDefault = false;
             this.txtQualifier.AttributeName = "Qualifier";
             this.txtQualifier.ContextName = "DialogContext";
             this.txtQualifier.DomainName = "DynamicProperty";
@@ -549,6 +551,7 @@ namespace PropertyManager {
             this.txtCriteria.Events = ((Gdk.EventMask)(256));
             this.txtCriteria.Name = "txtCriteria";
             this.txtCriteria.IsEditable = false;
+            this.txtCriteria.ActivatesDefault = false;
             this.txtCriteria.AttributeName = "RawCriteria";
             this.txtCriteria.ContextName = "ValueCriteriaCtx";
             this.txtCriteria.DomainName = "ValueCriteria";
@@ -564,6 +567,7 @@ namespace PropertyManager {
             this.txtValue.Events = ((Gdk.EventMask)(256));
             this.txtValue.Name = "txtValue";
             this.txtValue.IsEditable = true;
+            this.txtValue.ActivatesDefault = false;
             this.txtValue.AttributeName = "Value";
             this.txtValue.ContextName = "ValueCriteriaCtx";
             this.txtValue.DomainName = "ValueCriteria";
