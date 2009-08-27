@@ -488,8 +488,15 @@ public partial class MainWindow: Gtk.Window
     private void AddDynamicProperty()
     {
         log.Debug("Adding new Dynamic Property");
-        // Create a new Form domain
+        // Create a new Dynamic Property domain
         Domain domain = DomainFactory.Create("DynamicProperty");
+
+        Domain app = dynPropertyListCtl.GetSelectedDomain();
+
+        if (app != null)
+        {
+            domain.SetValue("ApplicationId", app.GetValue("Id"));
+        }
 
         DynPropEntryDlg dlg = new DynPropEntryDlg();
 
