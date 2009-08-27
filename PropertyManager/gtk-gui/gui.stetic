@@ -273,6 +273,7 @@
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.LoginDlg" design-size="270 163">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Logon to Property Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -481,6 +482,7 @@ Production</property>
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.ApplicationEntryDlg" design-size="391 91">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Application Details</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -591,6 +593,7 @@ Production</property>
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.BufferDisplayDlg" design-size="580 411">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Generated SQL</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -668,6 +671,7 @@ Production</property>
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.PropertyDefinitionEntryDlg" design-size="250 285">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Property Definition Details</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -918,6 +922,7 @@ Production</property>
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.FormEntryDlg" design-size="400 128">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Form Details</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -1076,6 +1081,7 @@ Production</property>
   <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="812 606">
     <action-group name="Default" />
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Dynamic Property Details</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
@@ -1986,6 +1992,7 @@ Production</property>
   </widget>
   <widget class="Gtk.Dialog" id="PropertyManager.TestDynPropDlg" design-size="702 375">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Test Dynamic Property</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="AllowShrink">True</property>
     <property name="Buttons">2</property>

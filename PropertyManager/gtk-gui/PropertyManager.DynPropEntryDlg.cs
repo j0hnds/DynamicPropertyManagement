@@ -115,6 +115,7 @@ namespace PropertyManager {
             this.UIManager.InsertActionGroup(w1, 0);
             this.AddAccelGroup(this.UIManager.AccelGroup);
             this.Name = "PropertyManager.DynPropEntryDlg";
+            this.Title = Mono.Unix.Catalog.GetString("Dynamic Property Details");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child PropertyManager.DynPropEntryDlg.VBox

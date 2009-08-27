@@ -35,6 +35,7 @@ namespace PropertyManager {
             Stetic.Gui.Initialize(this);
             // Widget PropertyManager.LoginDlg
             this.Name = "PropertyManager.LoginDlg";
+            this.Title = Mono.Unix.Catalog.GetString("Logon to Property Manager");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child PropertyManager.LoginDlg.VBox

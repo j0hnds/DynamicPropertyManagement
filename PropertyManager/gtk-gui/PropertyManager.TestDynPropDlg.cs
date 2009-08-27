@@ -55,6 +55,7 @@ namespace PropertyManager {
             Stetic.Gui.Initialize(this);
             // Widget PropertyManager.TestDynPropDlg
             this.Name = "PropertyManager.TestDynPropDlg";
+            this.Title = Mono.Unix.Catalog.GetString("Test Dynamic Property");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.AllowShrink = true;
             this.HasSeparator = false;

@@ -25,6 +25,7 @@ namespace PropertyManager {
             Stetic.Gui.Initialize(this);
             // Widget PropertyManager.BufferDisplayDlg
             this.Name = "PropertyManager.BufferDisplayDlg";
+            this.Title = Mono.Unix.Catalog.GetString("Generated SQL");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child PropertyManager.BufferDisplayDlg.VBox

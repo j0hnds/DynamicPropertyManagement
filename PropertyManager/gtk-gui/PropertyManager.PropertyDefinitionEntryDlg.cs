@@ -39,6 +39,7 @@ namespace PropertyManager {
             Stetic.Gui.Initialize(this);
             // Widget PropertyManager.PropertyDefinitionEntryDlg
             this.Name = "PropertyManager.PropertyDefinitionEntryDlg";
+            this.Title = Mono.Unix.Catalog.GetString("Property Definition Details");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child PropertyManager.PropertyDefinitionEntryDlg.VBox
