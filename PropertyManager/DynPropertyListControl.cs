@@ -135,5 +135,48 @@ namespace PropertyManager
                 }
             }
         }
+
+        public virtual Domain GetSelectedDomainParent()
+        {
+            Domain domain = null;
+
+            TreeModel model = null;
+            TreeIter iter = TreeIter.Zero;
+
+            if (((TreeView) widget).Selection.GetSelected(out model, out iter))
+            {
+                TreeIter parentIter = TreeIter.Zero;
+                if (model.IterParent(out parentIter, iter))
+                {
+                    domain = GetDomain(model, parentIter);
+                }
+            }
+
+            return domain;
+        }
+
+        public virtual Domain GetSelectedDomainGrandParent()
+        {
+            Domain domain = null;
+
+            TreeModel model = null;
+            TreeIter iter = TreeIter.Zero;
+
+            if (((TreeView) widget).Selection.GetSelected(out model, out iter))
+            {
+                TreeIter parentIter = TreeIter.Zero;
+                if (model.IterParent(out parentIter, iter))
+                {
+                    TreeIter grandParentIter = TreeIter.Zero;
+                    if (model.IterParent(out grandParentIter, parentIter))
+                    {
+                        domain = GetDomain(model, grandParentIter);
+                    }
+                }
+            }
+
+            return domain;
+        }
+
     }
 }

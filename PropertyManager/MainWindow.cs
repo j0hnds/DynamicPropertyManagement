@@ -490,12 +490,33 @@ public partial class MainWindow: Gtk.Window
         log.Debug("Adding new Dynamic Property");
         // Create a new Dynamic Property domain
         Domain domain = DomainFactory.Create("DynamicProperty");
+        Domain app = null;
+        Domain prop = null;
 
-        Domain app = dynPropertyListCtl.GetSelectedDomain();
+        switch (dynPropertyListCtl.SelectedLevel)
+        {
+        case DynamicPropertyLevels.Application:
+            app = dynPropertyListCtl.GetSelectedDomain();
+            break;
+
+        case DynamicPropertyLevels.Category:
+            app = dynPropertyListCtl.GetSelectedDomainParent();
+            break;
+
+        case DynamicPropertyLevels.Property:
+            app = dynPropertyListCtl.GetSelectedDomainGrandParent();
+            prop = dynPropertyListCtl.GetSelectedDomain();
+            break;
+        }
 
         if (app != null)
         {
             domain.SetValue("ApplicationId", app.GetValue("Id"));
+        }
+
+        if (prop != null)
+        {
+            domain.SetValue("PropertyId", prop.GetValue("PropertyId"));
         }
 
         DynPropEntryDlg dlg = new DynPropEntryDlg();
