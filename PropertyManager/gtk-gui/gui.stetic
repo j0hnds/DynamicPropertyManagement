@@ -500,6 +500,7 @@ Production</property>
             <child>
               <widget class="Gtk.Label" id="lblApplicationName">
                 <property name="MemberName" />
+                <property name="Xalign">0</property>
                 <property name="LabelProp" translatable="yes">Application Name:</property>
               </widget>
               <packing>
@@ -1192,6 +1193,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.Label" id="lblApplication">
                     <property name="MemberName" />
+                    <property name="Xalign">0</property>
                     <property name="LabelProp" translatable="yes">Application:</property>
                   </widget>
                   <packing>
@@ -1209,6 +1211,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.Label" id="lblDefaultValue">
                     <property name="MemberName" />
+                    <property name="Xalign">0</property>
                     <property name="LabelProp" translatable="yes">Default Value:</property>
                   </widget>
                   <packing>
@@ -1228,6 +1231,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.Label" id="lblProperty">
                     <property name="MemberName" />
+                    <property name="Xalign">0</property>
                     <property name="LabelProp" translatable="yes">Property:</property>
                   </widget>
                   <packing>
@@ -1247,6 +1251,7 @@ Production</property>
                 <child>
                   <widget class="Gtk.Label" id="lblQualifier">
                     <property name="MemberName" />
+                    <property name="Xalign">0</property>
                     <property name="LabelProp" translatable="yes">Qualifier:</property>
                   </widget>
                   <packing>
@@ -1428,7 +1433,7 @@ Production</property>
                   <widget class="Gtk.Notebook" id="nbValuePages">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">2</property>
+                    <property name="CurrentPage">1</property>
                     <property name="ShowTabs">False</property>
                     <child>
                       <widget class="Gtk.Label" id="label2">

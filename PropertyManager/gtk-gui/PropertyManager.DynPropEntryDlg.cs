@@ -185,6 +185,7 @@ namespace PropertyManager {
             // Container child table2.Gtk.Table+TableChild
             this.lblApplication = new Gtk.Label();
             this.lblApplication.Name = "lblApplication";
+            this.lblApplication.Xalign = 0F;
             this.lblApplication.LabelProp = Mono.Unix.Catalog.GetString("Application:");
             this.table2.Add(this.lblApplication);
             Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table2[this.lblApplication]));
@@ -193,6 +194,7 @@ namespace PropertyManager {
             // Container child table2.Gtk.Table+TableChild
             this.lblDefaultValue = new Gtk.Label();
             this.lblDefaultValue.Name = "lblDefaultValue";
+            this.lblDefaultValue.Xalign = 0F;
             this.lblDefaultValue.LabelProp = Mono.Unix.Catalog.GetString("Default Value:");
             this.table2.Add(this.lblDefaultValue);
             Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.table2[this.lblDefaultValue]));
@@ -203,6 +205,7 @@ namespace PropertyManager {
             // Container child table2.Gtk.Table+TableChild
             this.lblProperty = new Gtk.Label();
             this.lblProperty.Name = "lblProperty";
+            this.lblProperty.Xalign = 0F;
             this.lblProperty.LabelProp = Mono.Unix.Catalog.GetString("Property:");
             this.table2.Add(this.lblProperty);
             Gtk.Table.TableChild w8 = ((Gtk.Table.TableChild)(this.table2[this.lblProperty]));
@@ -213,6 +216,7 @@ namespace PropertyManager {
             // Container child table2.Gtk.Table+TableChild
             this.lblQualifier = new Gtk.Label();
             this.lblQualifier.Name = "lblQualifier";
+            this.lblQualifier.Xalign = 0F;
             this.lblQualifier.LabelProp = Mono.Unix.Catalog.GetString("Qualifier:");
             this.table2.Add(this.lblQualifier);
             Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table2[this.lblQualifier]));
@@ -322,7 +326,7 @@ namespace PropertyManager {
             this.nbValuePages = new Gtk.Notebook();
             this.nbValuePages.CanFocus = true;
             this.nbValuePages.Name = "nbValuePages";
-            this.nbValuePages.CurrentPage = 2;
+            this.nbValuePages.CurrentPage = 1;
             this.nbValuePages.ShowTabs = false;
             // Container child nbValuePages.Gtk.Notebook+NotebookChild
             this.label2 = new Gtk.Label();

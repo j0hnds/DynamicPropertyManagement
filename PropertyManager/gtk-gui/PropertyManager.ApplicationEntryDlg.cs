@@ -42,6 +42,7 @@ namespace PropertyManager {
             // Container child table1.Gtk.Table+TableChild
             this.lblApplicationName = new Gtk.Label();
             this.lblApplicationName.Name = "lblApplicationName";
+            this.lblApplicationName.Xalign = 0F;
             this.lblApplicationName.LabelProp = Mono.Unix.Catalog.GetString("Application Name:");
             this.table1.Add(this.lblApplicationName);
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.lblApplicationName]));
