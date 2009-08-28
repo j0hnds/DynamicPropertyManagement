@@ -41,6 +41,8 @@ namespace PropertyManager {
             this.Name = "PropertyManager.PropertyDefinitionEntryDlg";
             this.Title = Mono.Unix.Catalog.GetString("Property Definition Details");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Resizable = false;
+            this.AllowGrow = false;
             this.HasSeparator = false;
             // Internal child PropertyManager.PropertyDefinitionEntryDlg.VBox
             Gtk.VBox w1 = this.VBox;
@@ -51,6 +53,7 @@ namespace PropertyManager {
             this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
             this.table1.ColumnSpacing = ((uint)(6));
+            this.table1.BorderWidth = ((uint)(4));
             // Container child table1.Gtk.Table+TableChild
             this.cbDataType = new ControlWrappers.BoundComboBox();
             this.cbDataType.Events = ((Gdk.EventMask)(256));
@@ -197,8 +200,8 @@ namespace PropertyManager {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 250;
-            this.DefaultHeight = 285;
+            this.DefaultWidth = 245;
+            this.DefaultHeight = 264;
             this.buttonOk.HasDefault = true;
             this.Show();
         }
