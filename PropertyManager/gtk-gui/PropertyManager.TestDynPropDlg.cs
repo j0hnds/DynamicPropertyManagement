@@ -57,7 +57,8 @@ namespace PropertyManager {
             this.Name = "PropertyManager.TestDynPropDlg";
             this.Title = Mono.Unix.Catalog.GetString("Test Dynamic Property");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
-            this.AllowShrink = true;
+            this.Resizable = false;
+            this.AllowGrow = false;
             this.HasSeparator = false;
             // Internal child PropertyManager.TestDynPropDlg.VBox
             Gtk.VBox w1 = this.VBox;
@@ -180,6 +181,7 @@ namespace PropertyManager {
             this.hbox3 = new Gtk.HBox();
             this.hbox3.Name = "hbox3";
             this.hbox3.Spacing = 6;
+            this.hbox3.BorderWidth = ((uint)(4));
             // Container child hbox3.Gtk.Box+BoxChild
             this.lblEffectiveValue = new Gtk.Label();
             this.lblEffectiveValue.Name = "lblEffectiveValue";
@@ -247,8 +249,8 @@ namespace PropertyManager {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 702;
-            this.DefaultHeight = 375;
+            this.DefaultWidth = 701;
+            this.DefaultHeight = 383;
             this.Show();
             this.btnRevert.Clicked += new System.EventHandler(this.RevertSimulatedDateClicked);
             this.btnApply.Clicked += new System.EventHandler(this.ApplySimulatedDateClicked);

@@ -117,6 +117,8 @@ namespace PropertyManager {
             this.Name = "PropertyManager.DynPropEntryDlg";
             this.Title = Mono.Unix.Catalog.GetString("Dynamic Property Details");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Resizable = false;
+            this.AllowGrow = false;
             this.HasSeparator = false;
             // Internal child PropertyManager.DynPropEntryDlg.VBox
             Gtk.VBox w2 = this.VBox;
@@ -663,7 +665,7 @@ namespace PropertyManager {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 812;
+            this.DefaultWidth = 804;
             this.DefaultHeight = 606;
             this.Show();
             this.cbForm.Changed += new System.EventHandler(this.OnCbFormChanged);

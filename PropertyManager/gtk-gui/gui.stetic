@@ -1079,11 +1079,13 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="812 606">
+  <widget class="Gtk.Dialog" id="PropertyManager.DynPropEntryDlg" design-size="804 606">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Title" translatable="yes">Dynamic Property Details</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -1995,11 +1997,12 @@ Production</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="PropertyManager.TestDynPropDlg" design-size="702 375">
+  <widget class="Gtk.Dialog" id="PropertyManager.TestDynPropDlg" design-size="701 383">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Test Dynamic Property</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="AllowShrink">True</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -2176,6 +2179,7 @@ Production</property>
                   <widget class="Gtk.HBox" id="hbox3">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
+                    <property name="BorderWidth">4</property>
                     <child>
                       <widget class="Gtk.Label" id="lblEffectiveValue">
                         <property name="MemberName" />
