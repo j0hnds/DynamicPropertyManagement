@@ -11,3 +11,4 @@ test-results/*
 lib/*
 *PrimaryTrace.txt
 TestResult.xml
+package/*
