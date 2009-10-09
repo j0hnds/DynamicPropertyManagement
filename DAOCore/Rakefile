@@ -23,6 +23,7 @@ end
 PROJECT_TARGET = "#{BUILD_DIR}/#{PROJECT_NAME}.dll"
 DEPLOY_PATH = "#{LIB_DIR}/#{PROJECT_NAME}.dll"
 TEST_PATH = "#{TEST_DIR}/#{PROJECT_NAME}.dll"
+TEST_RESULTS_PATH = "#{TEST_DIR}/#{PROJECT_NAME}-Test.xml"
 
 # Define the clean/clobber paths
 CLEAN.include(BUILD_DIR) 
@@ -71,6 +72,7 @@ end
 task :test => [ :testinit, TEST_PATH ] do |t|
   cp "#{LIB_DIR}/DomainCore.dll", TEST_DIR
   nu = NUnitConsole.new t.prerequisites[1]
+  nu.xml = TEST_RESULTS_PATH
   nu.exec
 end
 
