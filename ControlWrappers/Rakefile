@@ -8,7 +8,7 @@ require '../DotNet'
 # The name of the project being built.
 PROJECT_NAME = "ControlWrappers"
 
-DEBUG = false
+DEBUG = (ENV['DEBUG_FLAG']) ? ENV['DEBUG_FLAG'].match(/^[tT]rue$/) != nil : false
 
 # The directory where the DLL will be deployed
 LIB_DIR = (ENV['LIB_DIR']) ? ENV['LIB_DIR'] : '../lib'
