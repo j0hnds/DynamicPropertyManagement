@@ -10,3 +10,4 @@ test-results/*
 */bin/*
 lib/*
 *PrimaryTrace.txt
+TestResult.xml
