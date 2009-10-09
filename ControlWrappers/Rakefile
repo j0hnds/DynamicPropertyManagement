@@ -13,14 +13,8 @@ DEBUG = (ENV['DEBUG_FLAG']) ? ENV['DEBUG_FLAG'].match(/^[tT]rue$/) != nil : fals
 # The directory where the DLL will be deployed
 LIB_DIR = (ENV['LIB_DIR']) ? ENV['LIB_DIR'] : '../lib'
 
-# The directory to which we will build the DLL
-if DEBUG
-  BUILD_DIR = 'bin/Debug'
-  TEST_DIR = 'bin/test/Debug'
-else
-  BUILD_DIR = 'bin/Release'
-  TEST_DIR = 'bin/test/Release'
-end
+# The output directories to use
+BUILD_DIR, TEST_DIR = create_output_directories DEBUG
 
 # Set up the required target names
 PROJECT_TARGET = "#{BUILD_DIR}/#{PROJECT_NAME}.dll"

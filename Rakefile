@@ -27,7 +27,7 @@ TARGETS = [ "deploy",
 LIB_DIR = 'lib'
 
 # The debug flag for the compiler
-DEBUG_FLAG = false
+DEBUG_FLAG = true
             
 # Define the default task to perform a deploy.
 task :default => [ :deploy ]
@@ -74,7 +74,6 @@ task :clobber => PROJECTS.collect { |p| "#{p}.clobber" }
 #
 def invokeRake(directory, target)
   cmd = "(cd #{directory}; rake #{target} LIB_DIR=../#{LIB_DIR} DEBUG_FLAG=#{DEBUG_FLAG})"
-  # print "#{cmd}\n"
   sh cmd
 end
 

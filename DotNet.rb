@@ -70,3 +70,12 @@ class NUnitConsole < BaseCommand
     return s
   end
 end
+
+#
+# Creates a tuple that contains the name of the build directory
+# and the test directory respectively.
+#
+def create_output_directories(debug_flag)
+  dir = (debug_flag) ? 'Debug' : 'Release'
+  return "bin/#{dir}", "bin/test/#{dir}"
+end
