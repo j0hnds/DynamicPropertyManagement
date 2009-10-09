@@ -13,6 +13,13 @@ PROJECTS = [ "ControlWrappers",
              "STUtils"
            ]
 
+TARGETS = [ "deploy",
+            "clean",
+            "clobber",
+            "test"
+          ]
+            
+
 task :default => [ :deploy ]
 
 # Define all the project dependencies
@@ -64,15 +71,7 @@ end
 
 # Define all the project-level rake tasks
 PROJECTS.each do |prj|
-  # Set up the tasks tasks
-  createTask prj, "deploy"
-
-  # Set up the clean tasks
-  createTask prj, "clean"
-
-  # Set up the clobber tasks
-  createTask prj, "clobber"
-
-  # Set up the test tasks
-  createTask prj, "test"
+  TARGETS.each do |tgt|
+    createTask prj, tgt
+  end
 end
