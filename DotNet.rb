@@ -51,13 +51,22 @@ class Gmcs < BaseCommand
 
 end
 
+# 
+# This class encapsulates the ability to run the NUnit Console application
+#
 class NUnitConsole < BaseCommand
+
+  attr_accessor :xml
 
   def initialize assembly
     @assembly = assembly
+    @xml = nil
   end
 
   def to_s
-    "nunit-console #{@assembly}"
+    s = "nunit-console #{@assembly}"
+    s << " -nologo"
+    s << " -xml=#{@xml} " unless @xml.nil?
+    return s
   end
 end
