@@ -21,9 +21,15 @@ TARGETS = [ "deploy",
             "clobber",
             "test"
           ]
-            
 
+# The directory where artifacts will be placed after the builds are
+# complete
+LIB_DIR = 'lib'
+            
+# Define the default task to perform a deploy.
 task :default => [ :deploy ]
+
+# Package the final result
 
 # Define all the project dependencies
 task "ControlWrappers.deploy" => [ "DomainCore.deploy", 
@@ -64,7 +70,7 @@ task :clobber => PROJECTS.collect { |p| "#{p}.clobber" }
 # target
 #
 def invokeRake(directory, target)
-  cmd = "(cd #{directory}; rake #{target})"
+  cmd = "(cd #{directory}; rake #{target} LIB_DIR=../#{LIB_DIR})"
   # print "#{cmd}\n"
   sh cmd
 end
