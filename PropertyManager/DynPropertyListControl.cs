@@ -178,5 +178,102 @@ namespace PropertyManager
             return domain;
         }
 
+        private TreeIter FindApplicationIter(long applicationId)
+        {
+            TreeIter foundIter = TreeIter.Zero;
+            TreeIter iter = TreeIter.Zero;
+            bool more = treeStore.GetIterFirst(out iter);
+            while (more)
+            {
+                // Get the application Id of the current row
+                long id = (long) treeStore.GetValue(iter, ID_CELL);
+                if (applicationId == id)
+                {
+                    foundIter = iter;
+                    break;
+                }
+                
+                more = treeStore.IterNext(ref iter);
+            }
+            
+            return foundIter;
+        }
+
+        private TreeIter FindCategoryIter(TreeIter appIter, string category)
+        {
+            log.InfoFormat("The category we are looking for is = '{0}'", category);
+
+            TreeIter foundIter = TreeIter.Zero;
+            TreeIter iter = TreeIter.Zero;
+            bool more = treeStore.IterChildren(out iter, appIter);
+            while (more)
+            {
+                // Get the application Id of the current row
+                string lblCategory = (string) treeStore.GetValue(iter, LABEL_CELL);
+                log.InfoFormat("The category label we are testing is = '{0}'", lblCategory);
+                if (lblCategory.Equals(category))
+                {
+                    foundIter = iter;
+                    break;
+                }
+                
+                more = treeStore.IterNext(ref iter);
+            }
+            
+            return foundIter;
+        }
+
+        public void AddDomain(Domain domain)
+        {
+            // Get the iter for the owner of this new domain object.
+            long applicationId = (long) domain.GetValue("ApplicationId");
+            long propertyId = (long) domain.GetValue("PropertyId");
+
+            DomainDAO dao = DomainFactory.GetDAO("PropertyDefinition");
+            Domain propDef = dao.GetObject(propertyId);
+
+            string category = (string) propDef.GetValue("Category");
+
+            domain.SetValue("Category", category);
+            domain.SetValue("PropertyName", propDef.GetValue("Name"));
+
+            TreeIter appIter = FindApplicationIter(applicationId);
+            if (! appIter.Equals(TreeIter.Zero))
+            {
+                // Found the application, now find the category to
+                // hook up to...
+                TreeIter catIter = FindCategoryIter(appIter, category);
+                TreeIter propIter = TreeIter.Zero;
+                if (! catIter.Equals(TreeIter.Zero))
+                {
+                    propIter = treeStore.AppendValues(catIter,
+                                           RenderLabel(domain),
+                                           domain.IdAttribute.Value,
+                                           domain.GetType().Name);
+                }
+                else
+                {
+                    // The category isn't there; need to create one.
+                    catIter = treeStore.AppendValues(appIter,
+                                                     Render(domain, "CategoryLabel"),
+                                                     domain.IdAttribute.Value,
+                                                     domain.GetType().Name);
+                    
+                    propIter = treeStore.AppendValues(catIter,
+                                           RenderLabel(domain),
+                                           domain.IdAttribute.Value,
+                                           domain.GetType().Name);
+                }
+
+                // Now highlight the specified row
+                SelectRow(propIter);
+            }
+            else
+            {
+                log.ErrorFormat("Unable to find application Id ({0}) to add domain", applicationId);
+            }
+            
+        }
+
     }
 }

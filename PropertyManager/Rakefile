@@ -1,3 +1,4 @@
+# -*- Mode: ruby; -*-
 require 'rake/clean'
 require '../DotNet'
 

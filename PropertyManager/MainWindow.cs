@@ -534,7 +534,7 @@ public partial class MainWindow: Gtk.Window
                 domain.Save();
             }
 
-            // formListCtl.AddDomain(domain);
+            dynPropertyListCtl.AddDomain(domain);
         }
     }
 

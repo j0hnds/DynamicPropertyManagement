@@ -1,3 +1,4 @@
+# -*- Mode: ruby -*-
 #
 # Rakefile
 #
