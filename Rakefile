@@ -4,6 +4,8 @@
 #
 # This rake file understands how to build/clean the PropertyManager project.
 #
+
+# The list of projects that contribute to the overall application.
 PROJECTS = [ "ControlWrappers",
              "CronUtils",
              "DAOCore",
@@ -13,6 +15,7 @@ PROJECTS = [ "ControlWrappers",
              "STUtils"
            ]
 
+# The list of targets supported by each of the project builds.
 TARGETS = [ "deploy",
             "clean",
             "clobber",
@@ -40,12 +43,20 @@ task "PropertyManager.deploy" => [ "DomainCore.deploy",
                                    "DynPropertyDomain.deploy",
                                    "CronUtils.deploy" ]
 
+# The deploy target will build the PropertyManager. The dependencies
+# defined above will determine what else has to be built.
 task :deploy => [ "PropertyManager.deploy" ]
 
+# Define the dependencies for the test task. This will ensure that
+# the test task is run for all projects.
 task :test => PROJECTS.collect { |p| "#{p}.test" }
 
+# Define the dependencies for the clean task. This will ensure that
+# the clean task is run for all projects.
 task :clean => PROJECTS.collect { |p| "#{p}.clean" }
 
+# Define the dependencies for the clobber task. This will ensure that
+# the clobber task is run for all projects.
 task :clobber => PROJECTS.collect { |p| "#{p}.clobber" }
 
 #
